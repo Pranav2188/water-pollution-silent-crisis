@@ -8,9 +8,9 @@ The website maps pollution hotspots, shows which authority is responsible for ea
 
 | Name | Role |
 | --- | --- |
-| Pranav Patil | Team Lead, Data & Research |
-| Shweta Telange | Frontend Development |
-| Sanskar Dumbare | Backend & GIS (Maps) Development |
+| Pranav Patil | Team Lead, Data & Research and Backend & GIS (Maps) Development |
+| Shweta Telange | Data & Research and Log Book |
+| Sanskar Dumbare | Frontend Development |
 | Vaishnavi Jadhav | Outreach, Legal & Documentation |
 | Siddhesh Kondhalkar | Field Survey & Testing |
 
@@ -22,7 +22,7 @@ The website maps pollution hotspots, shows which authority is responsible for ea
 ```
 docs/          Proposal, meeting notes, reports
 data/          Hotspot register, authority register, sources (CSV)
-web/           Website code (from Week 4)
+web/           Website code (from Week 1)
 ```
 
 ## Data rules
