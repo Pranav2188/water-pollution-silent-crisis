@@ -29,6 +29,8 @@ web/           Website code (setup from Week 1, design in Week 4, development fr
 
 The team edits the data in the shared Google Sheet: [Water Pollution – Data Registers](https://docs.google.com/spreadsheets/d/1mS0hFPElNAasD1ZlwrTl49pDPwRgBvUZhkPnBJhppiw/edit). The CSV files in `data/` are copies of its three tabs (Hotspots, Authorities, Sources), updated every two weeks or after a field visit.
 
+The team's working map shows the hotspots on top of the PMC ward boundaries: [Mula-Mutha Hotspots – Working Map](https://www.google.com/maps/d/edit?mid=13H0TosD0uQL93O2BbMLaC0Y_TS2vtnQ&usp=sharing) (Google My Maps). Its hotspot layer is imported from the sheet's **Map Pins** tab; re-import it after each field visit.
+
 1. Every hotspot and authority entry must have a source.
 2. Every entry has a "last verified" date. Re-check anything older than 90 days.
 3. No photos of people's faces. No personal phone numbers of officials.
