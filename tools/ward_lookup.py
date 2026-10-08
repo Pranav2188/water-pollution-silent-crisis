@@ -36,7 +36,14 @@ def _placemark_name(pm):
             key = d.get("name", "")
             val = _text(d.find("k:value", NS)) if tag == "Data" else _text(d)
             if val:
+                try:
+                    num = float(val)
+                    val = str(int(num)) if num.is_integer() else val
+                except ValueError:
+                    pass
                 parts.append(f"{key}={val}")
+    if len(parts) == 1 and parts[0].split("=", 1)[1].isdigit():
+        return f"Ward {parts[0].split('=', 1)[1]}"
     return "; ".join(parts[:3]) or "(unnamed)"
 
 
