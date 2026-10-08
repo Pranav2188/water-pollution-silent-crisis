@@ -1,6 +1,6 @@
-ID,Name,Latitude,Longitude,Type,Date Seen,Photo Link,Description,Source,Verified By,Last Verified
-HS-01,Old Keshavnagar–Kharadi Bridge weir (bandhara),18.546297,73.951499,weir,2026-09-29,,Thick white froth below the weir across most of the river width; turbid grey water,Team field visit 29 Sep 2026 (GPS Map Camera photo),Pranav Patil,2026-09-29
-HS-02,Sewage outfall pipe near the bridge,TO VERIFY,TO VERIFY,outfall,2026-09-29,,"Concrete outfall pipe discharging foamy, greenish wastewater into the river; algae on the pipes below",Team field visit 29 Sep 2026,,
-HS-03,Garbage dumped on the riverbank beside the bridge,TO VERIFY,TO VERIFY,dumping,2026-09-29,,"Large pile of plastic bags, clothes, wood and debris on the rocky bank",Team field visit 29 Sep 2026,,
-HS-04,Waste on the bridge walkway,TO VERIFY,TO VERIFY,dumping,2026-09-29,,Plastic and cloth waste left along the bridge; waste thrown into the river from here,Team field visit 29 Sep 2026,,
-HS-05,Water sample point below the weir,TO VERIFY,TO VERIFY,weir,2026-09-29,,"Bottled samples were turbid and yellowish-grey, with suspended particles",Team field visit 29 Sep 2026,,
+ID,Name,Latitude,Longitude,Type,Date Seen,Photo Link,Description,Source,Verified By,Last Verified,Prabhag,Ward Office,Assembly Constituency,Lok Sabha Constituency
+HS-01,Old Keshavnagar–Kharadi Bridge weir (bandhara),18.546297,73.951499,weir,2026-09-29,,Thick white froth below the weir across most of the river width; turbid grey water,Team field visit 29 Sep 2026 (GPS Map Camera photo),Pranav Patil,2026-09-29,4 / 15,Nagar Road–Vadgaonsheri / Hadapsar–Mundhwa (confirm),Vadgaon Sheri / Hadapsar (confirm),Pune / Shirur
+HS-02,Sewage outfall pipe near the bridge,TO VERIFY,TO VERIFY,outfall,2026-09-29,,"Concrete outfall pipe discharging foamy, greenish wastewater into the river; algae on the pipes below",Team field visit 29 Sep 2026,,,,,,
+HS-03,Garbage dumped on the riverbank beside the bridge,TO VERIFY,TO VERIFY,dumping,2026-09-29,,"Large pile of plastic bags, clothes, wood and debris on the rocky bank",Team field visit 29 Sep 2026,,,,,,
+HS-04,Waste on the bridge walkway,TO VERIFY,TO VERIFY,dumping,2026-09-29,,Plastic and cloth waste left along the bridge; waste thrown into the river from here,Team field visit 29 Sep 2026,,,,,,
+HS-05,Water sample point below the weir,TO VERIFY,TO VERIFY,weir,2026-09-29,,"Bottled samples were turbid and yellowish-grey, with suspended particles",Team field visit 29 Sep 2026,,,,,,
