@@ -22,10 +22,12 @@ The website maps pollution hotspots, shows which authority is responsible for ea
 ```
 docs/          Proposal, meeting notes, reports
 data/          Hotspot register, authority register, sources (CSV)
-web/           Website code (from Week 1)
+web/           Website code (setup from Week 1, design in Week 4, development from Week 5)
 ```
 
 ## Data rules
+
+The team edits the data in the shared Google Sheet: [Water Pollution – Data Registers](https://docs.google.com/spreadsheets/d/1mS0hFPElNAasD1ZlwrTl49pDPwRgBvUZhkPnBJhppiw/edit). The CSV files in `data/` are copies of its three tabs (Hotspots, Authorities, Sources), updated every two weeks or after a field visit.
 
 1. Every hotspot and authority entry must have a source.
 2. Every entry has a "last verified" date. Re-check anything older than 90 days.
