@@ -1,0 +1,131 @@
+/* Water Pollution A Silent Crisis: shared styles.
+   Colours are tokens so Sanskar can restyle in one place. */
+
+:root {
+  --bg: #f7f8f6;
+  --surface: #ffffff;
+  --text: #1d2321;
+  --muted: #5b6662;
+  --line: #d9dedb;
+  --accent: #0f6e7a;        /* river teal */
+  --accent-text: #ffffff;
+  --warn-bg: #fff4dc;
+  --warn-text: #7a4b00;
+  --outfall: #8a3b12;
+  --nalla: #a8662a;
+  --dumping: #6b5d1f;
+  --weir: #2b6fb3;
+  --ward: #0f6e7a;
+  --radius: 10px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121615;
+    --surface: #1b2120;
+    --text: #e6ebe9;
+    --muted: #a3aeaa;
+    --line: #2f3836;
+    --accent: #4fb3bf;
+    --accent-text: #0b1312;
+    --warn-bg: #3a2e12;
+    --warn-text: #f3d48a;
+    --ward: #4fb3bf;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121615; --surface: #1b2120; --text: #e6ebe9; --muted: #a3aeaa; --line: #2f3836;
+  --accent: #4fb3bf; --accent-text: #0b1312; --warn-bg: #3a2e12; --warn-text: #f3d48a; --ward: #4fb3bf;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.55 var(--font);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+a { color: var(--accent); }
+
+/* header */
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  padding: 10px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+}
+.site-title { font-weight: 700; font-size: 1.05rem; color: var(--text); text-decoration: none; }
+.site-title small { display: block; font-weight: 400; font-size: .8rem; color: var(--muted); }
+.site-nav { display: flex; gap: 4px 14px; flex-wrap: wrap; }
+.site-nav a { text-decoration: none; color: var(--muted); padding: 4px 0; }
+.site-nav a[aria-current="page"] { color: var(--accent); font-weight: 600; border-bottom: 2px solid var(--accent); }
+
+/* notice strip under the header */
+.notice {
+  background: var(--warn-bg);
+  color: var(--warn-text);
+  font-size: .88rem;
+  padding: 6px 16px;
+}
+
+/* map page layout */
+.map-layout { flex: 1; display: grid; grid-template-columns: 1fr 380px; min-height: 0; }
+#map { min-height: 60vh; height: 100%; }
+.panel {
+  background: var(--surface);
+  border-left: 1px solid var(--line);
+  padding: 16px;
+  overflow-y: auto;
+  max-height: calc(100vh - 110px);
+}
+@media (max-width: 800px) {
+  .map-layout { grid-template-columns: 1fr; }
+  #map { height: 60vh; }
+  .panel { border-left: 0; border-top: 1px solid var(--line); max-height: none; }
+}
+.panel h2 { margin: 0 0 4px; font-size: 1.2rem; }
+.panel h3 { margin: 18px 0 6px; font-size: 1rem; }
+.meta { color: var(--muted); font-size: .88rem; }
+.tag {
+  display: inline-block; font-size: .75rem; padding: 1px 8px; border-radius: 999px;
+  background: var(--warn-bg); color: var(--warn-text); margin-left: 4px; vertical-align: middle;
+}
+.placeholder {
+  border: 1px dashed var(--line); border-radius: var(--radius);
+  padding: 10px 12px; color: var(--muted); font-size: .9rem; margin-top: 10px;
+}
+.list { list-style: none; padding: 0; margin: 0; }
+.list li { padding: 8px 0; border-bottom: 1px solid var(--line); }
+.list li:last-child { border-bottom: 0; }
+
+/* legend */
+.legend { background: var(--surface); color: var(--text); padding: 8px 10px; border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.25); font-size: .82rem; line-height: 1.7; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+
+/* text pages */
+.page { flex: 1; width: 100%; max-width: 760px; margin: 0 auto; padding: 24px 16px 40px; }
+.page h1 { font-size: 1.6rem; line-height: 1.25; margin: 0 0 4px; }
+.page h2 { font-size: 1.15rem; margin-top: 28px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; margin: 14px 0; }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.table-wrap { overflow-x: auto; }
+
+/* footer */
+.site-footer {
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: .85rem;
+  padding: 12px 16px;
+  display: flex; flex-wrap: wrap; gap: 6px 16px;
+}
+.site-footer a { color: var(--muted); }

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>River Hotspot Map</title>
+<meta name="description" content="Map of pollution hotspots on the Mula-Mutha river near Kharadi and Mundhwa, Pune, and who is responsible for each.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3C11 11 7 15.5 7 20a9 9 0 0 0 18 0c0-4.5-4-9-9-17z' fill='%230f6e7a'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-title" href="index.html">Water Pollution: A Silent Crisis<small>Mula-Mutha river, Keshavnagar–Kharadi to Mundhwa, Pune</small></a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="index.html" aria-current="page">Map</a>
+    <a href="projects.html">Projects</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="disclaimer.html">Disclaimer</a>
+  </nav>
+</header>
+<div class="notice">Student project, not an official PMC or MPCB website. Anything marked <strong>to verify</strong> or <strong>to confirm</strong> has not been checked with the office yet. <a href="disclaimer.html">Read the disclaimer</a>.</div>
+<main class="map-layout">
+  <div id="map" role="region" aria-label="Map of pollution hotspots"></div>
+  <aside class="panel" id="panel" aria-live="polite">
+    <p>Loading hotspots…</p>
+  </aside>
+</main>
+<p class="meta" id="count" style="padding:4px 16px;margin:0"></p>
+<footer class="site-footer">
+  <span>Water Pollution: A Silent Crisis · student project 2026–27</span>
+  <a href="privacy.html">Privacy</a>
+  <a href="disclaimer.html">Disclaimer</a>
+  <a href="https://github.com/Pranav2188/water-pollution-silent-crisis" target="_blank" rel="noopener noreferrer">Code and data</a>
+  <span>Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</span>
+</footer>
+<script src="vendor/leaflet-1.9.4/leaflet.js"></script>
+<script type="module" src="js/map.js"></script>
+</body>
+</html>

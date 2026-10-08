@@ -1,0 +1,189 @@
+[
+ {
+  "problem_type": "Sewage outfall or nalla",
+  "what_you_see": "Pipe or open drain pouring grey, black or foamy water into the river",
+  "first_contact": "PMC Drainage Department, via the ward office",
+  "how_to_reach": "PMC CARE: WhatsApp 96899 00002, toll-free 1800-1030-222, X @PMCPune",
+  "also_inform": "Prabhag corporators. MPCB SRO Pune-I if the pipe comes from a treatment plant or factory",
+  "escalate": [
+   "Ward office Assistant Commissioner after the token deadline passes",
+   "Municipal Commissioner, copying the corporators",
+   "RTI to the Drainage Department"
+  ],
+  "what_to_include": "Hotspot ID, GPS photo, exact location, date and time, PMC token number",
+  "why_this_office": "PMC runs the city's sewers and sewage treatment plants",
+  "source_ids": [
+   "SRC-13",
+   "SRC-24"
+  ],
+  "status": "Draft (confirm)",
+  "confirmed": "",
+  "template": "Sewage is flowing into the Mula-Mutha river from a [pipe / open drain] at [landmark] ([latitude, longitude]), Prabhag [number], [ward office name] ward office area. I saw it on [date] at [time]. The water is [grey / black / foamy] and [smell]. Photo attached. Please send the Drainage Department to inspect the line and stop the discharge, and share the action taken. Hotspot ID: [HS-xx]. [Your name], resident of [area]."
+ },
+ {
+  "problem_type": "Treatment plant not working",
+  "what_you_see": "Untreated or smelly water leaving a sewage treatment plant outlet",
+  "first_contact": "MPCB Sub-Regional Office Pune-I",
+  "how_to_reach": "sropune1@mpcb.gov.in, 020-25811694, MPCB E-Catalyst app, X @mpcb_official",
+  "also_inform": "PMC Drainage Department (JICA project cell for new plants)",
+  "escalate": [
+   "MPCB Regional Office Pune (ropune@mpcb.gov.in)",
+   "RTI to MPCB for the plant's test reports"
+  ],
+  "what_to_include": "Plant name, photo of the outlet, date and time, smell and colour",
+  "why_this_office": "MPCB checks that treatment plants meet discharge standards",
+  "source_ids": [
+   "SRC-06",
+   "SRC-19",
+   "SRC-13"
+  ],
+  "status": "Draft (confirm)",
+  "confirmed": "",
+  "template": "Water leaving the [plant name] sewage treatment plant outlet at [landmark] appears untreated. On [date] at [time] it was [colour] with a [smell] smell. Photo attached. Please inspect whether the plant is meeting MPCB discharge standards and share the result. Location: [latitude, longitude]. Hotspot ID: [HS-xx]. [Your name], resident of [area]."
+ },
+ {
+  "problem_type": "Garbage dumping",
+  "what_you_see": "Plastic, cloth or household waste on the bank, or thrown from the bridge",
+  "first_contact": "PMC Solid Waste Management, via the ward office",
+  "how_to_reach": "PMC CARE: WhatsApp 96899 00002, toll-free 1800-1030-222, X @PMCPune",
+  "also_inform": "Prabhag corporators",
+  "escalate": [
+   "Ward office Assistant Commissioner",
+   "Raise it at the ward's mohalla committee meeting"
+  ],
+  "what_to_include": "Hotspot ID, photo, location, how large the pile is, whether it is new",
+  "why_this_office": "PMC collects and clears solid waste in the city",
+  "source_ids": [
+   "SRC-24",
+   "SRC-17"
+  ],
+  "status": "Draft (confirm)",
+  "confirmed": "",
+  "template": "Garbage is being dumped on the Mula-Mutha riverbank at [landmark] ([latitude, longitude]), Prabhag [number], [ward office name] ward office area. The pile is [small / medium / large] and includes [plastic / cloth / household waste]. Seen on [date] at [time]; photo attached. Please clear the waste and arrange to stop further dumping at this spot. Hotspot ID: [HS-xx]. [Your name], resident of [area]."
+ },
+ {
+  "problem_type": "Construction debris in riverbed",
+  "what_you_see": "Rubble, soil or building waste dumped into the river or a nalla",
+  "first_contact": "PMC ward office (construction waste)",
+  "how_to_reach": "PMC CARE, plus a written complaint at the ward office",
+  "also_inform": "PMC Building Permission Department, prabhag corporators, MPCB SRO Pune-I",
+  "escalate": [
+   "Municipal Commissioner",
+   "RTI asking which project the debris came from and what action was taken"
+  ],
+  "what_to_include": "Photos, location, vehicle or site name if seen from a safe distance, date and time",
+  "why_this_office": "Keshavnagar residents reported builders dumping debris here in July 2026",
+  "source_ids": [
+   "SRC-18",
+   "SRC-24"
+  ],
+  "status": "Draft (confirm)",
+  "confirmed": "",
+  "template": "Construction debris has been dumped into the [Mula-Mutha riverbed / nalla] at [landmark] ([latitude, longitude]), Prabhag [number]. Seen on [date] at [time]; photos attached. [If seen from a safe distance: vehicle or site details.] Please inspect, remove the debris, and take action under the construction and demolition waste rules. Please also share which project the debris came from. Hotspot ID: [HS-xx]. [Your name], resident of [area]."
+ },
+ {
+  "problem_type": "Froth or foam at the weir",
+  "what_you_see": "Thick white foam below the bandhara",
+  "first_contact": "MPCB Sub-Regional Office Pune-I",
+  "how_to_reach": "sropune1@mpcb.gov.in, 020-25811694, MPCB E-Catalyst app",
+  "also_inform": "PMC Drainage Department",
+  "escalate": [
+   "MPCB Regional Office Pune",
+   "RTI for water-quality readings at Mundhwa Bridge (station 219"
+  ],
+  "what_to_include": "Photo or short video, date and time, how far the foam spreads",
+  "why_this_office": "Foam usually comes from detergents in untreated sewage; MPCB monitors river water quality",
+  "source_ids": [
+   "SRC-06",
+   "SRC-05"
+  ],
+  "status": "Draft (confirm)",
+  "confirmed": "",
+  "template": "Thick white foam has formed on the Mula-Mutha river below the weir at the Old Keshavnagar–Kharadi bridge ([latitude, longitude]). On [date] at [time] it covered about [extent]. Photo or video attached. Please test the water at this point and identify the source of the discharge causing the foam. Hotspot ID: [HS-xx]. [Your name], resident of [area]."
+ },
+ {
+  "problem_type": "Dead fish",
+  "what_you_see": "Dead fish floating or washed up on the bank",
+  "first_contact": "MPCB Sub-Regional Office Pune-I, the same day",
+  "how_to_reach": "020-25811694, sropune1@mpcb.gov.in, plus PMC CARE",
+  "also_inform": "Jeevitnadi (NGO), local media if large",
+  "escalate": [
+   "MPCB Regional Office Pune. The NGT took up a similar case on its own (OA 214/202"
+  ],
+  "what_to_include": "Photos, rough count, location, date and time, colour and smell of the water",
+  "why_this_office": "A fish kill points to sudden pollution; MPCB investigates the source",
+  "source_ids": [
+   "SRC-06",
+   "SRC-20"
+  ],
+  "status": "Draft (confirm)",
+  "confirmed": "",
+  "template": "URGENT: Dead fish are floating in the Mula-Mutha river at [landmark] ([latitude, longitude]). I counted about [number] on [date] at [time]. The water is [colour] with a [smell] smell. Photos attached. Please collect water samples today and investigate the source. Hotspot ID: [HS-xx]. [Your name], resident of [area]."
+ },
+ {
+  "problem_type": "Water hyacinth or weeds",
+  "what_you_see": "Green weed covering the water and blocking the flow",
+  "first_contact": "Hyacinth in the river: PMC via PMC CARE, tagging the ward office health inspector. Hyacinth in the Baby Canal: Khadakwasla Irrigation Division",
+  "how_to_reach": "PMC CARE: WhatsApp 96899 00002, toll-free 1800-1030-222, X @PMCPune. Baby Canal: Khadakwasla Irrigation Division office (address to confirm)",
+  "also_inform": "Prabhag corporators. PMC says the weed drifts down from Pimpri Chinchwad (PCMC) and Khadki Cantonment areas upstream, so copy those bodies if it keeps coming back. For the Baby Canal, copy the PMC Environment Department",
+  "escalate": [
+   "PMC Environment Department (holds the hyacinth removal contract)",
+   "PMC Assistant Health Officer, vector-borne disease control (mosquitoes)",
+   "Municipal Commissioner, copying the corporators",
+   "RTI to the Environment Department for the contract and work order"
+  ],
+  "what_to_include": "Photos, how much of the river is covered, location",
+  "why_this_office": "PMC removes hyacinth from the river: its Environment Department holds the removal contracts (Feb 2026) and its Health Department spots the weed and sprays for mosquitoes. The Irrigation Division controls only the Baby Canal. PMC blames upstream growth in PCMC and Khadki Cantonment areas (Mar 2026). Full evidence: Research Log RES-03",
+  "source_ids": [
+   "SRC-37",
+   "SRC-25",
+   "SRC-27",
+   "SRC-21",
+   "SRC-24"
+  ],
+  "status": "Changed after check",
+  "confirmed": "Pranav Patil (doc check), 2026-10-09: corrected after no source was found for the Irrigation Department, then rewritten from desk research RES-03. Ward office still to confirm the contract holder and officer",
+  "template": "Water hyacinth is covering the Mula-Mutha river at [landmark] ([latitude, longitude]), Prabhag [number]. About [extent] of the river is covered and the flow is blocked. Seen on [date]; photo attached. Please arrange for the weed to be removed, or tell me which department is responsible for this stretch. [Your name], resident of [area]."
+ },
+ {
+  "problem_type": "Mosquito breeding",
+  "what_you_see": "Swarms of mosquitoes near still water by the river",
+  "first_contact": "PMC Health Department (insect control)",
+  "how_to_reach": "PMC CARE, X @PMCPune",
+  "also_inform": "Prabhag corporators",
+  "escalate": [
+   "Ward office Assistant Commissioner"
+  ],
+  "what_to_include": "Location, date and time, photo or video of swarms",
+  "why_this_office": "PMC carries out mosquito control and has sprayed this stretch by drone",
+  "source_ids": [
+   "SRC-22",
+   "SRC-23",
+   "SRC-24"
+  ],
+  "status": "Draft (confirm)",
+  "confirmed": "",
+  "template": "Large numbers of mosquitoes are breeding near still water by the Mula-Mutha river at [landmark] ([latitude, longitude]), Prabhag [number]. Seen on [date] at [time]; photo or video attached. Please arrange mosquito control at this spot. [Your name], resident of [area]."
+ },
+ {
+  "problem_type": "Delay in sewage treatment plant project",
+  "what_you_see": "A plant past its announced date, or a sewer line not connected",
+  "first_contact": "PMC JICA project cell (Drainage Department)",
+  "how_to_reach": "Letter to the Superintending Engineer, JICA project, PMC Head Office, Shivajinagar",
+  "also_inform": "MLA for the area",
+  "escalate": [
+   "CPGRAMS grievance to the National River Conservation Directorate",
+   "RTI for project status and dates"
+  ],
+  "what_to_include": "Project name, the date that was promised and its source, current state seen on site",
+  "why_this_office": "PMC is the implementing agency for the JICA-funded project",
+  "source_ids": [
+   "SRC-01",
+   "SRC-16",
+   "SRC-02"
+  ],
+  "status": "Draft (confirm)",
+  "confirmed": "",
+  "template": "To the Superintending Engineer, JICA Project (PARMM), Pune Municipal Corporation. The [plant name] sewage treatment plant was announced to start by [promised date] ([source]). On [date] we observed [what was seen, e.g. sewage still entering the river at nearby outfall HS-xx]. Please share the plant's current status, the revised completion date, and when the sewer lines serving [area] will be connected. [Your name], resident of [area]."
+ }
+]
