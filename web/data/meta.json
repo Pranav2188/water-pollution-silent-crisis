@@ -1,0 +1,11 @@
+{
+ "exported_on": "2026-10-09",
+ "counts": {
+  "hotspots_published": 1,
+  "authorities": 19,
+  "problem_types": 9,
+  "projects": 6,
+  "sources": 46
+ },
+ "note": "Generated from the team's Google Sheet by tools/export_data.py. Do not edit by hand."
+}

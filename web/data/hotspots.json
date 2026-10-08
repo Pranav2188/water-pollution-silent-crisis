@@ -1,0 +1,47 @@
+[
+ {
+  "id": "HS-01",
+  "name": "Old Keshavnagar–Kharadi Bridge weir (bandhara)",
+  "lat": 18.546297,
+  "lng": 73.951499,
+  "type": "weir",
+  "problem_type": "Froth or foam at the weir",
+  "date_seen": "2026-09-29",
+  "photo_url": null,
+  "description": "Thick white froth below the weir across most of the river width; turbid grey water",
+  "source": "Team field visit 29 Sep 2026 (GPS Map Camera photo)",
+  "last_verified": "2026-09-29",
+  "prabhags": [
+   4,
+   15
+  ],
+  "ward_offices": [
+   "Nagar Road–Vadgaonsheri",
+   "Hadapsar–Mundhwa"
+  ],
+  "assembly": [
+   "Vadgaon Sheri",
+   "Hadapsar"
+  ],
+  "lok_sabha": [
+   "Pune",
+   "Shirur"
+  ],
+  "to_confirm": [
+   "ward_offices",
+   "assembly"
+  ],
+  "authority_ids": [
+   "AU-02",
+   "AU-03",
+   "AU-08",
+   "AU-12",
+   "AU-14",
+   "AU-15",
+   "AU-16",
+   "AU-17"
+  ],
+  "project_ids": [],
+  "project_link": "To confirm"
+ }
+]

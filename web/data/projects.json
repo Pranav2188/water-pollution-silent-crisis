@@ -1,0 +1,241 @@
+[
+ {
+  "id": "PRJ-01",
+  "name": "Mundhwa sewage plant (new, JICA project)",
+  "capacity_mld": 20,
+  "capacity_text": "20",
+  "type": "New plant",
+  "scheme": "PARMM / JICA loan under the National River Conservation Plan (Centre 85%, PMC 15%)",
+  "original_deadline": "January 2022 (whole project)",
+  "current_target": "December 2026 (whole project); Mundhwa was due to be fully running by June 2026",
+  "label": "Announced (not confirmed)",
+  "status_text": "Reported running. PMC said 4 new plants totalling 81 MLD are operational. In April, the four due by June were Warje, Wadgaon, Mundhwa and Hadapsar, which add up to exactly 81 MLD (28 + 26 + 20 + 7)",
+  "status_date": "2026-08-12",
+  "source_ids": [
+   "SRC-02",
+   "SRC-12",
+   "SRC-03"
+  ],
+  "confirmed_by": "",
+  "confirmed_date": null,
+  "dates": [
+   {
+    "reported_on": "2016-01-13",
+    "promised": "2022-01",
+    "text": "Whole Mula-Mutha (JICA) project, including the new Mundhwa plant, to be completed by January 2022",
+    "source_id": "SRC-01",
+    "kind": "Original deadline",
+    "notes": "Loan agreement signed with JICA"
+   },
+   {
+    "reported_on": "2026-01-28",
+    "promised": null,
+    "text": "Mundhwa plant \"almost complete\"; dry runs done, wet testing with sewage to begin shortly",
+    "source_id": "SRC-03",
+    "kind": "Status report",
+    "notes": ""
+   },
+   {
+    "reported_on": "2026-04-14",
+    "promised": "2026-06",
+    "text": "Mundhwa among four plants to be fully operational by June 2026",
+    "source_id": "SRC-12",
+    "kind": "Revised target",
+    "notes": ""
+   },
+   {
+    "reported_on": "2026-04-14",
+    "promised": "2026-12",
+    "text": "Whole project deadline moved from March 2026 to December 2026",
+    "source_id": "SRC-16",
+    "kind": "Revised target",
+    "notes": "Applies to the whole project, not only Mundhwa"
+   },
+   {
+    "reported_on": "2026-08-12",
+    "promised": null,
+    "text": "PMC says four new plants (81 MLD) are operational",
+    "source_id": "SRC-02",
+    "kind": "Status report",
+    "notes": "Mundhwa not named; inferred from the totals (28 + 26 + 20 + 7 = 81 MLD). Confirm by RTI-02"
+   }
+  ]
+ },
+ {
+  "id": "PRJ-02",
+  "name": "Kharadi sewage plant (new, JICA project)",
+  "capacity_mld": 30,
+  "capacity_text": "30",
+  "type": "New plant",
+  "scheme": "PARMM / JICA loan under the National River Conservation Plan (Centre 85%, PMC 15%)",
+  "original_deadline": "January 2022 (whole project)",
+  "current_target": "December 2026",
+  "label": "Announced (not confirmed)",
+  "status_text": "Not reported running. Trial runs were expected by March 2026 (January report), then 'operational by July' (April report). In August PMC said 5 more plants would start by December 2026",
+  "status_date": "2026-08-12",
+  "source_ids": [
+   "SRC-03",
+   "SRC-12",
+   "SRC-02",
+   "SRC-16"
+  ],
+  "confirmed_by": "",
+  "confirmed_date": null,
+  "dates": [
+   {
+    "reported_on": "2016-01-13",
+    "promised": "2022-01",
+    "text": "Whole Mula-Mutha (JICA) project, including the Kharadi plant, to be completed by January 2022",
+    "source_id": "SRC-01",
+    "kind": "Original deadline",
+    "notes": "Loan agreement signed with JICA"
+   },
+   {
+    "reported_on": "2026-01-28",
+    "promised": "2026-03",
+    "text": "Kharadi trial operations to begin within the next two months",
+    "source_id": "SRC-03",
+    "kind": "Revised target",
+    "notes": "\"Within two months\" of 28 Jan 2026"
+   },
+   {
+    "reported_on": "2026-04-14",
+    "promised": "2026-07",
+    "text": "Kharadi expected to start operations by the end of July 2026",
+    "source_id": "SRC-16",
+    "kind": "Revised target",
+    "notes": "Pune Pulse (SRC-12) on the same day said \"by July\""
+   },
+   {
+    "reported_on": "2026-04-14",
+    "promised": "2026-12",
+    "text": "Whole project deadline moved from March 2026 to December 2026",
+    "source_id": "SRC-16",
+    "kind": "Revised target",
+    "notes": "Applies to the whole project"
+   },
+   {
+    "reported_on": "2026-08-12",
+    "promised": "2026-12",
+    "text": "Five more plants (290 MLD) to be commissioned by December 2026",
+    "source_id": "SRC-02",
+    "kind": "Revised target",
+    "notes": "Kharadi not named; inferred to be among the five. Confirm by RTI-02"
+   }
+  ]
+ },
+ {
+  "id": "PRJ-03",
+  "name": "Keshavnagar sewage plant (PMC-funded)",
+  "capacity_mld": 12,
+  "capacity_text": "12",
+  "type": "New plant",
+  "scheme": "PMC's own budget",
+  "original_deadline": "Not stated",
+  "current_target": "September 2026",
+  "label": "Announced (not confirmed)",
+  "status_text": "Listed as \"Proposed – work order issued\" in the state's March 2026 progress report to the NGT",
+  "status_date": "March 2026 report",
+  "source_ids": [
+   "SRC-13",
+   "SRC-11"
+  ],
+  "confirmed_by": "",
+  "confirmed_date": null,
+  "dates": [
+   {
+    "reported_on": "2023-06-22",
+    "promised": null,
+    "text": "PMC to build a new plant at Keshavnagar from its own budget",
+    "source_id": "SRC-11",
+    "kind": "Announcement",
+    "notes": "No date given"
+   },
+   {
+    "reported_on": "2026-03",
+    "promised": "2026-09",
+    "text": "Keshavnagar 12 MLD: \"Proposed – work order issued\", target September 2026",
+    "source_id": "SRC-13",
+    "kind": "Official target",
+    "notes": "State's monthly progress report to the NGT, March 2026. Target has passed with no report of completion"
+   }
+  ]
+ },
+ {
+  "id": "PRJ-04",
+  "name": "Old Mundhwa sewage plant (existing)",
+  "capacity_mld": 45,
+  "capacity_text": "45",
+  "type": "Existing plant",
+  "scheme": "PMC",
+  "original_deadline": "Not applicable",
+  "current_target": "Not applicable",
+  "label": "Official report",
+  "status_text": "Running at 45 MLD but rated 'Non-Comply': treated water does not meet discharge standards",
+  "status_date": "March 2026 report",
+  "source_ids": [
+   "SRC-13",
+   "SRC-04"
+  ],
+  "confirmed_by": "",
+  "confirmed_date": null,
+  "dates": []
+ },
+ {
+  "id": "PRJ-05",
+  "name": "Old Kharadi sewage plant (existing)",
+  "capacity_mld": 40,
+  "capacity_text": "40",
+  "type": "Existing plant",
+  "scheme": "PMC",
+  "original_deadline": "Not applicable",
+  "current_target": "Not applicable",
+  "label": "Official report",
+  "status_text": "Running at 40 MLD, rated 'Comply'",
+  "status_date": "March 2026 report",
+  "source_ids": [
+   "SRC-13",
+   "SRC-04"
+  ],
+  "confirmed_by": "",
+  "confirmed_date": null,
+  "dates": []
+ },
+ {
+  "id": "PRJ-06",
+  "name": "Upgrade of six old sewage plants (AMRUT 2.0)",
+  "capacity_mld": null,
+  "capacity_text": "City-wide: 477 to 566 MLD",
+  "type": "Upgrade",
+  "scheme": "AMRUT 2.0, ₹842.85 crore (Centre, State, PMC and private partner)",
+  "original_deadline": "Not stated",
+  "current_target": "Not stated",
+  "label": "Conflicting reports",
+  "status_text": "Tenders invited; three bids received and documents scrutinised. Contract not yet awarded",
+  "status_date": "2025-09-23",
+  "source_ids": [
+   "SRC-14",
+   "SRC-15"
+  ],
+  "confirmed_by": "",
+  "confirmed_date": null,
+  "dates": [
+   {
+    "reported_on": "2023-08-25",
+    "promised": null,
+    "text": "Upgrade proposals for six old plants sent for approval; about two more years expected before the work cuts pollution",
+    "source_id": "SRC-15",
+    "kind": "Announcement",
+    "notes": "That list of six did not include Mundhwa or Kharadi"
+   },
+   {
+    "reported_on": "2025-09-23",
+    "promised": null,
+    "text": "AMRUT 2.0 upgrade (₹842.85 crore): tenders invited, three bids received; no completion date given",
+    "source_id": "SRC-14",
+    "kind": "Status report",
+    "notes": "Mundhwa and Kharadi named as plants to be modernised"
+   }
+  ]
+ }
+]
