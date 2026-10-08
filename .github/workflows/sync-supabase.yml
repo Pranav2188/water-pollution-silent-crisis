@@ -1,0 +1,31 @@
+name: Sync Supabase
+
+# Copies data/*.csv into the Supabase tables (the sheet always wins).
+# Runs daily, which also stops the free project pausing after 7 idle days,
+# on every push to main that changes data/, and by hand from the Actions tab.
+# Does nothing until the SUPABASE_URL and SUPABASE_SERVICE_KEY secrets exist.
+
+on:
+  schedule:
+    - cron: "30 0 * * *"   # 06:00 IST
+  push:
+    branches: [main]
+    paths: ["data/**", "tools/export_data.py"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Sync
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python3 tools/export_data.py --check && python3 tools/export_data.py --supabase
