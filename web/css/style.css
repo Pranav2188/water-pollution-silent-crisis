@@ -101,6 +101,13 @@ a { color: var(--accent); }
   border: 1px dashed var(--line); border-radius: var(--radius);
   padding: 10px 12px; color: var(--muted); font-size: .9rem; margin-top: 10px;
 }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 4px; }
+.btn {
+  display: inline-block; padding: 8px 14px; border-radius: 8px; font-weight: 600; font-size: .92rem;
+  background: var(--accent); color: var(--accent-text); text-decoration: none; border: 1px solid var(--accent);
+}
+.btn:hover, .btn:focus-visible { filter: brightness(1.08); }
+.btn-quiet { background: transparent; color: var(--accent); }
 .list { list-style: none; padding: 0; margin: 0; }
 .list li { padding: 8px 0; border-bottom: 1px solid var(--line); }
 .list li:last-child { border-bottom: 0; }
