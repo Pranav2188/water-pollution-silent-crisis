@@ -69,7 +69,7 @@ A hotspot is published only when it has numeric latitude and longitude, a valid 
 }
 ```
 
-- `problem_type` is the Routing Rules row used by default for this kind of hotspot (outfall and nalla → "Sewage outfall or nalla", dumping → "Garbage dumping", weir → "Froth or foam at the weir"). The user can pick another type in the complaint helper.
+- `problem_type` is the Routing Rules row for this hotspot. It comes from the sheet's "Problem Type (if not default)" column when that is filled in (for example "Construction debris in riverbed"); otherwise the default for the type is used (outfall and nalla → "Sewage outfall or nalla", dumping → "Garbage dumping", weir → "Froth or foam at the weir"). The user can pick another type in the complaint helper.
 - `to_confirm` lists fields the sheet marks "(confirm)". The website shows these with a "to confirm" label.
 - `authority_ids` are worked out by the script from the prabhags, ward offices and constituencies.
 
