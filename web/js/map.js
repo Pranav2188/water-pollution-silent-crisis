@@ -9,6 +9,15 @@ const css = (name) => getComputedStyle(document.documentElement).getPropertyValu
 
 const panel = document.getElementById("panel");
 
+// Google Maps URLs (no API key needed). Nothing loads from Google until the
+// visitor taps the link, so the privacy page's "no outside scripts" still holds.
+function googleMapsUrl(h, kind) {
+  const point = `${h.lat},${h.lng}`;
+  return kind === "dir"
+    ? `https://www.google.com/maps/dir/?api=1&destination=${point}`
+    : `https://www.google.com/maps/search/?api=1&query=${point}`;
+}
+
 function showHotspot(h, data) {
   const unsure = (field) => (h.to_confirm.includes(field) ? '<span class="tag">to confirm</span>' : "");
   const authorities = h.authority_ids.map((id) => data.authorityById[id]).filter(Boolean);
@@ -20,6 +29,12 @@ function showHotspot(h, data) {
     <p>${esc(h.description)}</p>
     <p class="meta">Seen ${esc(niceDate(h.date_seen))} · Source: ${esc(h.source)} · Last checked ${esc(niceDate(h.last_verified))}</p>
     ${h.photo_url ? `<p><a href="${esc(h.photo_url)}" target="_blank" rel="noopener noreferrer">View photo</a></p>` : ""}
+
+    <div class="actions">
+      <a class="btn" href="${googleMapsUrl(h, "search")}" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
+      <a class="btn btn-quiet" href="${googleMapsUrl(h, "dir")}" target="_blank" rel="noopener noreferrer">Get directions</a>
+    </div>
+    <p class="meta">Opens Google Maps in a new tab. View the spot from the bridge or road only; never enter the riverbed.</p>
 
     <h3>Where it is</h3>
     <ul class="list">
