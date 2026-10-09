@@ -8,9 +8,244 @@
   "problem_type": "Froth or foam at the weir",
   "date_seen": "2026-09-29",
   "photo_url": null,
-  "description": "Thick white froth below the weir across most of the river width; turbid grey water",
-  "source": "Team field visit 29 Sep 2026 (GPS Map Camera photo)",
-  "last_verified": "2026-09-29",
+  "description": "Thick white froth below the weir across most of the river width; turbid grey water. Froth still across the weir on 9 Oct 2026 (seen from the Keshavnagar bank, 18.544415, 73.951621)",
+  "source": "Team field visits 29 Sep 2026 and 9 Oct 2026 (GPS Map Camera photos)",
+  "last_verified": "2026-10-09",
+  "prabhags": [
+   4,
+   15
+  ],
+  "ward_offices": [
+   "Nagar Road–Vadgaonsheri",
+   "Hadapsar–Mundhwa"
+  ],
+  "assembly": [
+   "Vadgaon Sheri",
+   "Hadapsar"
+  ],
+  "lok_sabha": [
+   "Pune",
+   "Shirur"
+  ],
+  "to_confirm": [
+   "ward_offices",
+   "assembly"
+  ],
+  "authority_ids": [
+   "AU-02",
+   "AU-03",
+   "AU-08",
+   "AU-12",
+   "AU-14",
+   "AU-15",
+   "AU-16",
+   "AU-17"
+  ],
+  "project_ids": [],
+  "project_link": "To confirm"
+ },
+ {
+  "id": "HS-02",
+  "name": "Sewage outfall near the old bridge (Kharadi bank)",
+  "lat": 18.546314,
+  "lng": 73.950716,
+  "type": "outfall",
+  "problem_type": "Sewage outfall or nalla",
+  "date_seen": "2026-09-29",
+  "photo_url": null,
+  "description": "Concrete culvert under a tree on the Kharadi (north) bank discharging a strong flow of greenish, foamy wastewater towards the river; algae on the pipes below. About 80 m upstream of the weir (HS-01) and about 150 m from the old Kharadi sewage plant (PRJ-05)",
+  "source": "Team field visits 29 Sep 2026 and 9 Oct 2026 (GPS Map Camera photo, 9 Oct 11:17)",
+  "last_verified": "2026-10-09",
+  "prabhags": [
+   4
+  ],
+  "ward_offices": [
+   "Nagar Road–Vadgaonsheri"
+  ],
+  "assembly": [
+   "Vadgaon Sheri"
+  ],
+  "lok_sabha": [
+   "Pune"
+  ],
+  "to_confirm": [
+   "assembly"
+  ],
+  "authority_ids": [
+   "AU-02",
+   "AU-08",
+   "AU-14",
+   "AU-16"
+  ],
+  "project_ids": [],
+  "project_link": "To confirm"
+ },
+ {
+  "id": "HS-03",
+  "name": "Garbage dumped on the riverbank beside the old bridge",
+  "lat": 18.546442,
+  "lng": 73.951494,
+  "type": "dumping",
+  "problem_type": "Garbage dumping",
+  "date_seen": "2026-09-29",
+  "photo_url": null,
+  "description": "Large spread of plastic bags, clothes, sacks, wood and dark burnt-looking fibrous waste on the rocky Kharadi bank at the old bridge; still there on 9 Oct 2026",
+  "source": "Team field visits 29 Sep 2026 and 9 Oct 2026 (GPS Map Camera photo, 9 Oct 11:17)",
+  "last_verified": "2026-10-09",
+  "prabhags": [
+   4
+  ],
+  "ward_offices": [
+   "Nagar Road–Vadgaonsheri"
+  ],
+  "assembly": [
+   "Vadgaon Sheri"
+  ],
+  "lok_sabha": [
+   "Pune"
+  ],
+  "to_confirm": [
+   "assembly"
+  ],
+  "authority_ids": [
+   "AU-02",
+   "AU-08",
+   "AU-14",
+   "AU-16"
+  ],
+  "project_ids": [],
+  "project_link": "Not a sewage problem"
+ },
+ {
+  "id": "HS-06",
+  "name": "Garbage dump on Grant Road (EON Free Zone side)",
+  "lat": 18.547827,
+  "lng": 73.94919,
+  "type": "dumping",
+  "problem_type": "Garbage dumping",
+  "date_seen": "2026-10-09",
+  "photo_url": null,
+  "description": "Large mixed-waste dump on open ground beside Grant Road: sacks, clothes, plastic, thermocol and an old office chair. More plastic waste along the dirt track by the fence towards the river (18.547723, 73.949218)",
+  "source": "Team field visit 9 Oct 2026 (GPS Map Camera photos, 11:15–11:16)",
+  "last_verified": "2026-10-09",
+  "prabhags": [
+   4
+  ],
+  "ward_offices": [
+   "Nagar Road–Vadgaonsheri"
+  ],
+  "assembly": [
+   "Vadgaon Sheri"
+  ],
+  "lok_sabha": [
+   "Pune"
+  ],
+  "to_confirm": [
+   "assembly"
+  ],
+  "authority_ids": [
+   "AU-02",
+   "AU-08",
+   "AU-14",
+   "AU-16"
+  ],
+  "project_ids": [],
+  "project_link": "Not a sewage problem"
+ },
+ {
+  "id": "HS-07",
+  "name": "Open nalla near Grant Road, Kharadi",
+  "lat": 18.547792,
+  "lng": 73.949241,
+  "type": "nalla",
+  "problem_type": "Sewage outfall or nalla",
+  "date_seen": "2026-10-09",
+  "photo_url": null,
+  "description": "Open earth channel carrying dark wastewater from an opening in the road's retaining wall, with plastic and waste along it. Grey water pools around a broken concrete chamber beside it (18.547822, 73.949192). The channel meets the river at 18.547289, 73.949595, where water hyacinth collects",
+  "source": "Team field visit 9 Oct 2026 (GPS Map Camera photos, 11:15–11:16)",
+  "last_verified": "2026-10-09",
+  "prabhags": [
+   4
+  ],
+  "ward_offices": [
+   "Nagar Road–Vadgaonsheri"
+  ],
+  "assembly": [
+   "Vadgaon Sheri"
+  ],
+  "lok_sabha": [
+   "Pune"
+  ],
+  "to_confirm": [
+   "assembly"
+  ],
+  "authority_ids": [
+   "AU-02",
+   "AU-08",
+   "AU-14",
+   "AU-16"
+  ],
+  "project_ids": [],
+  "project_link": "To confirm"
+ },
+ {
+  "id": "HS-08",
+  "name": "Rubble pushed into the river at Keshav Nagar Bridge",
+  "lat": 18.54373,
+  "lng": 73.94429,
+  "type": "dumping",
+  "problem_type": "Construction debris in riverbed",
+  "date_seen": "2026-10-09",
+  "photo_url": null,
+  "description": "Excavator working on a strip of rubble and soil built out into the river beside Keshav Nagar Bridge; more rubble and a concrete pipe on the far bank. Not yet known which project or contractor this is, or whether it is permitted",
+  "source": "Team field visit 9 Oct 2026 (GPS Map Camera photos from the bridge, 11:54–11:55)",
+  "last_verified": "2026-10-09",
+  "prabhags": [
+   4,
+   15
+  ],
+  "ward_offices": [
+   "Nagar Road–Vadgaonsheri",
+   "Hadapsar–Mundhwa"
+  ],
+  "assembly": [
+   "Vadgaon Sheri",
+   "Hadapsar"
+  ],
+  "lok_sabha": [
+   "Pune",
+   "Shirur"
+  ],
+  "to_confirm": [
+   "prabhags",
+   "ward_offices",
+   "assembly"
+  ],
+  "authority_ids": [
+   "AU-02",
+   "AU-03",
+   "AU-08",
+   "AU-12",
+   "AU-14",
+   "AU-15",
+   "AU-16",
+   "AU-17"
+  ],
+  "project_ids": [],
+  "project_link": "Not a sewage problem"
+ },
+ {
+  "id": "HS-09",
+  "name": "Froth line below Keshav Nagar Bridge",
+  "lat": 18.545048,
+  "lng": 73.943934,
+  "type": "weir",
+  "problem_type": "Froth or foam at the weir",
+  "date_seen": "2026-10-09",
+  "photo_url": null,
+  "description": "White froth line across the river just below Keshav Nagar Bridge, where the water drops over a step (weir to confirm). Greenish water with floating plastic and hyacinth along the Kharadi bank (18.543727, 73.944289)",
+  "source": "Team field visit 9 Oct 2026 (GPS Map Camera photos from the bridge, 11:54–11:55)",
+  "last_verified": "2026-10-09",
   "prabhags": [
    4,
    15

@@ -58,6 +58,14 @@
     "source_id": "SRC-02",
     "kind": "Status report",
     "notes": "Mundhwa not named; inferred from the totals (28 + 26 + 20 + 7 = 81 MLD). Confirm by RTI-02"
+   },
+   {
+    "reported_on": "2026-10-09",
+    "promised": null,
+    "text": "Team site visit: plant building with the board \"20 MLD Mundhwa Sewage Treatment Plant\" (PMC), staff on duty, and an on-site water-testing laboratory (benchtop meters, glassware, a burette stand, a wall-mounted water distiller). Some equipment and supplies were still in bubble wrap and cardboard boxes",
+    "source_id": "SRC-47",
+    "kind": "Site visit",
+    "notes": "Staff were busy (working hours) and did not answer questions, so whether the plant is treating sewage, and how much, is still unconfirmed. The packed equipment suggests the lab was set up recently; that is our reading of the photos, not a statement from PMC"
    }
   ]
  },

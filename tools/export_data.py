@@ -278,7 +278,7 @@ def build_hotspots(rows, authorities, project_ids):
             "lat": round(lat, 6),
             "lng": round(lng, 6),
             "type": htype,
-            "problem_type": DEFAULT_PROBLEM[htype],
+            "problem_type": r.get("Problem Type (if not default)") or DEFAULT_PROBLEM[htype],
             "date_seen": iso_date(r.get("Date Seen", "")),
             "photo_url": r.get("Photo Link") or None,
             "description": r.get("Description", ""),
