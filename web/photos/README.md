@@ -18,7 +18,7 @@ File names: `<hotspot or site ID>_<date>_<what it shows>.jpg`
 | HS-03_2026-10-09_bank.jpg | HS-03 (GPS) | 9 Oct 2026 | Pranav Patil & Siddhesh Kondhalkar |
 | HS-06_2026-10-09_dump.jpg | HS-06 Grant Road dump | 9 Oct 2026 | Pranav Patil & Siddhesh Kondhalkar |
 | HS-07_2026-10-09_nalla.jpg, _wall-opening.jpg, _mouth.jpg | HS-07 Grant Road nalla | 9 Oct 2026 | Pranav Patil & Siddhesh Kondhalkar |
-| HS-08_2026-10-09_debris.jpg | HS-08 rubble at Keshav Nagar Bridge | 9 Oct 2026 | Field visit 2 |
+| HS-08_2026-10-09_debris.jpg | HS-08 rubble at Keshav Nagar Bridge | 9 Oct 2026 | Pranav Patil & Siddhesh Kondhalkar |
 | HS-09_2026-10-09_froth.jpg, HS-09_2026-10-09_bank.jpg | HS-09 froth below Keshav Nagar Bridge | 9 Oct 2026 | Pranav Patil & Siddhesh Kondhalkar |
 | PRJ-01_2026-10-09_lab.jpg | Laboratory, 20 MLD Mundhwa STP | 9 Oct 2026 | Pranav Patil & Siddhesh Kondhalkar |
 | CS-01_2026-10-09_weir-piers.jpg | Alandi, waste at the old-bridge weir | 9 Oct 2026 | Sanskar Dumbare |
