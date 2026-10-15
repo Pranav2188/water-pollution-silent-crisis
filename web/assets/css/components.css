@@ -1,0 +1,34 @@
+/* Small reusable pieces: meta text, tags, buttons, lists, area filter, language switch. */
+
+.meta { color: var(--muted); font-size: .88rem; }
+.tag {
+  display: inline-block; font-size: .75rem; padding: 1px 8px; border-radius: 999px;
+  background: var(--warn-bg); color: var(--warn-text); margin-left: 4px; vertical-align: middle;
+}
+.placeholder {
+  border: 1px dashed var(--line); border-radius: var(--radius);
+  padding: 10px 12px; color: var(--muted); font-size: .9rem; margin-top: 10px;
+}
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 4px; }
+.btn {
+  display: inline-block; padding: 8px 14px; border-radius: 8px; font-weight: 600; font-size: .92rem;
+  background: var(--accent); color: var(--accent-text); text-decoration: none; border: 1px solid var(--accent);
+}
+.btn:hover, .btn:focus-visible { filter: brightness(1.08); }
+.btn-quiet { background: transparent; color: var(--accent); }
+.list { list-style: none; padding: 0; margin: 0; }
+.list li { padding: 8px 0; border-bottom: 1px solid var(--line); }
+.list li:last-child { border-bottom: 0; }
+
+/* area filter (map page) */
+.area-filter[hidden] { display: none; }
+.area-filter { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 16px; background: var(--surface); border-bottom: 1px solid var(--line); }
+.chip {
+  font: inherit; font-size: .85rem; padding: 4px 12px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: transparent; color: var(--text);
+}
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.chip .count { opacity: .75; margin-left: 4px; }
+
+/* language switch (shown only when more than one language is enabled in js/core/config.js) */
+.lang-switch { margin-left: auto; font: inherit; font-size: .85rem; padding: 2px 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--text); }

@@ -2,6 +2,7 @@
  {
   "id": "HS-01",
   "name": "Old Keshavnagar–Kharadi Bridge weir (bandhara)",
+  "area_id": "AREA-01",
   "lat": 18.546297,
   "lng": 73.951499,
   "type": "weir",
@@ -47,6 +48,7 @@
  {
   "id": "HS-02",
   "name": "Sewage outfall near the old bridge (Kharadi bank)",
+  "area_id": "AREA-01",
   "lat": 18.546314,
   "lng": 73.950716,
   "type": "outfall",
@@ -83,6 +85,7 @@
  {
   "id": "HS-03",
   "name": "Garbage dumped on the riverbank beside the old bridge",
+  "area_id": "AREA-01",
   "lat": 18.546442,
   "lng": 73.951494,
   "type": "dumping",
@@ -119,6 +122,7 @@
  {
   "id": "HS-04",
   "name": "Waste on the bridge walkway",
+  "area_id": "AREA-01",
   "lat": 18.546309,
   "lng": 73.95149,
   "type": "dumping",
@@ -165,6 +169,7 @@
  {
   "id": "HS-05",
   "name": "Water sample point below the weir",
+  "area_id": "AREA-01",
   "lat": 18.54631,
   "lng": 73.951488,
   "type": "weir",
@@ -211,6 +216,7 @@
  {
   "id": "HS-06",
   "name": "Garbage dump on Grant Road (EON Free Zone side)",
+  "area_id": "AREA-01",
   "lat": 18.547827,
   "lng": 73.94919,
   "type": "dumping",
@@ -247,6 +253,7 @@
  {
   "id": "HS-07",
   "name": "Open nalla near Grant Road, Kharadi",
+  "area_id": "AREA-01",
   "lat": 18.547792,
   "lng": 73.949241,
   "type": "nalla",
@@ -283,6 +290,7 @@
  {
   "id": "HS-08",
   "name": "Rubble pushed into the river at Keshav Nagar Bridge",
+  "area_id": "AREA-01",
   "lat": 18.54373,
   "lng": 73.94429,
   "type": "dumping",
@@ -329,6 +337,7 @@
  {
   "id": "HS-09",
   "name": "Froth line below Keshav Nagar Bridge",
+  "area_id": "AREA-01",
   "lat": 18.545048,
   "lng": 73.943934,
   "type": "weir",
@@ -374,6 +383,7 @@
  {
   "id": "HS-10",
   "name": "Floating plastic and garbage along the riverbank near Garware College, Khilarewadi",
+  "area_id": "AREA-02",
   "lat": 18.510474,
   "lng": 73.839966,
   "type": "dumping",
@@ -417,6 +427,7 @@
  {
   "id": "HS-11",
   "name": "Garbage dumped on the bank and in the river at Baba Bhide Bridge",
+  "area_id": "AREA-02",
   "lat": 18.51552,
   "lng": 73.844483,
   "type": "dumping",
@@ -460,6 +471,7 @@
  {
   "id": "HS-12",
   "name": "Pipeline work in the riverbed at Dengale Bridge (Chhatrapati Shahu Setu)",
+  "area_id": "AREA-02",
   "lat": 18.524723,
   "lng": 73.857707,
   "type": "dumping",
@@ -504,6 +516,7 @@
  {
   "id": "HS-13",
   "name": "Garbage on the riverbank at Old Tofkhana, Shivajinagar",
+  "area_id": "AREA-02",
   "lat": 18.525378,
   "lng": 73.857255,
   "type": "dumping",
@@ -541,6 +554,7 @@
  {
   "id": "HS-14",
   "name": "Floating waste caught at the piers of the steel bridge, Shivajinagar",
+  "area_id": "AREA-02",
   "lat": 18.52925,
   "lng": 73.859097,
   "type": "dumping",

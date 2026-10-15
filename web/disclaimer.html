@@ -6,19 +6,19 @@
 <title>Disclaimer</title>
 <meta name="description" content="What this student project is and is not, and how to use the information on it.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3C11 11 7 15.5 7 20a9 9 0 0 0 18 0c0-4.5-4-9-9-17z' fill='%230f6e7a'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
 <header class="site-header">
-  <a class="site-title" href="index.html">Water Pollution: A Silent Crisis<small>Mutha and Mula-Mutha rivers, central Pune to Kharadi</small></a>
+  <a class="site-title" href="index.html"><span data-i18n="site.title">Water Pollution: A Silent Crisis</span><small data-i18n="site.subtitle">Mutha and Mula-Mutha rivers, central Pune to Kharadi</small></a>
   <nav class="site-nav" aria-label="Main">
-    <a href="index.html">Map</a>
-    <a href="projects.html">Projects</a>
-    <a href="privacy.html">Privacy</a>
-    <a href="disclaimer.html" aria-current="page">Disclaimer</a>
+    <a href="index.html" data-i18n="nav.map">Map</a>
+    <a href="projects.html" data-i18n="nav.projects">Projects</a>
+    <a href="privacy.html" data-i18n="nav.privacy">Privacy</a>
+    <a href="disclaimer.html" data-i18n="nav.disclaimer" aria-current="page">Disclaimer</a>
   </nav>
 </header>
-<div class="notice">Student project, not an official PMC or MPCB website. Anything marked <strong>to verify</strong> or <strong>to confirm</strong> has not been checked with the office yet. <a href="disclaimer.html">Read the disclaimer</a>.</div>
+<div class="notice" data-i18n-html="notice.html">Student project, not an official PMC or MPCB website. Anything marked <strong>to verify</strong> or <strong>to confirm</strong> has not been checked with the office yet. <a href="disclaimer.html">Read the disclaimer</a>.</div>
 <main class="page">
   <h1>Disclaimer</h1>
   <p class="meta">Draft for review by the project guide · last updated 9 October 2026</p>
@@ -54,11 +54,12 @@
   <p>Map data &copy; OpenStreetMap contributors (Open Database License). Map library: Leaflet (BSD 2-Clause). News reports and documents we link to belong to their publishers; we link to them and do not copy them.</p>
 </main>
 <footer class="site-footer">
-  <span>Water Pollution: A Silent Crisis · student project 2026–27</span>
-  <a href="privacy.html">Privacy</a>
-  <a href="disclaimer.html">Disclaimer</a>
-  <a href="https://github.com/Pranav2188/water-pollution-silent-crisis" target="_blank" rel="noopener noreferrer">Code and data</a>
-  <span>Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</span>
+  <span data-i18n="footer.project">Water Pollution: A Silent Crisis · student project 2026–27</span>
+  <a href="privacy.html" data-i18n="nav.privacy">Privacy</a>
+  <a href="disclaimer.html" data-i18n="nav.disclaimer">Disclaimer</a>
+  <a href="https://github.com/Pranav2188/water-pollution-silent-crisis" target="_blank" rel="noopener noreferrer" data-i18n="footer.code">Code and data</a>
+  <span data-i18n-html="footer.osm.html">Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</span>
 </footer>
+<script type="module">import { initI18n } from "./js/core/i18n.js"; initI18n();</script>
 </body>
 </html>

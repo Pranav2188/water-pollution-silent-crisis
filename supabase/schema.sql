@@ -23,6 +23,18 @@ create table if not exists sources (
   url         text
 );
 
+-- One row per river stretch the site covers (data/areas.csv, kept in the repo).
+create table if not exists areas (
+  id          text primary key,           -- AREA-01
+  name        text not null,
+  name_mr     text,                       -- Marathi name, empty until translated
+  river       text,
+  local_body  text,
+  prabhags    jsonb not null default '[]',
+  status      text check (status in ('Live', 'Planned')),
+  description text
+);
+
 create table if not exists authorities (
   id            text primary key,         -- AU-01
   role          text not null,
@@ -86,6 +98,7 @@ create table if not exists project_dates (
 
 create table if not exists hotspots (
   id            text primary key,         -- HS-01
+  area_id       text references areas(id),
   name          text not null,
   lat           double precision not null check (lat between 18.3 and 18.8),
   lng           double precision not null check (lng between 73.6 and 74.1),
@@ -106,11 +119,15 @@ create table if not exists hotspots (
   project_link  text
 );
 
+-- Upgrading a project created before areas existed (16 Oct 2026)? This adds the column;
+-- it does nothing if the column is already there.
+alter table hotspots add column if not exists area_id text references areas(id);
+
 -- Row Level Security: public read-only.
 do $$
 declare t text;
 begin
-  foreach t in array array['sources', 'authorities', 'routing_rules', 'projects', 'project_dates', 'hotspots'] loop
+  foreach t in array array['sources', 'areas', 'authorities', 'routing_rules', 'projects', 'project_dates', 'hotspots'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists "public read" on %I', t);
     execute format('create policy "public read" on %I for select to anon, authenticated using (true)', t);

@@ -1,0 +1,42 @@
+name: Checks
+
+# Runs on every pull request and every push, so a broken data edit or a
+# JavaScript typo shows a red cross before anything is merged.
+# Nothing here needs secrets, and nothing is published.
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  data:
+    name: Data and pipeline
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Pipeline tests
+        run: python3 -m unittest discover -s tools/tests -v
+      - name: Check the CSV data (writes nothing)
+        run: python3 tools/export_data.py --check
+
+  web:
+    name: Website JavaScript
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Syntax check every script
+        run: for f in $(find web/js tests/js -name '*.js' -o -name '*.mjs'); do node --check "$f" || exit 1; done
+      - name: Unit tests
+        run: node --test tests/js/*.test.mjs
+      - name: Translation files have the same keys as English
+        run: node tests/js/check-i18n.mjs

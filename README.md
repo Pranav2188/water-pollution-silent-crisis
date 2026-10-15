@@ -20,21 +20,25 @@ The website maps pollution hotspots, shows which authority is responsible for ea
 ## Folder structure
 
 ```
-docs/          Proposal, reports, data model (docs/data-model.md)
-data/          CSV copies of the Google Sheet tabs, plus ward boundary files
-tools/         export_data.py (CSV -> website JSON, optional Supabase copy),
-               kml_to_geojson.py (prabhag outlines), ward_lookup.py
-web/           The website: plain HTML/CSS/JS + Leaflet, published by GitHub Pages
+docs/          architecture.md (start here), adding-features.md, data-model.md, meeting notes
+data/          CSV copies of the Google Sheet tabs, areas.csv (kept in the repo), ward boundaries
+tools/         export_data.py (CSV -> website JSON, optional Supabase copy; code in tools/pipeline/),
+               kml_to_geojson.py (prabhag outlines), ward_lookup.py, tests/
+web/           The website: plain HTML/CSS/JS + Leaflet, no build step, published by GitHub Pages
+               js/core (shared) · js/features (one file per feature) · js/pages · i18n (English, Marathi)
+tests/js/      Tests for the website logic (Node 22)
 supabase/      Database schema and setup steps (copy of the sheet, for Phase 4)
-.github/       Workflows: deploy the website, sync Supabase
+.github/       Workflows: checks on every pull request, deploy the website, sync Supabase
 ```
+
+New to the code? Read [docs/architecture.md](docs/architecture.md), then [docs/adding-features.md](docs/adding-features.md).
 
 ## Updating the website data
 
 1. Edit the Google Sheet.
 2. Download each exported tab as CSV (File → Download → CSV) into `data/` with the same file name (see `docs/data-model.md`).
-3. Run `python3 tools/export_data.py`. It stops with a clear error if a source or ID is missing, so a bad edit can't reach the website.
-4. Open a pull request. Once it is merged, the website updates itself.
+3. Run `python3 tools/export_data.py`. It stops with a clear error if a source or ID is missing, or a hotspot is in no area, so a bad edit can't reach the website.
+4. Open a pull request. The **Checks** workflow runs the tests; once it is green and the pull request is merged, the website updates itself.
 
 ## Data rules
 

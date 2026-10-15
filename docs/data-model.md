@@ -10,6 +10,8 @@ data/*.csv  ──  tools/export_data.py  ──►  web/data/*.json   (the webs
                                      └─►  Supabase tables     (copy for later phases; optional)
 ```
 
+`tools/export_data.py` is a thin command; the work is done by the `tools/pipeline/` package (one `build_*` function per data set, tested by `tools/tests/`).
+
 The sheet always wins. Never edit the JSON files or the Supabase tables by hand: change the sheet, download the CSVs again and rerun the script.
 
 ## Which sheet tabs are exported
@@ -22,6 +24,11 @@ The sheet always wins. Never edit the JSON files or the Supabase tables by hand:
 | Projects | `projects.csv` | `projects.json` (with its dates inside) | `projects` |
 | Project Dates | `project_dates.csv` | inside `projects.json` | `project_dates` |
 | Sources | `sources.csv` | `sources.json` | `sources` |
+| *(not in the sheet)* | `areas.csv` | `areas.json` | `areas` |
+
+`data/areas.csv` is the one file kept in the repo instead of the sheet: it lists the river stretches the site covers and which prabhags belong to each. It changes rarely (when the project adds a new stretch), so a pull request is the right place to review it. See `data/README.md`.
+
+`meta.json` holds the export date and the counts shown in the footer.
 
 Internal tabs (Progress, Verification Log, Research Log, RTI Tracker, Map Pins) are **not** exported. They stay in the sheet.
 
@@ -36,6 +43,8 @@ The script stops with an error if any of these fail, so a bad sheet edit can't r
 - Every project ID mentioned by a hotspot or a project date exists in Projects.
 - Hotspot types are one of: `outfall`, `nalla`, `dumping`, `weir`.
 - Published hotspots lie inside the Pune area (latitude 18.3–18.8, longitude 73.6–74.1).
+- Every published hotspot belongs to an area: its first prabhag is listed in `data/areas.csv` (or the optional "Area" column in the Hotspots tab names an area that exists).
+- No prabhag is listed in two areas, and area status is `Live` or `Planned`.
 
 It warns (but continues) when a hotspot is held back because it has no coordinates yet, or has no photo link.
 
@@ -48,6 +57,7 @@ A hotspot is published only when it has numeric latitude and longitude, a valid 
 ```json
 {
   "id": "HS-01",
+  "area_id": "AREA-01",
   "name": "Old Keshavnagar–Kharadi Bridge weir (bandhara)",
   "lat": 18.546297,
   "lng": 73.951499,
@@ -69,9 +79,31 @@ A hotspot is published only when it has numeric latitude and longitude, a valid 
 }
 ```
 
+- `area_id` is the area the hotspot belongs to (see `areas.json`). The map's area buttons use it.
 - `problem_type` is the Routing Rules row for this hotspot. It comes from the sheet's "Problem Type (if not default)" column when that is filled in (for example "Construction debris in riverbed"); otherwise the default for the type is used (outfall and nalla → "Sewage outfall or nalla", dumping → "Garbage dumping", weir → "Froth or foam at the weir"). The user can pick another type in the complaint helper.
 - `to_confirm` lists fields the sheet marks "(confirm)". The website shows these with a "to confirm" label.
 - `authority_ids` are worked out by the script from the prabhags, ward offices and constituencies.
+
+## areas.json
+
+```json
+{
+  "id": "AREA-01",
+  "name": "Kharadi–Mundhwa stretch",
+  "name_mr": "",
+  "river": "Mula-Mutha",
+  "local_body": "Pune Municipal Corporation",
+  "prabhags": [3, 4, 5, 14, 15],
+  "status": "Live",
+  "description": "The original study stretch, ...",
+  "hotspot_count": 9,
+  "bounds": [[18.54373, 73.943934], [18.547827, 73.951499]]
+}
+```
+
+`hotspot_count` and `bounds` (south-west and north-east corners of its hotspots) are worked out by the script. `Planned` areas (such as Alandi) are exported but not shown as buttons until they have hotspots and are switched to `Live`. `name_mr` is shown when the site is in Marathi; empty falls back to `name`.
+
+`wards.geojson` features carry `area_id` too, so the map shows only that area's prabhag outlines when an area is picked.
 
 ## authorities.json
 

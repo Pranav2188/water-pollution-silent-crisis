@@ -10,7 +10,7 @@ on:
     - cron: "30 0 * * *"   # 06:00 IST
   push:
     branches: [main]
-    paths: ["data/**", "tools/export_data.py"]
+    paths: ["data/**", "tools/export_data.py", "tools/pipeline/**"]
   workflow_dispatch:
 
 permissions:

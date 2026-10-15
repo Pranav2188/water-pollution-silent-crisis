@@ -1,0 +1,68 @@
+[
+ {
+  "id": "AREA-01",
+  "name": "Kharadi–Mundhwa stretch",
+  "name_mr": "",
+  "river": "Mula-Mutha",
+  "local_body": "Pune Municipal Corporation",
+  "prabhags": [
+   3,
+   4,
+   5,
+   14,
+   15
+  ],
+  "status": "Live",
+  "description": "The original study stretch, from Mundhwa Bridge to the Old Keshavnagar–Kharadi Bridge (visits on 29 Sep and 9 Oct 2026)",
+  "hotspot_count": 9,
+  "bounds": [
+   [
+    18.54373,
+    73.943934
+   ],
+   [
+    18.547827,
+    73.951499
+   ]
+  ]
+ },
+ {
+  "id": "AREA-02",
+  "name": "Central Pune (Mutha)",
+  "name_mr": "",
+  "river": "Mutha",
+  "local_body": "Pune Municipal Corporation",
+  "prabhags": [
+   12,
+   13,
+   25,
+   27,
+   29
+  ],
+  "status": "Live",
+  "description": "Upstream spots from Garware College, Deccan to the steel bridge at Shivajinagar (visit on 10 Oct 2026)",
+  "hotspot_count": 5,
+  "bounds": [
+   [
+    18.510474,
+    73.839966
+   ],
+   [
+    18.52925,
+    73.859097
+   ]
+  ]
+ },
+ {
+  "id": "AREA-03",
+  "name": "Alandi (Indrayani)",
+  "name_mr": "",
+  "river": "Indrayani",
+  "local_body": "Alandi Municipal Council",
+  "prabhags": [],
+  "status": "Planned",
+  "description": "Comparison site, kept off the map until Alandi's ward map and routing rules are ready (Phase 4, Indrayani Watch)",
+  "hotspot_count": 0,
+  "bounds": null
+ }
+]
