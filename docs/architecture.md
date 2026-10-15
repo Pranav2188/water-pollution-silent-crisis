@@ -28,7 +28,7 @@ web/                     the website (GitHub Pages publishes this folder as it i
   data/                  GENERATED json – never edit by hand
   photos/                field photos (no faces)
 tests/js/                node --test tests/js/*.test.mjs, plus check-i18n.mjs
-supabase/                schema.sql and setup steps (Phase 4)
+supabase/                schema.sql, setup steps and current status (Phase 4)
 .github/workflows/       checks.yml (every PR) · pages.yml (deploy) · sync-supabase.yml
 ```
 
@@ -72,7 +72,7 @@ The website never talks to the sheet or (until Phase 4) to Supabase. It only rea
 | Responsibility panel (Week 6) | `responsibilityPanel` | `features/responsibility.js` → `responsibleFor(h, data)` gives first contact, escalation steps, general and local offices | marked spot in `features/hotspot-panel.js` | the panel markup; verified authority rows |
 | Complaint helper (Week 7) | `complaintHelper` | `features/complaint.js` → `fillTemplate`, `openPlaceholders`, `whatsappLink`, `xLink` | marked spot in `features/hotspot-panel.js` | PMC CARE number verified (Progress P3-01); the form |
 | Marathi | add `"mr"` to `languages` | `core/i18n.js`, `i18n/mr.json` | header language switch; `?lang=mr` to test early | the translations; `name_mr` in `areas.csv` |
-| Photo reports (Phase 4) | `photoReports`, `supabase.url`/`anonKey` | `supabase/schema.sql` (read-only tables so far) | new page `report.html` + `js/pages/report.js` | upload table with a review queue, face blurring, storage policy |
+| Photo reports (Phase 4) | `photoReports`, `supabase.url`/`anonKey` | `supabase/schema.sql`; project live and synced daily since 16 Oct 2026 (read-only tables so far) | new page `report.html` + `js/pages/report.js` | upload table with a review queue, face blurring, storage policy |
 
 ## Checks that protect the live site
 

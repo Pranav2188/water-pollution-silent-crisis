@@ -27,7 +27,7 @@ tools/         export_data.py (CSV -> website JSON, optional Supabase copy; code
 web/           The website: plain HTML/CSS/JS + Leaflet, no build step, published by GitHub Pages
                js/core (shared) · js/features (one file per feature) · js/pages · i18n (English, Marathi)
 tests/js/      Tests for the website logic (Node 22)
-supabase/      Database schema and setup steps (copy of the sheet, for Phase 4)
+supabase/      Database schema, setup and status (a daily copy of the sheet, for Phase 4)
 .github/       Workflows: checks on every pull request, deploy the website, sync Supabase
 ```
 
