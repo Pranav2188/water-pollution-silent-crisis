@@ -18,6 +18,7 @@ export const config = {
     photoReports: false,        // Phase 4: resident uploads with face blurring and a review queue (needs Supabase)
   },
 
-  // Phase 4 only. The PUBLIC anon key may go here; the service_role key never goes in website code.
+  // Phase 4 only. The PUBLIC publishable key (sb_publishable_…, or the legacy anon key) may go here.
+  // The secret key (sb_secret_… / service_role) never goes in website code: see supabase/README.md.
   supabase: { url: "", anonKey: "" },
 };
