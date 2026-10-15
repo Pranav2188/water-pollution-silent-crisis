@@ -1,39 +1,38 @@
 #!/usr/bin/env python3
 """Make web/data/wards.geojson (prabhag outlines for the map) from the PMC KML.
 
-    python3 tools/kml_to_geojson.py                 # study-area prabhags + any with a hotspot
+    python3 tools/kml_to_geojson.py                 # prabhags of every area + any with a hotspot
     python3 tools/kml_to_geojson.py --all           # every prabhag in the file
 
-By default only the five study-area prabhags plus every prabhag named in the
-Prabhag column of data/hotspots.csv are exported, which keeps the file small.
-Rerun this after hotspots are added in a new ward. Coordinates are rounded to
-5 decimals (about 1 metre).
+By default only the prabhags listed in data/areas.csv, plus any prabhag named in
+the Prabhag column of data/hotspots.csv, are exported, which keeps the file small.
+Each outline carries the ID of the area it belongs to. Rerun this after adding an
+area or a hotspot in a new ward. Coordinates are rounded to 5 decimals (about 1 metre).
 """
 
 import argparse
-import csv
 import json
 import re
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pipeline.io import DATA, OUT, read_csv  # noqa: E402
+from pipeline.parse import numbers  # noqa: E402
 from ward_lookup import load_kml  # noqa: E402
 
-ROOT = Path(__file__).resolve().parent.parent
-KML = ROOT / "data" / "boundaries" / "pmc-electoral-wards-2025-labelled.kml"
-OUT = ROOT / "web" / "data" / "wards.geojson"
-HOTSPOTS = ROOT / "data" / "hotspots.csv"
-STUDY_AREA = {3, 4, 5, 14, 15}  # Kharadi–Mundhwa stretch and its neighbours
+KML = DATA / "boundaries" / "pmc-electoral-wards-2025-labelled.kml"
 SOURCE = "PMC electoral wards 2025 (via OpenCity); see data/boundaries/README.md"
+
+
+def area_of_prabhag():
+    """{prabhag number: area ID} from data/areas.csv."""
+    return {p: a["ID"] for a in read_csv("areas") for p in numbers(a.get("Prabhags"))}
 
 
 def hotspot_prabhags():
     """Prabhag numbers mentioned in data/hotspots.csv (e.g. '4 / 15 (confirm)' -> {4, 15})."""
-    if not HOTSPOTS.exists():
-        return set()
-    with HOTSPOTS.open(encoding="utf-8") as f:
-        return {int(n) for r in csv.DictReader(f) for n in re.findall(r"\d+", r.get("Prabhag", ""))}
+    return {p for r in read_csv("hotspots") for p in numbers(r.get("Prabhag"))}
 
 
 def main():
@@ -41,7 +40,8 @@ def main():
     ap.add_argument("--all", action="store_true", help="export every prabhag")
     args = ap.parse_args()
 
-    wanted = STUDY_AREA | hotspot_prabhags()
+    areas = area_of_prabhag()
+    wanted = set(areas) | hotspot_prabhags()
     features = []
     for name, rings in load_kml(KML):
         m = re.search(r"(\d+)", name)
@@ -53,13 +53,16 @@ def main():
         polys = [[[[round(x, 5), round(y, 5)] for x, y in ring]] for ring in rings]
         geom = ({"type": "Polygon", "coordinates": polys[0]} if len(polys) == 1
                 else {"type": "MultiPolygon", "coordinates": polys})
-        features.append({"type": "Feature", "properties": {"prabhag": num, "name": f"Prabhag {num}"}, "geometry": geom})
+        features.append({"type": "Feature",
+                         "properties": {"prabhag": num, "name": f"Prabhag {num}", "area_id": areas.get(num)},
+                         "geometry": geom})
 
     features.sort(key=lambda f: f["properties"]["prabhag"])
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps({"type": "FeatureCollection", "source": SOURCE, "features": features},
+    OUT.mkdir(parents=True, exist_ok=True)
+    out = OUT / "wards.geojson"
+    out.write_text(json.dumps({"type": "FeatureCollection", "source": SOURCE, "features": features},
                               separators=(",", ":")) + "\n", encoding="utf-8")
-    print(f"wrote {OUT.relative_to(ROOT)}: prabhags {[f['properties']['prabhag'] for f in features]}")
+    print(f"wrote {out.relative_to(OUT.parent.parent)}: prabhags {[f['properties']['prabhag'] for f in features]}")
 
 
 if __name__ == "__main__":

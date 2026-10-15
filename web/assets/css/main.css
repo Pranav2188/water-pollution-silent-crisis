@@ -1,0 +1,10 @@
+/* Water Pollution: A Silent Crisis — shared styles.
+   Every page links this one file. Split by purpose so a new feature adds its own file:
+     tokens.css      colours (light and dark)
+     base.css        page frame: header, notice, text pages, tables, footer
+     components.css  tags, buttons, lists, area filter, language switch
+     map.css         map page layout and legend */
+@import url("tokens.css");
+@import url("base.css");
+@import url("components.css");
+@import url("map.css");

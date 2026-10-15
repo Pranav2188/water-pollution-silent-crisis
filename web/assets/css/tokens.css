@@ -1,0 +1,39 @@
+/* Colour tokens for light and dark mode. Change colours here only. */
+
+:root {
+  --bg: #f7f8f6;
+  --surface: #ffffff;
+  --text: #1d2321;
+  --muted: #5b6662;
+  --line: #d9dedb;
+  --accent: #0f6e7a;        /* river teal */
+  --accent-text: #ffffff;
+  --warn-bg: #fff4dc;
+  --warn-text: #7a4b00;
+  --outfall: #8a3b12;
+  --nalla: #a8662a;
+  --dumping: #6b5d1f;
+  --weir: #2b6fb3;
+  --ward: #0f6e7a;
+  --radius: 10px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121615;
+    --surface: #1b2120;
+    --text: #e6ebe9;
+    --muted: #a3aeaa;
+    --line: #2f3836;
+    --accent: #4fb3bf;
+    --accent-text: #0b1312;
+    --warn-bg: #3a2e12;
+    --warn-text: #f3d48a;
+    --ward: #4fb3bf;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121615; --surface: #1b2120; --text: #e6ebe9; --muted: #a3aeaa; --line: #2f3836;
+  --accent: #4fb3bf; --accent-text: #0b1312; --warn-bg: #3a2e12; --warn-text: #f3d48a; --ward: #4fb3bf;
+}

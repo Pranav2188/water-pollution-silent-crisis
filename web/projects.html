@@ -6,32 +6,32 @@
 <title>Sewage Plant Tracker</title>
 <meta name="description" content="Dates promised for the Mundhwa and Kharadi sewage treatment plants, with sources.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3C11 11 7 15.5 7 20a9 9 0 0 0 18 0c0-4.5-4-9-9-17z' fill='%230f6e7a'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
 <header class="site-header">
-  <a class="site-title" href="index.html">Water Pollution: A Silent Crisis<small>Mutha and Mula-Mutha rivers, central Pune to Kharadi</small></a>
+  <a class="site-title" href="index.html"><span data-i18n="site.title">Water Pollution: A Silent Crisis</span><small data-i18n="site.subtitle">Mutha and Mula-Mutha rivers, central Pune to Kharadi</small></a>
   <nav class="site-nav" aria-label="Main">
-    <a href="index.html">Map</a>
-    <a href="projects.html" aria-current="page">Projects</a>
-    <a href="privacy.html">Privacy</a>
-    <a href="disclaimer.html">Disclaimer</a>
+    <a href="index.html" data-i18n="nav.map">Map</a>
+    <a href="projects.html" data-i18n="nav.projects" aria-current="page">Projects</a>
+    <a href="privacy.html" data-i18n="nav.privacy">Privacy</a>
+    <a href="disclaimer.html" data-i18n="nav.disclaimer">Disclaimer</a>
   </nav>
 </header>
-<div class="notice">Student project, not an official PMC or MPCB website. Anything marked <strong>to verify</strong> or <strong>to confirm</strong> has not been checked with the office yet. <a href="disclaimer.html">Read the disclaimer</a>.</div>
+<div class="notice" data-i18n-html="notice.html">Student project, not an official PMC or MPCB website. Anything marked <strong>to verify</strong> or <strong>to confirm</strong> has not been checked with the office yet. <a href="disclaimer.html">Read the disclaimer</a>.</div>
 <main class="page">
-  <h1>Sewage plant tracker</h1>
-  <p class="meta">Every date below comes from a dated, linked source. A plant is shown as <em>announced</em>, not complete, until the office, an RTI reply or a site visit confirms it.</p>
-  <div id="projects"><p>Loading…</p></div>
-  <div class="placeholder">Week 7: Sanskar turns this list into the "promises over time" tracker for the Mundhwa (PRJ-01) and Kharadi (PRJ-02) plants.</div>
+  <h1 data-i18n="projects.title">Sewage plant tracker</h1>
+  <p class="meta" data-i18n="projects.intro">Every date below comes from a dated, linked source. A plant is shown as announced, not complete, until the office, an RTI reply or a site visit confirms it.</p>
+  <div id="projects"><p data-i18n="common.loading">Loading…</p></div>
+  <div class="placeholder" data-i18n="projects.coming_soon">Week 7: Sanskar turns this list into the "promises over time" tracker for the Mundhwa (PRJ-01) and Kharadi (PRJ-02) plants.</div>
 </main>
 <footer class="site-footer">
-  <span>Water Pollution: A Silent Crisis · student project 2026–27</span>
-  <a href="privacy.html">Privacy</a>
-  <a href="disclaimer.html">Disclaimer</a>
-  <a href="https://github.com/Pranav2188/water-pollution-silent-crisis" target="_blank" rel="noopener noreferrer">Code and data</a>
-  <span>Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</span>
+  <span data-i18n="footer.project">Water Pollution: A Silent Crisis · student project 2026–27</span>
+  <a href="privacy.html" data-i18n="nav.privacy">Privacy</a>
+  <a href="disclaimer.html" data-i18n="nav.disclaimer">Disclaimer</a>
+  <a href="https://github.com/Pranav2188/water-pollution-silent-crisis" target="_blank" rel="noopener noreferrer" data-i18n="footer.code">Code and data</a>
+  <span data-i18n-html="footer.osm.html">Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</span>
 </footer>
-<script type="module" src="js/projects.js"></script>
+<script type="module" src="js/pages/projects.js"></script>
 </body>
 </html>

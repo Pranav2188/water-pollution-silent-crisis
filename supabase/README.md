@@ -15,7 +15,7 @@ The sheet always wins. The tables are overwritten from the sheet on every sync, 
    - Name: `water-pollution-silent-crisis`
    - Region: **South Asia (Mumbai)**
    - Plan: Free. Save the database password in the team's password manager, not in the sheet or the repo.
-2. Open **SQL Editor**, paste [`schema.sql`](schema.sql), and run it.
+2. Open **SQL Editor**, paste [`schema.sql`](schema.sql), and run it. It is safe to run again: when the schema changes (for example the `areas` table and `hotspots.area_id` added on 16 Oct 2026), paste and run the new file; existing tables are kept and the new ones are added.
 3. Open **Project Settings → API** and copy:
    - the **Project URL**
    - the **service_role** key (secret)

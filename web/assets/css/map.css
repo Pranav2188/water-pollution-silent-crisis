@@ -1,0 +1,23 @@
+/* Map page: map + side panel layout, legend. */
+
+/* map page layout */
+.map-layout { flex: 1; display: grid; grid-template-columns: 1fr 380px; min-height: 0; }
+#map { min-height: 60vh; height: 100%; }
+.panel {
+  background: var(--surface);
+  border-left: 1px solid var(--line);
+  padding: 16px;
+  overflow-y: auto;
+  max-height: calc(100vh - 110px);
+}
+@media (max-width: 800px) {
+  .map-layout { grid-template-columns: 1fr; }
+  #map { height: 60vh; }
+  .panel { border-left: 0; border-top: 1px solid var(--line); max-height: none; }
+}
+.panel h2 { margin: 0 0 4px; font-size: 1.2rem; }
+.panel h3 { margin: 18px 0 6px; font-size: 1rem; }
+/* legend */
+.legend { background: var(--surface); color: var(--text); padding: 8px 10px; border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.25); font-size: .82rem; line-height: 1.7; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
