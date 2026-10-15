@@ -7,7 +7,7 @@
   "type": "weir",
   "problem_type": "Froth or foam at the weir",
   "date_seen": "2026-09-29",
-  "photo_url": null,
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/HS-01_2026-09-29_froth.jpg",
   "description": "Thick white froth below the weir across most of the river width; turbid grey water. Froth still across the weir on 9 Oct 2026 (seen from the Keshavnagar bank, 18.544415, 73.951621)",
   "source": "Team field visits 29 Sep 2026 and 9 Oct 2026 (GPS Map Camera photos)",
   "last_verified": "2026-10-09",
@@ -52,7 +52,7 @@
   "type": "outfall",
   "problem_type": "Sewage outfall or nalla",
   "date_seen": "2026-09-29",
-  "photo_url": null,
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/HS-02_2026-10-09_outfall.jpg",
   "description": "Concrete culvert under a tree on the Kharadi (north) bank discharging a strong flow of greenish, foamy wastewater towards the river; algae on the pipes below. About 80 m upstream of the weir (HS-01) and about 150 m from the old Kharadi sewage plant (PRJ-05)",
   "source": "Team field visits 29 Sep 2026 and 9 Oct 2026 (GPS Map Camera photo, 9 Oct 11:17)",
   "last_verified": "2026-10-09",
@@ -88,7 +88,7 @@
   "type": "dumping",
   "problem_type": "Garbage dumping",
   "date_seen": "2026-09-29",
-  "photo_url": null,
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/HS-03_2026-10-09_bank.jpg",
   "description": "Large spread of plastic bags, clothes, sacks, wood and dark burnt-looking fibrous waste on the rocky Kharadi bank at the old bridge; still there on 9 Oct 2026",
   "source": "Team field visits 29 Sep 2026 and 9 Oct 2026 (GPS Map Camera photo, 9 Oct 11:17)",
   "last_verified": "2026-10-09",
@@ -117,6 +117,98 @@
   "project_link": "Not a sewage problem"
  },
  {
+  "id": "HS-04",
+  "name": "Waste on the bridge walkway",
+  "lat": 18.546309,
+  "lng": 73.95149,
+  "type": "dumping",
+  "problem_type": "Garbage dumping",
+  "date_seen": "2026-09-29",
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/HS-04_2026-09-29_walkway.jpg",
+  "description": "Plastic and cloth waste left along the bridge; waste thrown into the river from here",
+  "source": "Team field visit 29 Sep 2026",
+  "last_verified": null,
+  "prabhags": [
+   4,
+   15
+  ],
+  "ward_offices": [
+   "Nagar Road–Vadgaonsheri",
+   "Hadapsar–Mundhwa"
+  ],
+  "assembly": [
+   "Vadgaon Sheri",
+   "Hadapsar"
+  ],
+  "lok_sabha": [
+   "Pune",
+   "Shirur"
+  ],
+  "to_confirm": [
+   "prabhags",
+   "ward_offices",
+   "assembly"
+  ],
+  "authority_ids": [
+   "AU-02",
+   "AU-03",
+   "AU-08",
+   "AU-12",
+   "AU-14",
+   "AU-15",
+   "AU-16",
+   "AU-17"
+  ],
+  "project_ids": [],
+  "project_link": "Not a sewage problem"
+ },
+ {
+  "id": "HS-05",
+  "name": "Water sample point below the weir",
+  "lat": 18.54631,
+  "lng": 73.951488,
+  "type": "weir",
+  "problem_type": "Froth or foam at the weir",
+  "date_seen": "2026-09-29",
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/HS-05_2026-09-29_sample.jpg",
+  "description": "Bottled samples were turbid and yellowish-grey, with suspended particles",
+  "source": "Team field visit 29 Sep 2026",
+  "last_verified": null,
+  "prabhags": [
+   4,
+   15
+  ],
+  "ward_offices": [
+   "Nagar Road–Vadgaonsheri",
+   "Hadapsar–Mundhwa"
+  ],
+  "assembly": [
+   "Vadgaon Sheri",
+   "Hadapsar"
+  ],
+  "lok_sabha": [
+   "Pune",
+   "Shirur"
+  ],
+  "to_confirm": [
+   "prabhags",
+   "ward_offices",
+   "assembly"
+  ],
+  "authority_ids": [
+   "AU-02",
+   "AU-03",
+   "AU-08",
+   "AU-12",
+   "AU-14",
+   "AU-15",
+   "AU-16",
+   "AU-17"
+  ],
+  "project_ids": [],
+  "project_link": "To confirm"
+ },
+ {
   "id": "HS-06",
   "name": "Garbage dump on Grant Road (EON Free Zone side)",
   "lat": 18.547827,
@@ -124,7 +216,7 @@
   "type": "dumping",
   "problem_type": "Garbage dumping",
   "date_seen": "2026-10-09",
-  "photo_url": null,
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/HS-06_2026-10-09_dump.jpg",
   "description": "Large mixed-waste dump on open ground beside Grant Road: sacks, clothes, plastic, thermocol and an old office chair. More plastic waste along the dirt track by the fence towards the river (18.547723, 73.949218)",
   "source": "Team field visit 9 Oct 2026 (GPS Map Camera photos, 11:15–11:16)",
   "last_verified": "2026-10-09",
@@ -160,7 +252,7 @@
   "type": "nalla",
   "problem_type": "Sewage outfall or nalla",
   "date_seen": "2026-10-09",
-  "photo_url": null,
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/HS-07_2026-10-09_nalla.jpg",
   "description": "Open earth channel carrying dark wastewater from an opening in the road's retaining wall, with plastic and waste along it. Grey water pools around a broken concrete chamber beside it (18.547822, 73.949192). The channel meets the river at 18.547289, 73.949595, where water hyacinth collects",
   "source": "Team field visit 9 Oct 2026 (GPS Map Camera photos, 11:15–11:16)",
   "last_verified": "2026-10-09",
@@ -196,7 +288,7 @@
   "type": "dumping",
   "problem_type": "Construction debris in riverbed",
   "date_seen": "2026-10-09",
-  "photo_url": null,
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/HS-08_2026-10-09_debris.jpg",
   "description": "Excavator working on a strip of rubble and soil built out into the river beside Keshav Nagar Bridge; more rubble and a concrete pipe on the far bank. Not yet known which project or contractor this is, or whether it is permitted",
   "source": "Team field visit 9 Oct 2026 (GPS Map Camera photos from the bridge, 11:54–11:55)",
   "last_verified": "2026-10-09",
@@ -242,7 +334,7 @@
   "type": "weir",
   "problem_type": "Froth or foam at the weir",
   "date_seen": "2026-10-09",
-  "photo_url": null,
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/HS-09_2026-10-09_froth.jpg",
   "description": "White froth line across the river just below Keshav Nagar Bridge, where the water drops over a step (weir to confirm). Greenish water with floating plastic and hyacinth along the Kharadi bank (18.543727, 73.944289)",
   "source": "Team field visit 9 Oct 2026 (GPS Map Camera photos from the bridge, 11:54–11:55)",
   "last_verified": "2026-10-09",
@@ -278,5 +370,210 @@
   ],
   "project_ids": [],
   "project_link": "To confirm"
+ },
+ {
+  "id": "HS-10",
+  "name": "Floating plastic and garbage along the riverbank near Garware College, Khilarewadi",
+  "lat": 18.510474,
+  "lng": 73.839966,
+  "type": "dumping",
+  "problem_type": "Garbage dumping",
+  "date_seen": "2026-10-10",
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/HS-10_2026-10-10_floating-waste.jpg",
+  "description": "Plastic bottles, bags and other waste floating along the stone embankment on the Deccan (Khilarewadi) bank, below the bridge near Central Mall Road. A riverbank cleanup by another group was under way nearby the same morning, with a pile of collected waste beside the path (18.510545, 73.839675). Mutha river, upstream of the study stretch",
+  "source": "Team field visit 10 Oct 2026, central Pune (GPS Map Camera photos, 8:35–8:36)",
+  "last_verified": "2026-10-10",
+  "prabhags": [
+   29,
+   27
+  ],
+  "ward_offices": [
+   "Shivajinagar–Ghole Road",
+   "Tilak Road"
+  ],
+  "assembly": [
+   "Shivajinagar",
+   "Kasba Peth"
+  ],
+  "lok_sabha": [
+   "Pune"
+  ],
+  "to_confirm": [
+   "ward_offices",
+   "assembly"
+  ],
+  "authority_ids": [
+   "AU-16",
+   "AU-20",
+   "AU-23",
+   "AU-27",
+   "AU-28",
+   "AU-29",
+   "AU-30"
+  ],
+  "project_ids": [],
+  "project_link": "Not a sewage problem"
+ },
+ {
+  "id": "HS-11",
+  "name": "Garbage dumped on the bank and in the river at Baba Bhide Bridge",
+  "lat": 18.51552,
+  "lng": 73.844483,
+  "type": "dumping",
+  "problem_type": "Garbage dumping",
+  "date_seen": "2026-10-10",
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/HS-11_2026-10-10_dumping.jpg",
+  "description": "Sacks of mixed waste, plastic and cloth dumped on the rock embankment and lying in the water just below the bridge railing, with plastic floating downstream. Mats of water hyacinth along both banks between Baba Bhide Bridge and the old arch bridge beside it (18.515442, 73.844508). Mutha river, upstream of the study stretch",
+  "source": "Team field visit 10 Oct 2026, central Pune (GPS Map Camera photos, 8:39)",
+  "last_verified": "2026-10-10",
+  "prabhags": [
+   12,
+   25
+  ],
+  "ward_offices": [
+   "Shivajinagar–Ghole Road",
+   "Kasba–Vishrambaugwada"
+  ],
+  "assembly": [
+   "Shivajinagar",
+   "Kasba Peth"
+  ],
+  "lok_sabha": [
+   "Pune"
+  ],
+  "to_confirm": [
+   "ward_offices",
+   "assembly"
+  ],
+  "authority_ids": [
+   "AU-16",
+   "AU-20",
+   "AU-21",
+   "AU-24",
+   "AU-26",
+   "AU-29",
+   "AU-30"
+  ],
+  "project_ids": [],
+  "project_link": "Not a sewage problem"
+ },
+ {
+  "id": "HS-12",
+  "name": "Pipeline work in the riverbed at Dengale Bridge (Chhatrapati Shahu Setu)",
+  "lat": 18.524723,
+  "lng": 73.857707,
+  "type": "dumping",
+  "problem_type": "Construction debris in riverbed",
+  "date_seen": "2026-10-10",
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/HS-12_2026-10-10_pipes.jpg",
+  "description": "An excavator levelling a strip of soil and rubble built out on the riverbed beside the bridge, with a long row of large concrete pipes along the water's edge, a trench with a pipe laid in it and a diesel pump drawing water. Looks like pipeline (possibly sewer) work; which project and contractor it is, and whether the work is permitted, is not yet known (18.52421, 73.857438)",
+  "source": "Team field visit 10 Oct 2026, central Pune (GPS Map Camera photos, 8:47)",
+  "last_verified": "2026-10-10",
+  "prabhags": [
+   13,
+   12
+  ],
+  "ward_offices": [
+   "Dhole Patil Road",
+   "Shivajinagar–Ghole Road"
+  ],
+  "assembly": [
+   "Pune Cantonment",
+   "Shivajinagar"
+  ],
+  "lok_sabha": [
+   "Pune"
+  ],
+  "to_confirm": [
+   "prabhags",
+   "ward_offices",
+   "assembly"
+  ],
+  "authority_ids": [
+   "AU-16",
+   "AU-20",
+   "AU-22",
+   "AU-24",
+   "AU-25",
+   "AU-29",
+   "AU-31"
+  ],
+  "project_ids": [],
+  "project_link": "To confirm"
+ },
+ {
+  "id": "HS-13",
+  "name": "Garbage on the riverbank at Old Tofkhana, Shivajinagar",
+  "lat": 18.525378,
+  "lng": 73.857255,
+  "type": "dumping",
+  "problem_type": "Garbage dumping",
+  "date_seen": "2026-10-10",
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/HS-13_2026-10-10_bank.jpg",
+  "description": "Plastic and household waste dumped on the steep bank below the road at Old Tofkhana, beside a concrete slab that runs into shallow water flowing fast over rocks. About 90 m from the Dengale Bridge pipeline work (HS-12)",
+  "source": "Team field visit 10 Oct 2026, central Pune (GPS Map Camera photos, 8:45)",
+  "last_verified": "2026-10-10",
+  "prabhags": [
+   12
+  ],
+  "ward_offices": [
+   "Shivajinagar–Ghole Road"
+  ],
+  "assembly": [
+   "Shivajinagar"
+  ],
+  "lok_sabha": [
+   "Pune"
+  ],
+  "to_confirm": [
+   "ward_offices",
+   "assembly"
+  ],
+  "authority_ids": [
+   "AU-16",
+   "AU-20",
+   "AU-24",
+   "AU-29"
+  ],
+  "project_ids": [],
+  "project_link": "Not a sewage problem"
+ },
+ {
+  "id": "HS-14",
+  "name": "Floating waste caught at the piers of the steel bridge, Shivajinagar",
+  "lat": 18.52925,
+  "lng": 73.859097,
+  "type": "dumping",
+  "problem_type": "Garbage dumping",
+  "date_seen": "2026-10-10",
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/HS-14_2026-10-10_piers.jpg",
+  "description": "Thick mats of floating waste and grey scum caught against the piers of a riveted steel-girder bridge (railway bridge, to confirm), with dark, still water downstream (18.529182, 73.85928). Mutha river, upstream of the Sangam",
+  "source": "Team field visit 10 Oct 2026, central Pune (GPS Map Camera photos, 8:50)",
+  "last_verified": "2026-10-10",
+  "prabhags": [
+   12
+  ],
+  "ward_offices": [
+   "Shivajinagar–Ghole Road"
+  ],
+  "assembly": [
+   "Shivajinagar"
+  ],
+  "lok_sabha": [
+   "Pune"
+  ],
+  "to_confirm": [
+   "prabhags",
+   "ward_offices",
+   "assembly"
+  ],
+  "authority_ids": [
+   "AU-16",
+   "AU-20",
+   "AU-24",
+   "AU-29"
+  ],
+  "project_ids": [],
+  "project_link": "Not a sewage problem"
  }
 ]

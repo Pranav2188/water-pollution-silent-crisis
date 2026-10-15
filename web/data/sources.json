@@ -327,5 +327,26 @@
   "publisher": "Project team (field visit)",
   "date": "2026-10-09",
   "url": ""
+ },
+ {
+  "id": "SRC-48",
+  "title": "2026 Pune Municipal Corporation election (ward-wise results)",
+  "publisher": "Wikipedia",
+  "date": "2026",
+  "url": "https://en.wikipedia.org/wiki/2026_Pune_Municipal_Corporation_election"
+ },
+ {
+  "id": "SRC-49",
+  "title": "Mahayuti secures landslide victory in Pune district",
+  "publisher": "Free Press Journal",
+  "date": "2024-11-01",
+  "url": "https://www.freepressjournal.in/amp/pune/mahayuti-secures-landslide-victory-in-pune-district"
+ },
+ {
+  "id": "SRC-50",
+  "title": "Team field visit to the Mutha river in central Pune (Garware College, Baba Bhide, Jayantrao Tilak and Dengale bridges, Old Tofkhana, steel bridge at Shivajinagar)",
+  "publisher": "Project team (field visit: Vaishnavi Jadhav & Siddhesh Kondhalkar)",
+  "date": "2026-10-10",
+  "url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/README.md"
  }
 ]

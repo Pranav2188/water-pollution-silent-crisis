@@ -24,3 +24,11 @@ File names: `<hotspot or site ID>_<date>_<what it shows>.jpg`
 | CS-01_2026-10-09_weir-piers.jpg | Alandi, waste at the old-bridge weir | 9 Oct 2026 | Sanskar Dumbare |
 | CS-02_2026-10-09_green-water.jpg, CS-02_2026-10-09_froth.jpg | Alandi, Kate Patil Nagar weir | 9 Oct 2026 | Sanskar Dumbare |
 | CS-03_2026-10-09_drain.jpg | Alandi, drain on the opposite bank | 9 Oct 2026 | Sanskar Dumbare |
+| HS-10_2026-10-10_floating-waste.jpg, HS-10_2026-10-10_bridge.jpg | HS-10 floating waste near Garware College, Khilarewadi (Mutha) | 10 Oct 2026 | Vaishnavi Jadhav & Siddhesh Kondhalkar |
+| HS-11_2026-10-10_dumping.jpg, _hyacinth.jpg, _downstream.jpg | HS-11 garbage and hyacinth at Baba Bhide Bridge (Mutha) | 10 Oct 2026 | Vaishnavi Jadhav & Siddhesh Kondhalkar |
+| HS-12_2026-10-10_pipes.jpg, HS-12_2026-10-10_excavator.jpg | HS-12 pipeline work in the riverbed at Dengale Bridge (Mutha) | 10 Oct 2026 | Vaishnavi Jadhav & Siddhesh Kondhalkar |
+| HS-13_2026-10-10_bank.jpg, HS-13_2026-10-10_river.jpg | HS-13 garbage on the bank at Old Tofkhana, Shivajinagar (Mutha) | 10 Oct 2026 | Vaishnavi Jadhav & Siddhesh Kondhalkar |
+| HS-14_2026-10-10_piers.jpg | HS-14 floating waste at the steel bridge piers, Shivajinagar (Mutha) | 10 Oct 2026 | Vaishnavi Jadhav & Siddhesh Kondhalkar |
+| UP_2026-10-10_khilarewadi-weir.jpg, UP_2026-10-10_tilak-bridge.jpg | Upstream views with no hotspot: weir at Khilarewadi, Jayantrao Tilak Bridge | 10 Oct 2026 | Vaishnavi Jadhav & Siddhesh Kondhalkar |
+
+Three photos from 10 Oct (a riverbank cleanup by another group near Garware College) show people's faces and are not in this folder.

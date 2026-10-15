@@ -27,7 +27,7 @@ function showHotspot(h, data) {
     <p class="meta">${esc(h.id)} · ${esc(TYPE_LABEL[h.type] || h.type)}</p>
     <h2>${esc(h.name)}</h2>
     <p>${esc(h.description)}</p>
-    <p class="meta">Seen ${esc(niceDate(h.date_seen))} · Source: ${esc(h.source)} · Last checked ${esc(niceDate(h.last_verified))}</p>
+    <p class="meta">Seen ${esc(niceDate(h.date_seen))} · Source: ${esc(h.source)}${h.last_verified ? ` · Last checked ${esc(niceDate(h.last_verified))}` : ' · <span class="tag">to verify</span>'}</p>
     ${h.photo_url ? `<p><a href="${esc(h.photo_url)}" target="_blank" rel="noopener noreferrer">View photo</a></p>` : ""}
 
     <div class="actions">
@@ -83,7 +83,9 @@ async function start() {
     }).addTo(map);
   }
 
+  const bounds = [];
   for (const h of data.hotspots) {
+    bounds.push([h.lat, h.lng]);
     L.circleMarker([h.lat, h.lng], {
       radius: 9, weight: 2, color: "#ffffff", fillColor: css(`--${h.type}`) || "#333", fillOpacity: 0.95,
     })
@@ -100,6 +102,9 @@ async function start() {
     return div;
   };
   legend.addTo(map);
+
+  // Hotspots now span two areas (central Pune and Kharadi–Mundhwa), so open on all of them.
+  if (bounds.length > 1) map.fitBounds(bounds, { padding: [30, 30], maxZoom: 16 });
 
   if (first) showHotspot(first, data);
   document.getElementById("count").textContent =
