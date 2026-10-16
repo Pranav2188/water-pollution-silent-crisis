@@ -19,9 +19,10 @@ Set up and syncing since 16 Oct 2026.
 | Project | `water-pollution-silent-crisis` |
 | Region | South Asia (Mumbai), `ap-south-1` |
 | Project URL | `https://enungxucvdqqeyzpyyxl.supabase.co` (not a secret; also stored as the `SUPABASE_URL` GitHub secret) |
-| Schema | `schema.sql` run on 16 Oct 2026: 7 tables, Row Level Security on, one "public read" rule each |
+| Schema | `schema.sql` run on 16 Oct 2026: 7 tables, Row Level Security on, one "public read" rule each. Same day: `areas.general_authority_ids` and `hotspots.jurisdiction`, `first_contact_id`, `notes` added for the Alandi comparison sites |
 | GitHub secrets | `SUPABASE_URL`, `SUPABASE_SERVICE_KEY` (added 16 Oct 2026) |
 | First sync | 16 Oct 2026: 50 sources, 3 areas, 31 authorities, 9 problem types, 6 projects, 15 project dates, 14 hotspots (9 in AREA-01, 5 in AREA-02) |
+| With Alandi | 43 authorities (31 `AU` + 12 `CA`) and 18 spots (14 `HS` + 4 `CS` in AREA-03); other counts unchanged |
 | Checked | Every hotspot value matched `web/data/hotspots.json`; a test write with the public key was refused; Supabase security advisor: no issues |
 
 ## Keys

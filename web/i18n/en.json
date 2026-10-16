@@ -1,6 +1,6 @@
 {
   "site.title": "Water Pollution: A Silent Crisis",
-  "site.subtitle": "Mutha and Mula-Mutha rivers, central Pune to Kharadi",
+  "site.subtitle": "Mula-Mutha and Mutha in Pune, Indrayani at Alandi",
   "nav.label": "Main",
   "nav.map": "Map",
   "nav.projects": "Projects",
@@ -44,11 +44,13 @@
   "panel.ward_office": "Ward office: {value}",
   "panel.assembly": "Assembly: {value}",
   "panel.lok_sabha": "Lok Sabha: {value}",
+  "panel.jurisdiction": "Who owns this spot: {value}",
   "panel.responsible": "Who is responsible here?",
   "panel.coming_soon": "Week 6: this becomes the full panel (first contact, escalation steps, sources). Week 7: the complaint helper goes here.",
   "panel.first_contact": "Contact first",
   "panel.escalate": "If nothing happens",
   "panel.project": "Project that should fix it",
+  "panel.notes": "Still to check",
 
   "complaint.title": "Send a complaint",
   "complaint.whatsapp": "Send on WhatsApp",

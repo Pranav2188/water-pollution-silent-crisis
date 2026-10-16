@@ -23,7 +23,9 @@ File names: `<hotspot or site ID>_<date>_<what it shows>.jpg`
 | PRJ-01_2026-10-09_lab.jpg | Laboratory, 20 MLD Mundhwa STP | 9 Oct 2026 | Pranav Patil & Siddhesh Kondhalkar |
 | CS-01_2026-10-09_weir-piers.jpg | Alandi, waste at the old-bridge weir | 9 Oct 2026 | Sanskar Dumbare |
 | CS-02_2026-10-09_green-water.jpg, CS-02_2026-10-09_froth.jpg | Alandi, Kate Patil Nagar weir | 9 Oct 2026 | Sanskar Dumbare |
+| CS-02_2026-10-09_weir-wide.jpg, CS-02_2026-10-09_from-downstream.jpg | Alandi, Kate Patil Nagar weir: full width with froth, and from downstream (people in the distance blurred) | 9 Oct 2026 | Sanskar Dumbare |
 | CS-03_2026-10-09_drain.jpg | Alandi, drain on the opposite bank | 9 Oct 2026 | Sanskar Dumbare |
+| CS-04_2026-10-09_under-bridge.jpg | Alandi, waste on the riverbed under the Dighi–Alandi Road bridge (a person on the bridge blurred) | 9 Oct 2026 | Sanskar Dumbare |
 | HS-10_2026-10-10_floating-waste.jpg, HS-10_2026-10-10_bridge.jpg | HS-10 floating waste near Garware College, Khilarewadi (Mutha) | 10 Oct 2026 | Vaishnavi Jadhav & Siddhesh Kondhalkar |
 | HS-11_2026-10-10_dumping.jpg, _hyacinth.jpg, _downstream.jpg | HS-11 garbage and hyacinth at Baba Bhide Bridge (Mutha) | 10 Oct 2026 | Vaishnavi Jadhav & Siddhesh Kondhalkar |
 | HS-12_2026-10-10_pipes.jpg, HS-12_2026-10-10_excavator.jpg | HS-12 pipeline work in the riverbed at Dengale Bridge (Mutha) | 10 Oct 2026 | Vaishnavi Jadhav & Siddhesh Kondhalkar |

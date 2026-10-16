@@ -17,6 +17,11 @@ def read_csv(name, folder=DATA):
     return [r for r in rows if any(r.values())]
 
 
+def read_optional(name, folder=DATA):
+    """Like read_csv, but an absent file means no rows (for tabs a project may not use)."""
+    return read_csv(name, folder) if (Path(folder) / f"{name}.csv").exists() else []
+
+
 def write_json(name, payload, folder=OUT):
     folder = Path(folder)
     folder.mkdir(parents=True, exist_ok=True)

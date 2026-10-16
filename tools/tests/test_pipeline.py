@@ -105,6 +105,47 @@ class Export(unittest.TestCase):
         self.edit("hotspots", change)
         self.assertError("has type 'drain'")
 
+    # ---- comparison sites (Alandi) -------------------------------------------------
+
+    def test_comparison_sites_link_only_to_their_own_offices(self):
+        rep, t = self.run_export()
+        cs = [h for h in t["hotspots"] if h["id"].startswith("CS-")]
+        self.assertTrue(cs)
+        for h in cs:
+            self.assertTrue(all(a.startswith("CA-") for a in h["authority_ids"]), h)
+            self.assertTrue(h["first_contact_id"].startswith("CA-"), h)
+            self.assertIsNone(h["problem_type"])
+        hs = [h for h in t["hotspots"] if h["id"].startswith("HS-")]
+        self.assertTrue(all(a.startswith("AU-") for h in hs for a in h["authority_ids"]))
+
+    def test_comparison_site_unknown_first_contact(self):
+        def change(rows):
+            rows[0]["First Contact (Authority ID)"] = "CA-99"
+        self.edit("comparison_sites", change)
+        self.assertError("first contact CA-99")
+
+    def test_comparison_site_unknown_area(self):
+        def change(rows):
+            rows[0]["Area"] = "AREA-99"
+        self.edit("comparison_sites", change)
+        self.assertError("names area AREA-99")
+
+    def test_general_authority_must_exist(self):
+        def change(rows):
+            rows[2]["General Authorities"] = "CA-01 / CA-77"
+        self.edit("areas", change)
+        self.assertError("general authority CA-77")
+
+    def test_comparison_tabs_are_optional(self):
+        (self.tmp / "comparison_sites.csv").unlink()
+        (self.tmp / "comparison_authorities.csv").unlink()
+        def change(rows):
+            rows[2]["General Authorities"] = ""
+        self.edit("areas", change)
+        rep, t = self.run_export()
+        self.assertEqual(rep.errors, [])
+        self.assertFalse([h for h in t["hotspots"] if h["id"].startswith("CS-")])
+
 
 if __name__ == "__main__":
     unittest.main()

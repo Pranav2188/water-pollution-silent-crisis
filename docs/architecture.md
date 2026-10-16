@@ -68,7 +68,7 @@ The website never talks to the sheet or (until Phase 4) to Supabase. It only rea
 
 | Feature | Switch in `config.js` | Logic (done, tested) | Where it shows | Still needed |
 |---|---|---|---|---|
-| Several areas on one site | `areaFilter: true` (on) | `pipeline/build.py` (`area_for`), `features/areas.js` | buttons above the map | Alandi hotspots, then set AREA-03 to `Live` |
+| Several areas on one site | `areaFilter: true` (on) | `pipeline/build.py` (`area_for`, `build_comparison_sites`), `features/areas.js` | buttons above the map | done: 3 areas live (Alandi since 16 Oct 2026); an Alandi ward map would add outlines |
 | Responsibility panel (Week 6) | `responsibilityPanel` | `features/responsibility.js` → `responsibleFor(h, data)` gives first contact, escalation steps, general and local offices | marked spot in `features/hotspot-panel.js` | the panel markup; verified authority rows |
 | Complaint helper (Week 7) | `complaintHelper` | `features/complaint.js` → `fillTemplate`, `openPlaceholders`, `whatsappLink`, `xLink` | marked spot in `features/hotspot-panel.js` | PMC CARE number verified (Progress P3-01); the form |
 | Marathi | add `"mr"` to `languages` | `core/i18n.js`, `i18n/mr.json` | header language switch; `?lang=mr` to test early | the translations; `name_mr` in `areas.csv` |

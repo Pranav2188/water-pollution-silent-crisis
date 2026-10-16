@@ -19,6 +19,13 @@ export function googleMapsUrl(h, kind) {
 
 const tag = (key) => `<span class="tag">${esc(t(key))}</span>`;
 
+// The office to contact first (when the sheet names one) goes to the top of the list.
+function firstFirst(who) {
+  const all = [...who.general, ...who.local];
+  if (!who.firstAuthority) return all;
+  return [who.firstAuthority, ...all.filter((a) => a !== who.firstAuthority)];
+}
+
 export function renderHotspotPanel(panel, h, data) {
   const unsure = (field) => (h.to_confirm.includes(field) ? tag("common.to_confirm") : "");
   const who = responsibleFor(h, data);
@@ -42,16 +49,18 @@ export function renderHotspotPanel(panel, h, data) {
 
     <h3>${esc(t("panel.where"))}</h3>
     <ul class="list">
+      ${h.jurisdiction && !h.prabhags.length ? `
+      <li>${esc(t("panel.jurisdiction", { value: h.jurisdiction }))} ${unsure("jurisdiction")}</li>` : `
       <li>${esc(t("panel.prabhag", { value: h.prabhags.join(" / ") || t("common.to_confirm") }))} ${unsure("prabhags")}</li>
-      <li>${esc(t("panel.ward_office", { value: h.ward_offices.join(" / ") || t("common.to_confirm") }))} ${unsure("ward_offices")}</li>
+      <li>${esc(t("panel.ward_office", { value: h.ward_offices.join(" / ") || t("common.to_confirm") }))} ${unsure("ward_offices")}</li>`}
       <li>${esc(t("panel.assembly", { value: h.assembly.join(" / ") || t("common.to_confirm") }))} ${unsure("assembly")}</li>
       <li>${esc(t("panel.lok_sabha", { value: h.lok_sabha.join(" / ") || t("common.to_confirm") }))} ${unsure("lok_sabha")}</li>
     </ul>
 
     <h3>${esc(t("panel.responsible"))}</h3>
     <ul class="list">
-      ${[...who.general, ...who.local].map((a) => `
-        <li><strong>${esc(a.role)}</strong>${a.verified ? "" : ` ${tag("common.to_verify")}`}<br>
+      ${firstFirst(who).map((a) => `
+        <li>${a === who.firstAuthority ? `<span class="meta">${esc(t("panel.first_contact"))}</span><br>` : ""}<strong>${esc(a.role)}</strong>${a.verified ? "" : ` ${tag("common.to_verify")}`}<br>
         ${esc(a.office)}<br><span class="meta">${esc(a.contact)}</span></li>`).join("")}
     </ul>
     ${config.features.responsibilityPanel ? "" /* Week 6: render who.firstContact and who.escalation here */ : `<div class="placeholder">${esc(t("panel.coming_soon"))}</div>`}
@@ -61,5 +70,6 @@ export function renderHotspotPanel(panel, h, data) {
     <p>${h.project_ids.length
       ? h.project_ids.map((id) => esc(data.projectById[id]?.name || id)).join(", ")
       : `${esc(h.project_link)} ${tag("common.to_confirm")}`}</p>
+    ${h.notes ? `<h3>${esc(t("panel.notes"))}</h3><p class="meta">${esc(h.notes)}</p>` : ""}
   `;
 }

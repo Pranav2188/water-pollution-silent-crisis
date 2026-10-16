@@ -43,7 +43,10 @@
    "AU-17"
   ],
   "project_ids": [],
-  "project_link": "To confirm"
+  "project_link": "To confirm",
+  "jurisdiction": "",
+  "first_contact_id": null,
+  "notes": ""
  },
  {
   "id": "HS-02",
@@ -80,7 +83,10 @@
    "AU-16"
   ],
   "project_ids": [],
-  "project_link": "To confirm"
+  "project_link": "To confirm",
+  "jurisdiction": "",
+  "first_contact_id": null,
+  "notes": ""
  },
  {
   "id": "HS-03",
@@ -117,7 +123,10 @@
    "AU-16"
   ],
   "project_ids": [],
-  "project_link": "Not a sewage problem"
+  "project_link": "Not a sewage problem",
+  "jurisdiction": "",
+  "first_contact_id": null,
+  "notes": ""
  },
  {
   "id": "HS-04",
@@ -164,7 +173,10 @@
    "AU-17"
   ],
   "project_ids": [],
-  "project_link": "Not a sewage problem"
+  "project_link": "Not a sewage problem",
+  "jurisdiction": "",
+  "first_contact_id": null,
+  "notes": ""
  },
  {
   "id": "HS-05",
@@ -211,7 +223,10 @@
    "AU-17"
   ],
   "project_ids": [],
-  "project_link": "To confirm"
+  "project_link": "To confirm",
+  "jurisdiction": "",
+  "first_contact_id": null,
+  "notes": ""
  },
  {
   "id": "HS-06",
@@ -248,7 +263,10 @@
    "AU-16"
   ],
   "project_ids": [],
-  "project_link": "Not a sewage problem"
+  "project_link": "Not a sewage problem",
+  "jurisdiction": "",
+  "first_contact_id": null,
+  "notes": ""
  },
  {
   "id": "HS-07",
@@ -285,7 +303,10 @@
    "AU-16"
   ],
   "project_ids": [],
-  "project_link": "To confirm"
+  "project_link": "To confirm",
+  "jurisdiction": "",
+  "first_contact_id": null,
+  "notes": ""
  },
  {
   "id": "HS-08",
@@ -332,7 +353,10 @@
    "AU-17"
   ],
   "project_ids": [],
-  "project_link": "Not a sewage problem"
+  "project_link": "Not a sewage problem",
+  "jurisdiction": "",
+  "first_contact_id": null,
+  "notes": ""
  },
  {
   "id": "HS-09",
@@ -378,7 +402,10 @@
    "AU-17"
   ],
   "project_ids": [],
-  "project_link": "To confirm"
+  "project_link": "To confirm",
+  "jurisdiction": "",
+  "first_contact_id": null,
+  "notes": ""
  },
  {
   "id": "HS-10",
@@ -422,7 +449,10 @@
    "AU-30"
   ],
   "project_ids": [],
-  "project_link": "Not a sewage problem"
+  "project_link": "Not a sewage problem",
+  "jurisdiction": "",
+  "first_contact_id": null,
+  "notes": ""
  },
  {
   "id": "HS-11",
@@ -466,7 +496,10 @@
    "AU-30"
   ],
   "project_ids": [],
-  "project_link": "Not a sewage problem"
+  "project_link": "Not a sewage problem",
+  "jurisdiction": "",
+  "first_contact_id": null,
+  "notes": ""
  },
  {
   "id": "HS-12",
@@ -511,7 +544,10 @@
    "AU-31"
   ],
   "project_ids": [],
-  "project_link": "To confirm"
+  "project_link": "To confirm",
+  "jurisdiction": "",
+  "first_contact_id": null,
+  "notes": ""
  },
  {
   "id": "HS-13",
@@ -549,7 +585,10 @@
    "AU-29"
   ],
   "project_ids": [],
-  "project_link": "Not a sewage problem"
+  "project_link": "Not a sewage problem",
+  "jurisdiction": "",
+  "first_contact_id": null,
+  "notes": ""
  },
  {
   "id": "HS-14",
@@ -588,6 +627,144 @@
    "AU-29"
   ],
   "project_ids": [],
-  "project_link": "Not a sewage problem"
+  "project_link": "Not a sewage problem",
+  "jurisdiction": "",
+  "first_contact_id": null,
+  "notes": ""
+ },
+ {
+  "id": "CS-01",
+  "name": "Waste caught on weir piers by the old bridge",
+  "area_id": "AREA-03",
+  "lat": 18.676874,
+  "lng": 73.893992,
+  "type": "dumping",
+  "problem_type": null,
+  "date_seen": "2026-10-09",
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/CS-01_2026-10-09_weir-piers.jpg",
+  "description": "Row of brick-faced piers (a weir) beside the old road bridge, with plastic sheets, cloth and branches caught against the piers; still, dark water. Litter on the bank by the gate (18.676867, 73.893975)",
+  "source": "Field visit 9 Oct 2026 (GPS Map Camera photos)",
+  "last_verified": "2026-10-09",
+  "prabhags": [],
+  "ward_offices": [],
+  "assembly": [
+   "Khed Alandi"
+  ],
+  "lok_sabha": [
+   "Shirur"
+  ],
+  "to_confirm": [
+   "jurisdiction"
+  ],
+  "authority_ids": [
+   "CA-10",
+   "CA-11"
+  ],
+  "project_ids": [],
+  "project_link": "To confirm",
+  "jurisdiction": "Alandi Municipal Council (to confirm with the ward map)",
+  "first_contact_id": "CA-01",
+  "notes": "Who owns and operates this weir is unknown (RTI to the council and WRD). One team photo from this spot shows a face and stays in the log book only"
+ },
+ {
+  "id": "CS-02",
+  "name": "Weir with green water and froth, Kate Patil Nagar",
+  "area_id": "AREA-03",
+  "lat": 18.677468,
+  "lng": 73.889917,
+  "type": "weir",
+  "problem_type": null,
+  "date_seen": "2026-10-09",
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/CS-02_2026-10-09_green-water.jpg",
+  "description": "Water spilling over a weir (concrete piers with a pipe rail on top); strongly yellow-green on one side of the spillway, white froth below; plastic on the rocks. Froth patch and dark water downstream (18.677457, 73.889959)",
+  "source": "Field visit 9 Oct 2026 (GPS Map Camera photos)",
+  "last_verified": "2026-10-09",
+  "prabhags": [],
+  "ward_offices": [],
+  "assembly": [
+   "Khed Alandi"
+  ],
+  "lok_sabha": [
+   "Shirur"
+  ],
+  "to_confirm": [
+   "jurisdiction",
+   "assembly"
+  ],
+  "authority_ids": [
+   "CA-10",
+   "CA-11"
+  ],
+  "project_ids": [],
+  "project_link": "To confirm",
+  "jurisdiction": "Alandi Municipal Council (to confirm); weir owner unknown",
+  "first_contact_id": "CA-03",
+  "notes": "Green colour is consistent with algae in a nutrient-rich weir pool, but that is an inference; only MPCB sampling can say what it is. Foam here is the subject of NGT OA 111/2024 (WZ)"
+ },
+ {
+  "id": "CS-03",
+  "name": "Possible drain entering from the opposite bank",
+  "area_id": "AREA-03",
+  "lat": 18.67779,
+  "lng": 73.890422,
+  "type": "nalla",
+  "problem_type": null,
+  "date_seen": "2026-10-09",
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/CS-03_2026-10-09_drain.jpg",
+  "description": "Dark water flowing across the mudflat from an opening in the stone ghat wall on the opposite bank",
+  "source": "Field visit 9 Oct 2026 (GPS Map Camera photo)",
+  "last_verified": "2026-10-09",
+  "prabhags": [],
+  "ward_offices": [],
+  "assembly": [],
+  "lok_sabha": [
+   "Shirur"
+  ],
+  "to_confirm": [
+   "jurisdiction",
+   "lok_sabha"
+  ],
+  "authority_ids": [
+   "CA-11"
+  ],
+  "project_ids": [],
+  "project_link": "To confirm",
+  "jurisdiction": "To confirm: the opposite bank may be outside Alandi council limits (Charholi/PCMC side or a village)",
+  "first_contact_id": "CA-01",
+  "notes": "GPS is where the photo was taken, not the drain itself. Pin the drain's exact spot on the next visit (from the bank, never in the riverbed)"
+ },
+ {
+  "id": "CS-04",
+  "name": "Plastic and cloth waste on the riverbed under the Dighi–Alandi Road bridge",
+  "area_id": "AREA-03",
+  "lat": 18.676935,
+  "lng": 73.894623,
+  "type": "dumping",
+  "problem_type": null,
+  "date_seen": "2026-10-09",
+  "photo_url": "https://pranav2188.github.io/water-pollution-silent-crisis/photos/CS-04_2026-10-09_under-bridge.jpg",
+  "description": "Plastic bags, cloth and other waste on the rocks and in the shallow water under the Dighi–Alandi Road bridge, just downstream of the brick-pier weir (CS-01); dark, still water between the piers",
+  "source": "Field visit 9 Oct 2026 (GPS Map Camera photo)",
+  "last_verified": "2026-10-09",
+  "prabhags": [],
+  "ward_offices": [],
+  "assembly": [
+   "Khed Alandi"
+  ],
+  "lok_sabha": [
+   "Shirur"
+  ],
+  "to_confirm": [
+   "jurisdiction"
+  ],
+  "authority_ids": [
+   "CA-10",
+   "CA-11"
+  ],
+  "project_ids": [],
+  "project_link": "To confirm",
+  "jurisdiction": "Alandi Municipal Council (to confirm with the ward map); who maintains the bridge (PWD or council) unknown",
+  "first_contact_id": "CA-01",
+  "notes": "Same weir and bridge as CS-01, about 65 m east. Photo taken from the bank under the bridge; a person on the bridge is blurred in the website copy"
  }
 ]

@@ -1,6 +1,6 @@
 # Water Pollution A Silent Crisis
 
-A citizen awareness and accountability website for the Mula-Mutha river stretch from the Old Keshavnagar–Kharadi Bridge to Mundhwa Bridge, Pune. Since 10 Oct 2026 it also covers five spots upstream on the Mutha in central Pune (Deccan to Shivajinagar, HS-10 to HS-14).
+A citizen awareness and accountability website for the Mula-Mutha river stretch from the Old Keshavnagar–Kharadi Bridge to Mundhwa Bridge, Pune. Since 10 Oct 2026 it also covers five spots upstream on the Mutha in central Pune (Deccan to Shivajinagar, HS-10 to HS-14), and since 16 Oct 2026 four comparison sites on the Indrayani at Alandi (CS-01 to CS-04).
 
 The website maps pollution hotspots, shows which authority is responsible for each one, tracks the progress of government projects meant to fix them, and helps residents raise complaints through the correct official channels.
 

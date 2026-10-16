@@ -12,6 +12,11 @@
    14,
    15
   ],
+  "general_authority_ids": [
+   "AU-01",
+   "AU-06",
+   "AU-07"
+  ],
   "status": "Live",
   "description": "The original study stretch, from Mundhwa Bridge to the Old Keshavnagar–Kharadi Bridge (visits on 29 Sep and 9 Oct 2026)",
   "hotspot_count": 9,
@@ -39,6 +44,11 @@
    27,
    29
   ],
+  "general_authority_ids": [
+   "AU-01",
+   "AU-06",
+   "AU-07"
+  ],
   "status": "Live",
   "description": "Upstream spots from Garware College, Deccan to the steel bridge at Shivajinagar (visit on 10 Oct 2026)",
   "hotspot_count": 5,
@@ -60,9 +70,23 @@
   "river": "Indrayani",
   "local_body": "Alandi Municipal Council",
   "prabhags": [],
-  "status": "Planned",
-  "description": "Comparison site, kept off the map until Alandi's ward map and routing rules are ready (Phase 4, Indrayani Watch)",
-  "hotspot_count": 0,
-  "bounds": null
+  "general_authority_ids": [
+   "CA-01",
+   "CA-03",
+   "CA-04"
+  ],
+  "status": "Live",
+  "description": "Comparison site on the Indrayani at Alandi: the weir by the old road bridge and the Kate Patil Nagar weir (visit on 9 Oct 2026). Sites and offices come from the Comparison Sites and Comparison Authorities tabs",
+  "hotspot_count": 4,
+  "bounds": [
+   [
+    18.676874,
+    73.889917
+   ],
+   [
+    18.67779,
+    73.894623
+   ]
+  ]
  }
 ]
