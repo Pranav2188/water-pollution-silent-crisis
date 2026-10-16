@@ -14,7 +14,8 @@
   "why_this_office": "PMC runs the city's sewers and sewage treatment plants",
   "source_ids": [
    "SRC-13",
-   "SRC-24"
+   "SRC-24",
+   "SRC-51"
   ],
   "status": "Draft (confirm)",
   "confirmed": "",
@@ -24,7 +25,7 @@
   "problem_type": "Treatment plant not working",
   "what_you_see": "Untreated or smelly water leaving a sewage treatment plant outlet",
   "first_contact": "MPCB Sub-Regional Office Pune-I",
-  "how_to_reach": "sropune1@mpcb.gov.in, 020-25811694, MPCB E-Catalyst app, X @mpcb_official",
+  "how_to_reach": "sropune1@mpcb.gov.in, 020-25811694, MPCB E-Catalyst app (complaint feature to verify), X @mpcb_official",
   "also_inform": "PMC Drainage Department (JICA project cell for new plants)",
   "escalate": [
    "MPCB Regional Office Pune (ropune@mpcb.gov.in)",
@@ -35,7 +36,8 @@
   "source_ids": [
    "SRC-06",
    "SRC-19",
-   "SRC-13"
+   "SRC-13",
+   "SRC-57"
   ],
   "status": "Draft (confirm)",
   "confirmed": "",
@@ -55,7 +57,8 @@
   "why_this_office": "PMC collects and clears solid waste in the city",
   "source_ids": [
    "SRC-24",
-   "SRC-17"
+   "SRC-17",
+   "SRC-51"
   ],
   "status": "Draft (confirm)",
   "confirmed": "",
@@ -85,17 +88,19 @@
   "problem_type": "Froth or foam at the weir",
   "what_you_see": "Thick white foam below the bandhara",
   "first_contact": "MPCB Sub-Regional Office Pune-I",
-  "how_to_reach": "sropune1@mpcb.gov.in, 020-25811694, MPCB E-Catalyst app",
+  "how_to_reach": "sropune1@mpcb.gov.in, 020-25811694, MPCB E-Catalyst app (complaint feature to verify)",
   "also_inform": "PMC Drainage Department",
   "escalate": [
    "MPCB Regional Office Pune",
-   "RTI for water-quality readings at Mundhwa Bridge (station 219"
+   "RTI for water-quality readings at Mundhwa Bridge (station 2192)"
   ],
   "what_to_include": "Photo or short video, date and time, how far the foam spreads",
   "why_this_office": "Foam usually comes from detergents in untreated sewage; MPCB monitors river water quality",
   "source_ids": [
    "SRC-06",
-   "SRC-05"
+   "SRC-05",
+   "SRC-19",
+   "SRC-57"
   ],
   "status": "Draft (confirm)",
   "confirmed": "",
@@ -108,7 +113,7 @@
   "how_to_reach": "020-25811694, sropune1@mpcb.gov.in, plus PMC CARE",
   "also_inform": "Jeevitnadi (NGO), local media if large",
   "escalate": [
-   "MPCB Regional Office Pune. The NGT took up a similar case on its own (OA 214/202"
+   "MPCB Regional Office Pune. The NGT took up a similar case on its own (OA 214/2024)"
   ],
   "what_to_include": "Photos, rough count, location, date and time, colour and smell of the water",
   "why_this_office": "A fish kill points to sudden pollution; MPCB investigates the source",
@@ -139,7 +144,8 @@
    "SRC-25",
    "SRC-27",
    "SRC-21",
-   "SRC-24"
+   "SRC-24",
+   "SRC-51"
   ],
   "status": "Changed after check",
   "confirmed": "Pranav Patil (doc check), 2026-10-09: corrected after no source was found for the Irrigation Department, then rewritten from desk research RES-03. Ward office still to confirm the contract holder and officer",

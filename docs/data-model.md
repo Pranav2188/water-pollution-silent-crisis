@@ -146,11 +146,13 @@ Comparison sites (`CS-xx`) use the same shape, with these differences:
 }
 ```
 
-`verified` is false when Last Verified says "Not yet verified"; the website then shows "to verify". `scope` is `local` for rows tied to a prabhag, ward office or constituency (these are linked to hotspots), and `general` for city-wide offices such as PMC CARE and MPCB.
+`verified` is false when Last Verified says "Not yet verified"; the website then shows "to verify". When it is true, the website tells two kinds of check apart from the Verified By column: a name followed by "(doc check)" means the details were matched against official pages or reports only (shown as "Checked against sources"); a plain name means someone called, wrote or visited the office (shown as "Confirmed with the office"). After contacting an office, log it in the Verification Log and replace "Pranav Patil (doc check)" with the name of the person who made contact. `scope` is `local` for rows tied to a prabhag, ward office or constituency (these are linked to hotspots), and `general` for city-wide offices such as PMC CARE and MPCB.
 
 ## routing.json
 
-One entry per problem type, from the Routing Rules tab. `escalate` is split into steps; `template` is the complaint text with `[placeholders]` the complaint helper fills in.
+One entry per problem type, from the Routing Rules tab. `escalate` is split into steps at "1)", "2)" and so on (a step number is one digit at the start or after a space, so "(station 2192)" stays whole); `template` is the complaint text with `[placeholders]` the complaint helper fills in.
+
+The responsibility panel turns the phone numbers, WhatsApp numbers, emails, websites and X handles in "How to Reach" and in each office's Contact and Official Handle into buttons. Write "(to verify)" next to any channel nobody has checked, and say "not a complaint line" for numbers that are something else (such as MPCB's online-services helpdesk): the website then leaves them out. Routes stay marked as drafts until Status says the team has agreed them.
 
 ## projects.json
 

@@ -105,6 +105,13 @@ class Export(unittest.TestCase):
         self.edit("hotspots", change)
         self.assertError("has type 'drain'")
 
+    def test_escalation_steps_keep_numbers_in_brackets(self):
+        rep, t = self.run_export()
+        froth = next(r for r in t["routing"] if r["problem_type"] == "Froth or foam at the weir")
+        self.assertEqual(froth["escalate"][-1], "RTI for water-quality readings at Mundhwa Bridge (station 2192)")
+        fish = next(r for r in t["routing"] if r["problem_type"] == "Dead fish")
+        self.assertTrue(fish["escalate"][0].endswith("(OA 214/2024)"), fish["escalate"])
+
     # ---- comparison sites (Alandi) -------------------------------------------------
 
     def test_comparison_sites_link_only_to_their_own_offices(self):

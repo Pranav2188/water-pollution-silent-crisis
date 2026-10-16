@@ -13,7 +13,7 @@ export const config = {
 
   features: {
     areaFilter: true,           // area buttons above the map (data/areas.csv)
-    responsibilityPanel: false, // Week 6 (Sanskar): first contact + escalation from Routing Rules
+    responsibilityPanel: true,  // "What to do about it": first contact, channels, escalation (features/respond-panel.js)
     complaintHelper: false,     // Week 7: WhatsApp / X message; needs the PMC CARE number verified (Progress P3-01)
     photoReports: false,        // Phase 4: resident uploads with face blurring and a review queue (needs Supabase)
   },
