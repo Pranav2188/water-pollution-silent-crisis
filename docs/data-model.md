@@ -24,13 +24,17 @@ The sheet always wins. Never edit the JSON files or the Supabase tables by hand:
 | Projects | `projects.csv` | `projects.json` (with its dates inside) | `projects` |
 | Project Dates | `project_dates.csv` | inside `projects.json` | `project_dates` |
 | Sources | `sources.csv` | `sources.json` | `sources` |
+| Comparison Sites | `comparison_sites.csv` | inside `hotspots.json` (IDs `CS-xx`) | `hotspots` |
+| Comparison Authorities | `comparison_authorities.csv` | inside `authorities.json` (IDs `CA-xx`) | `authorities` |
 | *(not in the sheet)* | `areas.csv` | `areas.json` | `areas` |
+
+The two Comparison tabs hold sites outside the Pune study stretch (so far the Indrayani at Alandi, AREA-03). Their spots go on the map with the hotspots, but they link only to Comparison Authorities, never to PMC offices. The Comparison Projects tab is not exported yet.
 
 `data/areas.csv` is the one file kept in the repo instead of the sheet: it lists the river stretches the site covers and which prabhags belong to each. It changes rarely (when the project adds a new stretch), so a pull request is the right place to review it. See `data/README.md`.
 
 `meta.json` holds the export date and the counts shown in the footer.
 
-Internal tabs (Progress, Verification Log, Research Log, RTI Tracker, Map Pins) are **not** exported. They stay in the sheet.
+Internal tabs (Progress, Verification Log, Research Log, RTI Tracker, Map Pins, Comparison Projects) are **not** exported. They stay in the sheet.
 
 `web/data/wards.geojson` (prabhag outlines) is made separately by `tools/kml_to_geojson.py` from `data/boundaries/pmc-electoral-wards-2025-labelled.kml`.
 
@@ -45,6 +49,9 @@ The script stops with an error if any of these fail, so a bad sheet edit can't r
 - Published hotspots lie inside the Pune area (latitude 18.3–18.8, longitude 73.6–74.1).
 - Every published hotspot belongs to an area: its first prabhag is listed in `data/areas.csv` (or the optional "Area" column in the Hotspots tab names an area that exists).
 - No prabhag is listed in two areas, and area status is `Live` or `Planned`.
+- Every ID in an area's General Authorities exists in the Authorities or Comparison Authorities tab.
+- Every comparison site names an Area that exists, and its First Contact is a `CA-xx` in Comparison Authorities.
+- No ID appears twice across Hotspots and Comparison Sites, or across Authorities and Comparison Authorities.
 
 It warns (but continues) when a hotspot is held back because it has no coordinates yet, or has no photo link.
 
@@ -75,7 +82,10 @@ A hotspot is published only when it has numeric latitude and longitude, a valid 
   "to_confirm": ["ward_offices", "assembly"],
   "authority_ids": ["AU-02", "AU-03", "AU-08", "AU-12", "AU-14", "AU-15", "AU-16", "AU-17"],
   "project_ids": [],
-  "project_link": "To confirm"
+  "project_link": "To confirm",
+  "jurisdiction": "",
+  "first_contact_id": null,
+  "notes": ""
 }
 ```
 
@@ -83,6 +93,14 @@ A hotspot is published only when it has numeric latitude and longitude, a valid 
 - `problem_type` is the Routing Rules row for this hotspot. It comes from the sheet's "Problem Type (if not default)" column when that is filled in (for example "Construction debris in riverbed"); otherwise the default for the type is used (outfall and nalla → "Sewage outfall or nalla", dumping → "Garbage dumping", weir → "Froth or foam at the weir"). The user can pick another type in the complaint helper.
 - `to_confirm` lists fields the sheet marks "(confirm)". The website shows these with a "to confirm" label.
 - `authority_ids` are worked out by the script from the prabhags, ward offices and constituencies.
+
+Comparison sites (`CS-xx`) use the same shape, with these differences:
+
+- `prabhags` and `ward_offices` are empty; `jurisdiction` says who owns the spot (from "Jurisdiction (who owns this spot)"). The website shows it instead of the prabhag and ward office.
+- `problem_type` is `null`: the Routing Rules are written for PMC, so Alandi has none yet. `first_contact_id` comes straight from the sheet's "First Contact (Authority ID)".
+- `authority_ids` link only to `CA-xx` offices, by assembly and Lok Sabha constituency (the sheet's Assembly and Lok Sabha columns).
+- `notes` is the sheet's "Notes / To Verify"; the website shows it under "Still to check".
+- `to_confirm` can include `jurisdiction` when that text says "to confirm".
 
 ## areas.json
 
@@ -94,6 +112,7 @@ A hotspot is published only when it has numeric latitude and longitude, a valid 
   "river": "Mula-Mutha",
   "local_body": "Pune Municipal Corporation",
   "prabhags": [3, 4, 5, 14, 15],
+  "general_authority_ids": ["AU-01", "AU-06", "AU-07"],
   "status": "Live",
   "description": "The original study stretch, ...",
   "hotspot_count": 9,
@@ -101,7 +120,7 @@ A hotspot is published only when it has numeric latitude and longitude, a valid 
 }
 ```
 
-`hotspot_count` and `bounds` (south-west and north-east corners of its hotspots) are worked out by the script. `Planned` areas (such as Alandi) are exported but not shown as buttons until they have hotspots and are switched to `Live`. `name_mr` is shown when the site is in Marathi; empty falls back to `name`.
+`hotspot_count` and `bounds` (south-west and north-east corners of its hotspots) are worked out by the script. `Planned` areas are exported but not shown as buttons until they have hotspots and are switched to `Live`. `general_authority_ids` (the "General Authorities" column) are the main offices listed for every spot in the area, in order: PMC CARE and MPCB for Pune city, the council and MPCB Pune-II for Alandi. `name_mr` is shown when the site is in Marathi; empty falls back to `name`.
 
 `wards.geojson` features carry `area_id` too, so the map shows only that area's prabhag outlines when an area is picked.
 

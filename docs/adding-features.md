@@ -14,13 +14,17 @@ Open a pull request; `checks.yml` runs the same checks on GitHub.
 
 ## A new area (river stretch)
 
-Example: the Alandi comparison (AREA-03) once it has hotspots.
+Two ways, depending on where the stretch is:
 
-1. In `data/areas.csv`, fill the area's **Prabhags** (or leave them empty and use the Hotspots tab's optional **Area** column, which is easier for places outside PMC such as Alandi).
-2. Add its hotspots to the sheet as usual and download the CSVs.
-3. Set the area's **Status** to `Live`.
-4. If the area is outside the PMC ward file, the map shows the hotspots without prabhag outlines. That is fine; add a boundary file to `data/boundaries/` later if one exists.
-5. If its hotspots are outside latitude 18.3–18.8 / longitude 73.6–74.1, widen `LAT_RANGE` / `LNG_RANGE` in `tools/pipeline/build.py` and the matching `check` in `supabase/schema.sql`.
+- **Inside PMC** (another Mula-Mutha stretch): add a row to `data/areas.csv` with its **Prabhags**, add the hotspots to the Hotspots tab as usual, and use `AU-01 / AU-06 / AU-07` as its **General Authorities**.
+- **Outside PMC** (another town, like Alandi, AREA-03): add the spots to the **Comparison Sites** tab with the new area's ID in the **Area** column, and its offices to **Comparison Authorities** (`CA-xx`). In `data/areas.csv` leave Prabhags empty and list the town's main offices as **General Authorities** (Alandi uses `CA-01 / CA-03 / CA-04`).
+
+Then:
+
+1. Download the changed tabs as CSVs into `data/`.
+2. Set the area's **Status** to `Live`.
+3. If the area is outside the PMC ward file, the map shows the hotspots without prabhag outlines. That is fine; add a boundary file to `data/boundaries/` later if one exists.
+4. If its hotspots are outside latitude 18.3–18.8 / longitude 73.6–74.1, widen `LAT_RANGE` / `LNG_RANGE` in `tools/pipeline/build.py` and the matching `check` in `supabase/schema.sql`.
 
 A prabhag can belong to only one area; the script stops if it is listed twice.
 

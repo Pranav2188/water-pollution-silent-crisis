@@ -31,6 +31,7 @@ create table if not exists areas (
   river       text,
   local_body  text,
   prabhags    jsonb not null default '[]',
+  general_authority_ids jsonb not null default '[]',  -- main offices shown for every spot in the area
   status      text check (status in ('Live', 'Planned')),
   description text
 );
@@ -96,14 +97,15 @@ create table if not exists project_dates (
   notes       text
 );
 
+-- Hotspots (HS-xx, Hotspots tab) and comparison sites (CS-xx, Comparison Sites tab).
 create table if not exists hotspots (
-  id            text primary key,         -- HS-01
+  id            text primary key,         -- HS-01 or CS-01
   area_id       text references areas(id),
   name          text not null,
   lat           double precision not null check (lat between 18.3 and 18.8),
   lng           double precision not null check (lng between 73.6 and 74.1),
   type          text not null check (type in ('outfall', 'nalla', 'dumping', 'weir')),
-  problem_type  text references routing_rules(problem_type),
+  problem_type  text references routing_rules(problem_type),  -- empty for comparison sites
   date_seen     date,
   photo_url     text,
   description   text,
@@ -116,12 +118,21 @@ create table if not exists hotspots (
   to_confirm    jsonb not null default '[]',
   authority_ids jsonb not null default '[]',
   project_ids   jsonb not null default '[]',
-  project_link  text
+  project_link  text,
+  jurisdiction  text,                     -- comparison sites: who owns the spot
+  first_contact_id text references authorities(id),  -- comparison sites: office to contact first
+  notes         text                      -- comparison sites: what is still to check
 );
 
--- Upgrading a project created before areas existed (16 Oct 2026)? This adds the column;
--- it does nothing if the column is already there.
+-- Upgrading an older project? These add the newer columns; each does nothing if the
+-- column is already there.
 alter table hotspots add column if not exists area_id text references areas(id);
+
+-- Added 16 Oct 2026 for the Alandi comparison sites. Safe to run again.
+alter table areas    add column if not exists general_authority_ids jsonb not null default '[]';
+alter table hotspots add column if not exists jurisdiction text;
+alter table hotspots add column if not exists first_contact_id text references authorities(id);
+alter table hotspots add column if not exists notes text;
 
 -- Row Level Security: public read-only.
 do $$

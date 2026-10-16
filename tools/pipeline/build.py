@@ -4,7 +4,7 @@ the JSON-ready list for the website. The rules are listed in docs/data-model.md.
 import datetime as dt
 import re
 
-from .io import DATA, OUT, read_csv, write_json
+from .io import DATA, OUT, read_csv, read_optional, write_json
 from .parse import iso_date, number, numbers, split_ids, split_list
 from .report import Report
 
@@ -76,6 +76,7 @@ def build_areas(rows, rep):
             "river": r.get("River", ""),
             "local_body": r.get("Local Body", ""),
             "prabhags": prabhags,
+            "general_authority_ids": split_ids(r.get("General Authorities", ""), "(?:AU|CA)"),
             "status": status,
             "description": r.get("Description", ""),
         })
@@ -98,36 +99,59 @@ def area_for(row, prabhags, areas):
 # --------------------------------------------------------------------------- authorities
 
 
+def authority(r, rep, contact_col="Contact", handle_col="Official Handle"):
+    """One authority in the shape the website and Supabase use. Works for both the
+    Authorities tab (AU-xx) and the Comparison Authorities tab (CA-xx)."""
+    office = r.get("Office", "")
+    role = r.get("Role", "")
+    m_prabhag = re.match(r"Prabhag (\d+)", office)
+    m_ward = re.match(r"(.+?) Ward Office", office)
+    m_assembly = re.match(r"(.+?) Assembly:", office)
+    m_ls = re.match(r"(.+?) Lok Sabha:", office)
+    last = r.get("Last Verified", "")
+    local = bool(m_prabhag or (role == "Ward office" and m_ward) or m_assembly or m_ls)
+    return {
+        "id": r["ID"],
+        "role": role,
+        "office": office,
+        "area": r.get("Area Covered", ""),
+        "contact": r.get(contact_col, ""),
+        "handle": r.get(handle_col, ""),
+        "source_url": r.get("Source URL", ""),
+        "verified": iso_date(last) is not None,
+        "last_verified": iso_date(last),
+        "verified_by": r.get("Verified By", ""),
+        "prabhag": int(m_prabhag.group(1)) if m_prabhag else None,
+        "ward_office": m_ward.group(1) if (role == "Ward office" and m_ward) else None,
+        "assembly": m_assembly.group(1) if m_assembly else None,
+        "lok_sabha": m_ls.group(1) if m_ls else None,
+        "scope": "local" if local else "general",
+    }
+
+
 def build_authorities(rows, rep):
     unique(rows, "ID", "Authorities", rep)
-    out = []
+    return [authority(r, rep) for r in rows]
+
+
+def build_comparison_authorities(rows, rep):
+    """The Comparison Authorities tab (CA-xx): offices for the comparison sites such as Alandi."""
+    unique(rows, "ID", "Comparison Authorities", rep)
     for r in rows:
-        office = r.get("Office", "")
-        role = r.get("Role", "")
-        m_prabhag = re.match(r"Prabhag (\d+)", office)
-        m_ward = re.match(r"(.+?) Ward Office", office)
-        m_assembly = re.match(r"(.+?) Assembly:", office)
-        m_ls = re.match(r"(.+?) Lok Sabha:", office)
-        last = r.get("Last Verified", "")
-        local = bool(m_prabhag or (role == "Ward office" and m_ward) or m_assembly or m_ls)
-        out.append({
-            "id": r["ID"],
-            "role": role,
-            "office": office,
-            "area": r.get("Area Covered", ""),
-            "contact": r.get("Contact", ""),
-            "handle": r.get("Official Handle", ""),
-            "source_url": r.get("Source URL", ""),
-            "verified": iso_date(last) is not None,
-            "last_verified": iso_date(last),
-            "verified_by": r.get("Verified By", ""),
-            "prabhag": int(m_prabhag.group(1)) if m_prabhag else None,
-            "ward_office": m_ward.group(1) if (role == "Ward office" and m_ward) else None,
-            "assembly": m_assembly.group(1) if m_assembly else None,
-            "lok_sabha": m_ls.group(1) if m_ls else None,
-            "scope": "local" if local else "general",
-        })
-    return out
+        if not r.get("ID", "").startswith("CA-"):
+            rep.error(f"Comparison Authorities: '{r.get('ID')}' should start with CA-")
+    return [authority(r, rep, contact_col="Contact (office only)", handle_col="Other Official Channels")
+            for r in rows]
+
+
+def check_general_authorities(areas, authorities, rep):
+    ids = {a["id"] for a in authorities}
+    for a in areas:
+        for i in a["general_authority_ids"]:
+            if i not in ids:
+                rep.error(f"Areas: {a['id']} lists general authority {i}, which is in neither Authorities tab")
+        if a["status"] == "Live" and not a["general_authority_ids"]:
+            rep.warn(f"Areas: {a['id']} has no general authorities; its hotspots will list only local offices")
 
 
 # --------------------------------------------------------------------------- routing rules
@@ -229,22 +253,10 @@ def build_hotspots(rows, authorities, project_ids, areas, rep):
     published = []
     for r in rows:
         hid = r.get("ID", "?")
-        lat, lng = number(r.get("Latitude")), number(r.get("Longitude"))
-        htype = r.get("Type", "").lower()
-        if htype not in HOTSPOT_TYPES:
-            rep.error(f"Hotspots: {hid} has type '{htype}' (allowed: {', '.join(sorted(HOTSPOT_TYPES))})")
+        spot = check_spot(r, "Hotspots", rep)
+        if spot is None:
             continue
-        if lat is None or lng is None:
-            rep.warn(f"Hotspots: {hid} held back (no GPS yet)")
-            continue
-        if not (LAT_RANGE[0] <= lat <= LAT_RANGE[1] and LNG_RANGE[0] <= lng <= LNG_RANGE[1]):
-            rep.error(f"Hotspots: {hid} at {lat}, {lng} is outside the Pune area; check the numbers")
-            continue
-        if not r.get("Source"):
-            rep.warn(f"Hotspots: {hid} held back (no source)")
-            continue
-        if not r.get("Photo Link"):
-            rep.warn(f"Hotspots: {hid} has no photo link (published without a photo)")
+        lat, lng, htype = spot
 
         prabhags = numbers(r.get("Prabhag", ""))
         wards, ward_c = split_list(r.get("Ward Office", ""))
@@ -293,6 +305,92 @@ def build_hotspots(rows, authorities, project_ids, areas, rep):
             "authority_ids": linked,
             "project_ids": projs,
             "project_link": proj_text if not projs else ", ".join(projs),
+            "jurisdiction": "",
+            "first_contact_id": None,
+            "notes": "",
+        })
+    return published
+
+
+def check_spot(r, label, rep):
+    """Shared checks for one map spot. Returns (lat, lng, type) or None if it is held back."""
+    sid = r.get("ID", "?")
+    lat, lng = number(r.get("Latitude")), number(r.get("Longitude"))
+    stype = r.get("Type", "").lower()
+    if stype not in HOTSPOT_TYPES:
+        rep.error(f"{label}: {sid} has type '{stype}' (allowed: {', '.join(sorted(HOTSPOT_TYPES))})")
+        return None
+    if lat is None or lng is None:
+        rep.warn(f"{label}: {sid} held back (no GPS yet)")
+        return None
+    if not (LAT_RANGE[0] <= lat <= LAT_RANGE[1] and LNG_RANGE[0] <= lng <= LNG_RANGE[1]):
+        rep.error(f"{label}: {sid} at {lat}, {lng} is outside the Pune area; check the numbers")
+        return None
+    if not r.get("Source"):
+        rep.warn(f"{label}: {sid} held back (no source)")
+        return None
+    if not r.get("Photo Link"):
+        rep.warn(f"{label}: {sid} has no photo link (published without a photo)")
+    return lat, lng, stype
+
+
+def build_comparison_sites(rows, authorities, areas, rep):
+    """The Comparison Sites tab (CS-xx), published as map spots in their own area.
+    They link only to Comparison Authorities (CA-xx) and have no PMC routing rule yet,
+    so problem_type is empty; first_contact_id comes straight from the sheet."""
+    unique(rows, "ID", "Comparison Sites", rep)
+    area_ids = {a["id"] for a in areas}
+    ca_ids = {a["id"] for a in authorities}
+    published = []
+    for r in rows:
+        sid = r.get("ID", "?")
+        spot = check_spot(r, "Comparison Sites", rep)
+        if spot is None:
+            continue
+        lat, lng, stype = spot
+        area = r.get("Area", "")
+        if not area:
+            rep.error(f"Comparison Sites: {sid} has no Area; add one from data/areas.csv")
+        elif area not in area_ids:
+            rep.error(f"Comparison Sites: {sid} names area {area}, which is not in data/areas.csv")
+        first = r.get("First Contact (Authority ID)", "")
+        if first and first not in ca_ids:
+            rep.error(f"Comparison Sites: {sid} first contact {first} is not in Comparison Authorities")
+
+        assembly, asm_c = split_list(r.get("Assembly Constituency", ""))
+        lok_sabha, ls_c = split_list(r.get("Lok Sabha Constituency", ""))
+        to_confirm = [n for n, c in (("assembly", asm_c), ("lok_sabha", ls_c)) if c]
+        jurisdiction = r.get("Jurisdiction (who owns this spot)", "")
+        if "confirm" in jurisdiction.lower():
+            to_confirm.insert(0, "jurisdiction")
+        linked = [a["id"] for a in authorities
+                  if (a["assembly"] and a["assembly"] in assembly)
+                  or (a["lok_sabha"] and a["lok_sabha"] in lok_sabha)]
+
+        published.append({
+            "id": sid,
+            "name": r.get("Site Name", ""),
+            "area_id": area or None,
+            "lat": round(lat, 6),
+            "lng": round(lng, 6),
+            "type": stype,
+            "problem_type": None,
+            "date_seen": iso_date(r.get("Date Seen", "")),
+            "photo_url": r.get("Photo Link") or None,
+            "description": r.get("Description", ""),
+            "source": r.get("Source", ""),
+            "last_verified": iso_date(r.get("Last Verified", "")),
+            "prabhags": [],
+            "ward_offices": [],
+            "assembly": assembly,
+            "lok_sabha": lok_sabha,
+            "to_confirm": to_confirm,
+            "authority_ids": linked,
+            "project_ids": [],
+            "project_link": "To confirm",
+            "jurisdiction": jurisdiction,
+            "first_contact_id": first or None,
+            "notes": r.get("Notes / To Verify", ""),
         })
     return published
 
@@ -317,14 +415,20 @@ def export(data_dir=DATA, out_dir=OUT, write=True, today=None):
     source_ids = {s["id"] for s in sources}
     areas = build_areas(read_csv("areas", data_dir), rep)
     authorities = build_authorities(read_csv("authorities", data_dir), rep)
+    comparison_authorities = build_comparison_authorities(read_optional("comparison_authorities", data_dir), rep)
     routing = build_routing(read_csv("routing_rules", data_dir), source_ids, rep)
     projects = build_projects(read_csv("projects", data_dir), read_csv("project_dates", data_dir), source_ids, rep)
     hotspots = build_hotspots(read_csv("hotspots", data_dir), authorities, {p["id"] for p in projects}, areas, rep)
+    hotspots += build_comparison_sites(read_optional("comparison_sites", data_dir), comparison_authorities, areas, rep)
+    authorities = authorities + comparison_authorities
+    unique([{"ID": a["id"]} for a in authorities], "ID", "Authorities + Comparison Authorities", rep)
+    unique([{"ID": h["id"]} for h in hotspots], "ID", "Hotspots + Comparison Sites", rep)
+    check_general_authorities(areas, authorities, rep)
     finish_areas(areas, hotspots)
 
     problem_names = {r["problem_type"] for r in routing}
     for h in hotspots:
-        if h["problem_type"] not in problem_names:
+        if h["problem_type"] is not None and h["problem_type"] not in problem_names:
             rep.error(f"Hotspots: {h['id']} maps to '{h['problem_type']}', which is not in Routing Rules")
 
     tables = {"hotspots": hotspots, "areas": areas, "authorities": authorities,
