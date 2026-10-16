@@ -27,9 +27,11 @@ How the parts fit together, and where the planned features plug in: [docs/archit
 | `js/core/i18n.js` | `t("key")` for every visible word; language from `?lang=` or the header switch | shared |
 | `js/features/map-view.js` | Leaflet map, prabhag outlines, markers, legend, `showArea()` | done |
 | `js/features/areas.js` | Area buttons above the map (from `data/areas.csv`) | done |
-| `js/features/hotspot-panel.js` | The side panel. The responsibility panel and complaint helper go at the marked spots | Sanskar, Weeks 6–7 |
-| `js/features/responsibility.js` | `responsibleFor(hotspot, data)`: first contact, escalation, local and general offices (tested) | ready for Week 6 |
-| `js/features/complaint.js` | Fills the Routing Rules template; WhatsApp and X links (tested) | ready for Week 7 (needs the PMC CARE number verified) |
+| `js/features/hotspot-panel.js` | The side panel: details, where it is, the offices with check badges; the complaint helper goes at the marked spot | Sanskar, Week 7 |
+| `js/features/respond-panel.js` | "What to do about it": problem picker, contact first with tap-able WhatsApp / call / email buttons, what to include, also inform, if nothing happens, why this office with sources | done (Week 6) |
+| `js/features/contacts.js` | Reads phone numbers, WhatsApp, emails, websites and X handles out of the sheet's contact text; skips anything marked "to verify" or "not a complaint line" (tested) | done |
+| `js/features/responsibility.js` | `responsibleFor(hotspot, data, problemType)`: first contact, channels, escalation, sources, local and general offices; `checkStatus(authority)` (tested) | done (Week 6) |
+| `js/features/complaint.js` | Fills the Routing Rules template; WhatsApp and X links (tested) | ready for Week 7 (PMC CARE number checked against sources; a test message is still to send) |
 | `js/features/project-list.js` | Project cards with dated promises | Sanskar, Week 7 |
 | `i18n/en.json`, `i18n/mr.json` | All website text. `mr.json` is empty until translated; empty values show in English | Vaishnavi translates |
 | `assets/css/` | `tokens.css` (all colours, light and dark) · `base.css` · `components.css` · `map.css`; pages load `main.css` | shared |

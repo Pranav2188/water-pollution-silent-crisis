@@ -173,7 +173,9 @@ def build_routing(rows, source_ids, rep):
             if s not in source_ids:
                 rep.error(f"Routing Rules: '{name}' cites {s}, which is not in Sources")
         esc = r.get("Escalate If No Action", "")
-        steps = [s.strip(" .") for s in re.split(r"\s*\d\)\s*", esc) if s.strip(" .")]
+        # "1) A. 2) B" -> ["A", "B"]. A step number is one digit at the start or after a space,
+        # so "(station 2192)" and "(OA 214/2024)" are not split.
+        steps = [s.strip(" .") for s in re.split(r"(?:^|\s)\d\)\s+", esc) if s.strip(" .")]
         if not r.get("Complaint Template"):
             rep.warn(f"Routing Rules: '{name}' has no complaint template yet")
         out.append({

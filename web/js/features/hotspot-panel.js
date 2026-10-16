@@ -1,11 +1,13 @@
 // The side panel that opens when a hotspot is tapped.
-// Week 6 (responsibility panel) and Week 7 (complaint helper) plug in at the marked spots,
-// switched on in js/core/config.js.
+// The responsibility panel ("What to do about it", features/respond-panel.js) and the Week 7
+// complaint helper plug in here, switched on in js/core/config.js.
 
 import { config } from "../core/config.js";
 import { esc, niceDate } from "../core/format.js";
 import { lang, t } from "../core/i18n.js";
 import { areaName } from "./areas.js";
+import { officeChannels } from "./contacts.js";
+import { channelLinks, checkBadge, renderResponsibility } from "./respond-panel.js";
 import { responsibleFor } from "./responsibility.js";
 
 // Google Maps URLs (no API key needed). Nothing loads from Google until the visitor taps
@@ -57,14 +59,20 @@ export function renderHotspotPanel(panel, h, data) {
       <li>${esc(t("panel.lok_sabha", { value: h.lok_sabha.join(" / ") || t("common.to_confirm") }))} ${unsure("lok_sabha")}</li>
     </ul>
 
+    ${config.features.responsibilityPanel ? `<section class="respond"></section>` : ""}
+
     <h3>${esc(t("panel.responsible"))}</h3>
-    <ul class="list">
-      ${firstFirst(who).map((a) => `
-        <li>${a === who.firstAuthority ? `<span class="meta">${esc(t("panel.first_contact"))}</span><br>` : ""}<strong>${esc(a.role)}</strong>${a.verified ? "" : ` ${tag("common.to_verify")}`}<br>
-        ${esc(a.office)}<br><span class="meta">${esc(a.contact)}</span></li>`).join("")}
+    <ul class="list offices">
+      ${firstFirst(who).map((a) => {
+        const links = officeChannels(a);
+        return `
+        <li>${a === who.firstAuthority ? `<span class="first-label">${esc(t("panel.first_contact"))}</span><br>` : ""}<strong>${esc(a.role)}</strong> ${checkBadge(a)}<br>
+        ${esc(a.office)}<br><span class="meta">${esc(a.contact)}</span>
+        ${links.length ? `<div class="links">${channelLinks(links, { small: false })}</div>` : ""}</li>`;
+      }).join("")}
     </ul>
-    ${config.features.responsibilityPanel ? "" /* Week 6: render who.firstContact and who.escalation here */ : `<div class="placeholder">${esc(t("panel.coming_soon"))}</div>`}
-    ${config.features.complaintHelper ? "" /* Week 7: use features/complaint.js (fillTemplate, whatsappLink, xLink) here */ : ""}
+    ${config.features.complaintHelper ? "" /* Week 7: use features/complaint.js (fillTemplate, whatsappLink, xLink) here */
+      : `<div class="placeholder">${esc(t(config.features.responsibilityPanel ? "panel.helper_soon" : "panel.coming_soon"))}</div>`}
 
     <h3>${esc(t("panel.project"))}</h3>
     <p>${h.project_ids.length
@@ -72,4 +80,6 @@ export function renderHotspotPanel(panel, h, data) {
       : `${esc(h.project_link)} ${tag("common.to_confirm")}`}</p>
     ${h.notes ? `<h3>${esc(t("panel.notes"))}</h3><p class="meta">${esc(h.notes)}</p>` : ""}
   `;
+  const respond = panel.querySelector(".respond");
+  if (respond) renderResponsibility(respond, h, data);
 }

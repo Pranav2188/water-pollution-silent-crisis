@@ -10,6 +10,9 @@
   --accent-text: #ffffff;
   --warn-bg: #fff4dc;
   --warn-text: #7a4b00;
+  --ok-bg: #e2f2e7;         /* "confirmed with the office" badge */
+  --ok-text: #1b6337;
+  --soft-bg: #edf1ef;       /* "checked against sources" badge */
   --outfall: #8a3b12;
   --nalla: #a8662a;
   --dumping: #6b5d1f;
@@ -30,10 +33,14 @@
     --accent-text: #0b1312;
     --warn-bg: #3a2e12;
     --warn-text: #f3d48a;
+    --ok-bg: #173323;
+    --ok-text: #9fdcb2;
+    --soft-bg: #252d2b;
     --ward: #4fb3bf;
   }
 }
 :root[data-theme="dark"] {
   --bg: #121615; --surface: #1b2120; --text: #e6ebe9; --muted: #a3aeaa; --line: #2f3836;
   --accent: #4fb3bf; --accent-text: #0b1312; --warn-bg: #3a2e12; --warn-text: #f3d48a; --ward: #4fb3bf;
+  --ok-bg: #173323; --ok-text: #9fdcb2; --soft-bg: #252d2b;
 }
