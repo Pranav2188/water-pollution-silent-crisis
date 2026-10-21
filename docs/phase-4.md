@@ -101,6 +101,11 @@ Library versions are pinned to releases at least two weeks old, and kept in `web
 - The cleanup photo: 3 faces blurred, the dumper lettering suggested; Reject refused without a reason, then deleted the original and published nothing.
 - "Needs a team visit" kept the original. An approved report whose original had not been deleted (an interrupted decision) was tidied up when the page opened.
 
+### First live review (22 Oct 2026)
+
+- Pranav's reviewer account signed in; "Needs a team visit" on RPT-00002 recorded his account and time and kept the original.
+- **Approve failed** with "new row violates row-level security policy": Supabase Storage needs a read rule as well as add and replace rules to upload with "upsert", and migration 002 gave reviewers no read rule on `report-public`. The stand-in used for testing did not enforce that rule. Nothing was changed by the failed attempt. Fixed by migration 005.
+
 ## Data
 
 Migration `supabase/migrations/002_resident_reports.sql`:
