@@ -18,9 +18,9 @@
 .status-list li.bad::before { content: "!"; left: 8px; font-weight: 700; }
 .status-list li.busy::before { content: "…"; left: 4px; }
 
-/* photo preview: dragging on it draws a blur box, so it must not scroll the page */
+/* photo preview (as it will be sent) */
 .preview-wrap { margin: 10px 0 4px; text-align: center; }
-#preview { max-width: 100%; max-height: 70vh; touch-action: none; cursor: crosshair; border-radius: 8px; background: var(--soft-bg); }
+#preview { max-width: 100%; max-height: 70vh; border-radius: 8px; background: var(--soft-bg); }
 
 /* pin map */
 #pin-map { height: 50vh; min-height: 280px; border-radius: 8px; border: 1px solid var(--line); margin-top: 8px; }

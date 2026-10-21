@@ -18,6 +18,7 @@ The sheet always wins for the registers. Those tables are overwritten from the s
 | `migrations/001_registers.sql` | The 7 register tables and their "public read" rules (was `schema.sql`) |
 | `migrations/002_resident_reports.sql` | Phase 4: `reports`, `reviewers`, `report_attempts`, `used_challenges`, the `claim_report_slot` rate-limit function, the `report-photos` and `report-public` folders and their rules |
 | `migrations/003_private_reviewer_check.sql` | Moves the "is this person a reviewer?" check into a schema the public API cannot reach |
+| `migrations/004_delete_original_at_review.sql` | Lets the review page delete the resident's original when a report is approved or rejected: the photo paths may then be empty, and reviewers may only empty them |
 | `functions/submit-report/` | The only way a report gets in: checks the spam puzzle, the place, the photo and the limits, then stores it as `waiting`. `report-rules.js` and `report-zones.json` are **copies** made from the website's files (see below) |
 
 ## Status
@@ -28,7 +29,7 @@ The sheet always wins for the registers. Those tables are overwritten from the s
 | Project | `water-pollution-silent-crisis` |
 | Region | South Asia (Mumbai), `ap-south-1` |
 | Project URL | `https://enungxucvdqqeyzpyyxl.supabase.co` (not a secret; also stored as the `SUPABASE_URL` GitHub secret) |
-| Migrations run | 001 on 16 Oct 2026 (plus the Alandi columns the same day); 002 and 003 on 21 Oct 2026 |
+| Migrations run | 001 on 16 Oct 2026 (plus the Alandi columns the same day); 002 and 003 on 21 Oct 2026; 004 not yet (Milestone 3) |
 | GitHub secrets | `SUPABASE_URL`, `SUPABASE_SERVICE_KEY` (added 16 Oct 2026) |
 | Registers | 50 sources, 3 areas, 43 authorities (31 `AU` + 12 `CA`), 9 problem types, 6 projects, 15 project dates, 18 spots (14 `HS` + 4 `CS`) |
 | `submit-report` | Version 2 deployed 21 Oct 2026, 11 report zones. Function secrets: see "The submit-report function" |
@@ -88,15 +89,26 @@ node --test tests/js/*.test.mjs                                        # fails i
 
 Then redeploy all three files (`index.ts`, `report-rules.js`, `report-zones.json`) in the dashboard (Edge Functions → submit-report → Code) or with `supabase functions deploy submit-report --no-verify-jwt`, and check that `?about` shows the new fingerprint. The checks on GitHub stop a merge, and the website deploy, if the zones in the repo are out of date, but they cannot see what is deployed: that is what `?about` is for.
 
-## Adding a reviewer (Phase 4)
+## Reviewers (Phase 4, `review.html`)
 
-1. Dashboard → **Authentication → Users → Add user → Send invitation**, with the team member's email.
-2. SQL Editor:
+Reviewers sign in with **email and password**. No emails are sent: Supabase's built-in email service only delivers to members of the Supabase team and only a few an hour, so invitation and magic-link emails would not reach most reviewers.
+
+**Once, before the first reviewer:** Dashboard → **Authentication → Sign In / Providers** → turn **off** "Allow new users to sign up". Accounts are then made only by Pranav. (Even if someone made an account, the database rules give it nothing unless it is in `public.reviewers`.)
+
+**Adding a reviewer:**
+
+1. Dashboard → **Authentication → Users → Add user → Create new user**: the team member's email and a long password (from a password manager), with **Auto Confirm User** ticked.
+2. Give them the password in person or by phone, never in the sheet, a chat group or the repo.
+3. SQL Editor:
    ```sql
    insert into public.reviewers (user_id, display_name)
    select id, 'Shweta' from auth.users where email = 'their.email@example.com';
    ```
-3. To remove someone: delete their user in Authentication; the reviewer row goes with it.
+4. They open `https://pranav2188.github.io/water-pollution-silent-crisis/review.html` (not linked from the menu) and sign in.
+
+**Changing a password:** Authentication → Users → the user → **Reset password** sends an email, which only works for Supabase team members; otherwise delete the user and add them again with a new password (then repeat step 3).
+
+**Removing a reviewer:** delete their user in Authentication; the reviewer row goes with it.
 
 ## Setting it up again (new project or new account)
 

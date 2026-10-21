@@ -34,6 +34,9 @@ async function getDetector() {
   return detector;
 }
 
+// Start the download early: the report page calls this as soon as it opens.
+export const preloadFaces = () => getDetector().catch(() => null);
+
 // work: the working canvas. Returns face boxes {x, y, w, h} in its pixels.
 export async function findFaces(work) {
   const detect = await getDetector();

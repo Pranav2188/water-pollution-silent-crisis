@@ -4,9 +4,11 @@
      base.css        page frame: header, notice, text pages, tables, footer
      components.css  tags, buttons, lists, area filter, language switch
      map.css         map page layout and legend
-     report.css      report page (Phase 4) */
+     report.css      report page (Phase 4)
+     review.css      review page (Phase 4, team only) */
 @import url("tokens.css");
 @import url("base.css");
 @import url("components.css");
 @import url("map.css");
 @import url("report.css");
+@import url("review.css");
