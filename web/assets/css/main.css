@@ -3,8 +3,10 @@
      tokens.css      colours (light and dark)
      base.css        page frame: header, notice, text pages, tables, footer
      components.css  tags, buttons, lists, area filter, language switch
-     map.css         map page layout and legend */
+     map.css         map page layout and legend
+     report.css      report page (Phase 4) */
 @import url("tokens.css");
 @import url("base.css");
 @import url("components.css");
 @import url("map.css");
+@import url("report.css");

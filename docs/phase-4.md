@@ -4,6 +4,8 @@ Residents send a photo of a pollution spot from their phone. The team reviews it
 
 Status (21 Oct 2026): **Milestone 1 (foundation) built.** Migrations 002 and 003 are run, `submit-report` is deployed (version 2, 11 report zones) and passed 20 local tests; its two puzzle secrets are added by Pranav in the dashboard ([supabase/README.md](../supabase/README.md#the-submit-report-function)). The feature is switched off on the live site (`photoReports: false` in `web/js/core/config.js`) until the pilot.
 
+Status (22 Oct 2026): **Milestone 2 (upload page) built.** `report.html` works end to end against a local copy of `submit-report` (results under "Tests" below). It is not linked from the menu and opens only with `?pilot` in the address (`report.html?pilot`), so the team can test it on their phones before the pilot.
+
 ## Decisions
 
 | Question | Decision (21 Oct 2026) |
@@ -14,6 +16,9 @@ Status (21 Oct 2026): **Milestone 1 (foundation) built.** Migrations 002 and 003
 | How admins approve | A review page on the site (`review.html`), with email login for reviewers only (Option 2) |
 | Where the location comes from | The printed GPS stamp first, then the photo's hidden GPS, then "Use my location", always ending with a pin the resident confirms |
 | When | Milestone 1 started 21 Oct 2026; the rest is scheduled by the team |
+| Reading the printed stamp (22 Oct) | **Automatic when the photo looks stamped** (a quick check needing no download); a "Read the location printed on my photo" button stays as a backup. The text is read only from a cleaned-up strip of the bottom of the photo; **the photo sent is always the whole scene, stamp included** |
+| Blurring faces (22 Oct) | **Both on the phone and on the review page.** Phone: faces found automatically and blurred, plus boxes the resident draws. A phone blur is permanent (those pixels never leave the phone), so the phone shows every box before sending and the resident can switch off a wrong one. Review page (Milestone 3): automatic face finding again, plus **Blur** and **Clear blur** tools; "clear" works on blurs added there |
+| GPS camera (22 Oct) | The page recommends the free **GPS Map Camera** app. Later the team may build its own camera app |
 
 ## How a report travels
 
@@ -44,20 +49,31 @@ Nothing a resident sends is public until a person approves it. Waiting and rejec
 
 | Step | Where | Built with | Notes |
 |---|---|---|---|
-| Location from the printed stamp | Phone | **Tesseract.js** (Apache-2.0), text recognition in the browser | Tested 21 Oct on six Alandi photos: 5 of 6 read exactly; tuning (find the dark stamp box first) to fix the rest. Reads "Lat … Long …" and the day/month/year date |
+| Is there a stamp? | Phone | A pixel check on a 1280 px copy: white letters next to a dark box in the bottom 30% (`stampScore` in `features/report-form.js`) | No download. Tested 22 Oct on 41 field photos in Chromium: all 28 stamped photos scored 2.36 or more (limit 2.0); 11 of 13 unstamped scored under 1.3, the other 2 were bright white water from a pipe (they only cost a wasted download) |
+| Location from the printed stamp | Phone | **Tesseract.js 7.0.0** (Apache-2.0) with the "fast" English model, in the browser | The bottom strip is cleaned to black letters on white, then read up to three times (three brightness limits). **A location or date counts only when two readings agree exactly**: in testing, one single reading turned 73.84 into 79.84. Tested 22 Oct: 27 of 28 locations and 27 of 28 dates right, **none wrong**, nothing read from unstamped photos; the one left unread falls back to the pin. About 1 s per photo on a laptop. Only the GPS Map Camera layout ("Lat … Long …", day/month/year) is understood |
 | Location from hidden photo data | Phone | **exifr** (MIT) | Usually missing: Android 10+ and iPhone (unless the user allows it) remove GPS on web uploads, and WhatsApp removes it always |
 | Location from the phone | Phone | Browser location, only when the resident taps "Use my location" | Changes the privacy page: the site asks for location on the report page only |
 | Final location | Phone | A draggable pin on the Leaflet map | What gets saved is the confirmed pin |
 | Report zones | Phone + server | Point-in-polygon on `web/data/report-zones.geojson` (`tools/report_zones.py`) | **Interim** zones: the prabhag outlines of the Pune areas and a box around Alandi. To be replaced by **river corridors** (150 m either side of the river, from OpenStreetMap) |
-| Face blur, pass 1 | Phone | **MediaPipe Face Detector** (`@mediapipe/tasks-vision`, Apache-2.0) | The standard web model is short-range (selfie distance) and misses small distant faces; test the full-range model (P4-06). No number-plate detection |
-| Resize and strip hidden data | Phone | The browser's canvas | Redrawing drops all hidden data and fixes rotation; 1600 px photo and 400 px thumbnail, WebP (JPEG fallback) |
+| Face blur, pass 1 | Phone | **MediaPipe Face Detection** full-range model (`@mediapipe/face_detection@0.4.1646425229`, Apache-2.0), confidence 0.7, whole photo + 3 × 3 overlapping tiles; mosaic blur | `@mediapipe/tasks-vision` was not used: it is twice the size and its face model has to be downloaded from a Google site this workspace cannot reach. Tested 22 Oct: found all 6 faces in a close group photo and the clear faces in our riverbank photos (a man on the bank, two workers at the cleanup); no bottle caps or rubble taken for faces at 0.7; **missed most people further back** and 45 of 57 faces in a class photo. So the resident's own boxes and the reviewer stay essential. No number-plate detection |
+| Blur by hand | Phone | Drag on the photo to add a box; tap a box to switch it off | Covers what the model misses: distant faces, number plates, house numbers |
+| Resize and strip hidden data | Phone | The browser's canvas | Redrawing drops all hidden data and fixes rotation; 1600 px photo and 400 px thumbnail, WebP (JPEG fallback). Tested 22 Oct: uploaded files had no EXIF or XMP (a test photo's phone make, model and GPS were gone), 250–320 KB per photo, 22–38 KB per thumbnail |
 | Spam check | Phone + server | **ALTCHA** (MIT): widget `altcha@3.2.4`, server `altcha-lib@2.5.0` | A small proof-of-work puzzle, no cookies. Tested 21 Oct: tampered answers, challenges and reused answers on other challenges are rejected; **the same answer can be replayed**, so the server records every used challenge |
 | Upload gate | Server | Supabase Edge Function `submit-report` (Deno, `@supabase/supabase-js@2.117.2`) | The only way in. Uses the secret key from Supabase's own environment; nothing to paste |
 | Storage | Server | Supabase Storage: `report-photos` (private), `report-public` (public) | Free plan: 1 GB storage, 5 GB downloads a month, 50 MB per file. Image resizing is a Pro feature, so thumbnails are made on the phone |
 | Face blur, pass 2 | Review page | Blur brush in the browser + a check by eye | Approve saves the cleaned copy to `report-public` |
 | Monthly audit | Team laptop | EgoBlur (faces and number plates) or deface (faces) over all published photos | Confirm their licences when set up |
 
-Library versions are pinned to releases at least two weeks old, and kept in `web/assets/vendor/` (no outside scripts), loaded only on the report and review pages.
+Library versions are pinned to releases at least two weeks old, and kept in `web/assets/vendor/` (no outside scripts; versions, sources and licences in its README), loaded only on the report and review pages.
+
+**What a resident downloads** the first time (the browser keeps it afterwards): about 0.2 MB for the page, spam puzzle and photo-GPS reader; about 3 MB more for stamp reading, only when the photo looks stamped; about 7 MB more for face finding (about 3 MB if GitHub Pages compresses it).
+
+### Tests (22 Oct 2026, Chromium on a Pixel 7 and an iPhone 13 profile, against the local `submit-report` and a stand-in for Supabase)
+
+- Three stamped photos (Alandi, central Pune, Kharadi) sent: stamp read, pin in the right area, `location_source` "stamp", date from the stamp, references RPT-00001 to 00003; the fourth in the same hour refused with the rate-limit message.
+- A photo with hidden GPS, no stamp and rotation data: pin from the photo, "photo" as the source, date from the photo, upright; a phone number in the note flagged `note_has_contact` for the reviewer.
+- "Use my location", drawing and switching off a blur box, a pin outside the areas (blocked with a message), sending with nothing filled in (lists what is missing).
+- Two workers' faces blurred automatically in the uploaded photo; a drawn box blurred too.
 
 ## Data
 
@@ -99,7 +115,7 @@ Flags the function adds for the reviewer: `pin_far_from_stamp`, `pin_far_from_ph
 | # | Milestone | Contents | Owner |
 |---|---|---|---|
 | 1 | Foundation | This plan; migrations folder; reports database, folders and rules; interim report zones; shared report rules with tests; `submit-report` function deployed and tested | Pranav |
-| 2 | Upload page | `report.html`: photo, stamp reading, location, pin, area check, blur, redraw, spam puzzle, send; Marathi strings | Sanskar (+ Pranav) |
+| 2 | Upload page (**built 22 Oct**, opens with `?pilot`) | `report.html`: photo, stamp reading, location, pin, area check, blur, redraw, spam puzzle, send; Marathi strings (keys added; translation by Vaishnavi) | Sanskar (+ Pranav) |
 | 3 | Review page | `review.html`: email login, queue, blur brush, approve / reject / needs a visit; reviewer guidelines | Sanskar + Pranav; guidelines Shweta |
 | 4 | Map and privacy | Resident reports layer; privacy and disclaimer updates; "report this photo"; promote-to-hotspot routine; retention clean-up | Sanskar, Vaishnavi, Shweta |
 | 5 | Test and pilot | Team photos through the whole chain; blur test on riverbank photos (P4-06); pilot with Jeevitnadi / Keshav Nagar association; then switch on | Siddhesh, Vaishnavi |
@@ -128,3 +144,5 @@ This workspace cannot reach OpenStreetMap, so a team member exports once:
 2. Retention periods (30 / 60 days proposed).
 3. Daily email to reviewers when reports are waiting.
 4. Width of the river corridors (150 m proposed).
+5. Delete the private original as soon as a reviewer approves or rejects a report (Milestone 3)?
+6. Number plates: no automatic detection on the phone; rely on the resident's boxes and the reviewer, or add a detector on the review page?

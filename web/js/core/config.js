@@ -15,10 +15,11 @@ export const config = {
     areaFilter: true,           // area buttons above the map (data/areas.csv)
     responsibilityPanel: true,  // "What to do about it": first contact, channels, escalation (features/respond-panel.js)
     complaintHelper: false,     // Week 7: WhatsApp / X message; needs the PMC CARE number verified (Progress P3-01)
-    photoReports: false,        // Phase 4: resident uploads with face blurring and a review queue (needs Supabase)
+    photoReports: false,        // Phase 4: report.html (resident photo reports). Until switched on, it opens only with ?pilot in the address
   },
 
   // Phase 4 only. The PUBLIC publishable key (sb_publishable_…, or the legacy anon key) may go here.
   // The secret key (sb_secret_… / service_role) never goes in website code: see supabase/README.md.
-  supabase: { url: "", anonKey: "" },
+  // url: the project address (not a secret); the report page sends to <url>/functions/v1/submit-report.
+  supabase: { url: "https://enungxucvdqqeyzpyyxl.supabase.co", anonKey: "" },
 };

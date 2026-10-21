@@ -1,6 +1,7 @@
 /* Page frame: reset, header, notice, text pages, tables, footer. */
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }   /* the hidden attribute always wins over display rules like .actions */
 html, body { margin: 0; }
 body {
   background: var(--bg);
