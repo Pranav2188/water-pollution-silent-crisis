@@ -21,6 +21,32 @@ export function googleMapsUrl(h, kind) {
 
 const tag = (key) => `<span class="tag">${esc(t(key))}</span>`;
 
+// The hotspot's photo, shown larger over the page (same tab). One viewer for the whole page.
+function openPhotoViewer(src, alt) {
+  let dlg = document.getElementById("photo-viewer");
+  if (!dlg) {
+    dlg = document.createElement("dialog");
+    dlg.id = "photo-viewer";
+    dlg.className = "photo-viewer";
+    dlg.innerHTML = `<form method="dialog"><button class="btn btn-small photo-close">${esc(t("panel.photo_close"))}</button></form><img alt="">`;
+    dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });   // tap outside the photo
+    document.body.append(dlg);
+  }
+  const img = dlg.querySelector("img");
+  img.src = src;
+  img.alt = alt;
+  dlg.showModal();
+}
+
+// Show the photo in the panel; hide it quietly if the file cannot be loaded.
+function wirePhoto(panel) {
+  const fig = panel.querySelector(".panel-photo");
+  if (!fig) return;
+  const img = fig.querySelector("img");
+  img.addEventListener("error", () => { fig.hidden = true; });
+  fig.querySelector(".photo-open").addEventListener("click", () => openPhotoViewer(img.src, img.alt));
+}
+
 // The office to contact first (when the sheet names one) goes to the top of the list.
 function firstFirst(who) {
   const all = [...who.general, ...who.local];
@@ -41,7 +67,13 @@ export function renderHotspotPanel(panel, h, data) {
     <h2>${esc(h.name)}</h2>
     <p>${esc(h.description)}</p>
     <p class="meta">${esc(t("panel.seen", { date: niceDate(h.date_seen, lang) }))} · ${esc(t("panel.source", { source: h.source }))}${checked}</p>
-    ${h.photo_url ? `<p><a href="${esc(h.photo_url)}" target="_blank" rel="noopener noreferrer">${esc(t("panel.view_photo"))}</a></p>` : ""}
+    ${h.photo_url ? `
+    <figure class="panel-photo">
+      <button type="button" class="photo-open" aria-label="${esc(t("panel.photo_enlarge"))}">
+        <img src="${esc(h.photo_url)}" alt="${esc(t("panel.photo_alt", { id: h.id, name: h.name }))}" loading="lazy" decoding="async">
+      </button>
+      <figcaption class="meta">${esc(t("panel.photo_caption"))}</figcaption>
+    </figure>` : ""}
 
     <div class="actions">
       <a class="btn" href="${googleMapsUrl(h, "search")}" target="_blank" rel="noopener noreferrer">${esc(t("panel.open_maps"))}</a>
@@ -80,6 +112,7 @@ export function renderHotspotPanel(panel, h, data) {
       : `${esc(h.project_link)} ${tag("common.to_confirm")}`}</p>
     ${h.notes ? `<h3>${esc(t("panel.notes"))}</h3><p class="meta">${esc(h.notes)}</p>` : ""}
   `;
+  wirePhoto(panel);
   const respond = panel.querySelector(".respond");
   if (respond) renderResponsibility(respond, h, data);
 }
