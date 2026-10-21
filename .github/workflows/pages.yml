@@ -34,6 +34,7 @@ jobs:
           python3 -m unittest discover -s tools/tests
           python3 tools/export_data.py
           python3 tools/kml_to_geojson.py
+          python3 tools/report_zones.py --check
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -38,6 +38,8 @@ Internal tabs (Progress, Verification Log, Research Log, RTI Tracker, Map Pins, 
 
 `web/data/wards.geojson` (prabhag outlines) is made separately by `tools/kml_to_geojson.py` from `data/boundaries/pmc-electoral-wards-2025-labelled.kml`.
 
+`web/data/report-zones.geojson` (Phase 4: where residents may send photo reports) is made by `tools/report_zones.py` from `areas.json` and `wards.geojson`, after the two scripts above. Every Live area with published spots gets a zone: its prabhag outlines, or for a town without a ward map (Alandi) a box about 900 m around its spots. The same file is written to `supabase/functions/submit-report/report-zones.json` for the server. These are interim; river corridors replace them later ([phase-4.md](phase-4.md)).
+
 ## Rules the script checks
 
 The script stops with an error if any of these fail, so a bad sheet edit can't reach the website:

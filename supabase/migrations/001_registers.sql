@@ -13,7 +13,8 @@
 -- (anon) key. Only the service key can write, and it is kept as a GitHub
 -- secret, never in website code.
 --
--- How to run: Supabase dashboard -> SQL Editor -> paste this file -> Run.
+-- Migration 001 (16 Oct 2026; was supabase/schema.sql). Safe to run again.
+-- How to run: see supabase/README.md (SQL Editor -> paste -> Run and enable RLS).
 
 create table if not exists sources (
   id          text primary key,           -- SRC-01

@@ -24,7 +24,8 @@ Then:
 1. Download the changed tabs as CSVs into `data/`.
 2. Set the area's **Status** to `Live`.
 3. If the area is outside the PMC ward file, the map shows the hotspots without prabhag outlines. That is fine; add a boundary file to `data/boundaries/` later if one exists.
-4. If its hotspots are outside latitude 18.3–18.8 / longitude 73.6–74.1, widen `LAT_RANGE` / `LNG_RANGE` in `tools/pipeline/build.py` and the matching `check` in `supabase/schema.sql`.
+4. If its hotspots are outside latitude 18.3–18.8 / longitude 73.6–74.1, widen `LAT_RANGE` / `LNG_RANGE` in `tools/pipeline/build.py`, and add a new migration in `supabase/migrations/` that widens the matching `check` on `hotspots` and on `reports`.
+5. Run `python3 tools/report_zones.py` so residents can send photo reports there, then redeploy the `submit-report` function and check its `?about` fingerprint ([supabase/README.md](../supabase/README.md#the-submit-report-function)).
 
 A prabhag can belong to only one area; the script stops if it is listed twice.
 
@@ -59,7 +60,7 @@ Don't type visible words straight into JavaScript. Add a key to `web/i18n/en.jso
 
 ## A new hotspot type
 
-1. Add it to `HOTSPOT_TYPES` and `DEFAULT_PROBLEM` in `tools/pipeline/build.py`, and to the `type in (...)` check in `supabase/schema.sql`.
+1. Add it to `HOTSPOT_TYPES` and `DEFAULT_PROBLEM` in `tools/pipeline/build.py`, and to the `type in (...)` check on `hotspots` with a new migration in `supabase/migrations/`.
 2. Add a colour token `--yourtype` in `assets/css/tokens.css` (the type colours are shared by light and dark mode).
 3. Add it to `TYPES` in `web/js/features/map-view.js` and add `type.yourtype` to the i18n files.
 4. Make sure the Routing Rules tab has a row for its default problem type.
@@ -70,4 +71,4 @@ Don't type visible words straight into JavaScript. Add a key to `web/i18n/en.jso
 2. Write `build_your_tab(rows, rep)` in `tools/pipeline/build.py` with the checks it needs, call it from `export()` and add it to the `tables` dictionary there (every entry is written as `web/data/<name>.json`).
 3. Add its name to `FILES` in `web/js/core/data.js`.
 4. Add a test for at least one rule in `tools/tests/test_pipeline.py`.
-5. If it should go to Supabase, add a table to `supabase/schema.sql` and a line to `rows_for()` in `tools/pipeline/supabase.py`.
+5. If it should go to Supabase, add the table in a new migration in `supabase/migrations/` (run it before merging) and a line to `rows_for()` in `tools/pipeline/supabase.py`.
