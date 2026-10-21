@@ -32,6 +32,7 @@ How the parts fit together, and where the planned features plug in: [docs/archit
 | `js/features/contacts.js` | Reads phone numbers, WhatsApp, emails, websites and X handles out of the sheet's contact text; skips anything marked "to verify" or "not a complaint line" (tested) | done |
 | `js/features/responsibility.js` | `responsibleFor(hotspot, data, problemType)`: first contact, channels, escalation, sources, local and general offices; `checkStatus(authority)` (tested) | done (Week 6) |
 | `js/features/complaint.js` | Fills the Routing Rules template; WhatsApp and X links (tested) | ready for Week 7 (PMC CARE number checked against sources; a test message is still to send) |
+| `js/features/report-rules.js` | Phase 4 rules for photo reports: which area a point is in, reading a GPS-camera stamp, location warnings, date and note checks, "is this really a clean JPEG/WebP". Runs in the browser and, as an identical copy, in the `submit-report` function (tested) | done (Milestone 1) |
 | `js/features/project-list.js` | Project cards with dated promises | Sanskar, Week 7 |
 | `i18n/en.json`, `i18n/mr.json` | All website text. `mr.json` is empty until translated; empty values show in English | Vaishnavi translates |
 | `assets/css/` | `tokens.css` (all colours, light and dark) · `base.css` · `components.css` · `map.css`; pages load `main.css` | shared |

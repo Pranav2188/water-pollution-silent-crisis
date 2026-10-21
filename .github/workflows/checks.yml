@@ -25,6 +25,8 @@ jobs:
         run: python3 -m unittest discover -s tools/tests -v
       - name: Check the CSV data (writes nothing)
         run: python3 tools/export_data.py --check
+      - name: Report zones are up to date (website and submit-report copy)
+        run: python3 tools/report_zones.py --check
 
   web:
     name: Website JavaScript
