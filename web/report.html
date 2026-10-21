@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Report a pollution spot</title>
+<meta name="description" content="Send a photo of sewage, foam, dumped waste or a blocked drain on the Mula-Mutha, Mutha or Indrayani. The team checks every report before it is shown.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3C11 11 7 15.5 7 20a9 9 0 0 0 18 0c0-4.5-4-9-9-17z' fill='%230f6e7a'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/vendor/leaflet-1.9.4/leaflet.css">
+<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-title" href="index.html"><span data-i18n="site.title">Water Pollution: A Silent Crisis</span><small data-i18n="site.subtitle">Mula-Mutha and Mutha in Pune, Indrayani at Alandi</small></a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="index.html" data-i18n="nav.map">Map</a>
+    <a href="projects.html" data-i18n="nav.projects">Projects</a>
+    <a href="report.html" data-i18n="nav.report" aria-current="page">Report a spot</a>
+    <a href="privacy.html" data-i18n="nav.privacy">Privacy</a>
+    <a href="disclaimer.html" data-i18n="nav.disclaimer">Disclaimer</a>
+  </nav>
+</header>
+<div class="notice" data-i18n-html="notice.html">Student project, not an official PMC or MPCB website. Anything marked <strong>to verify</strong> or <strong>to confirm</strong> has not been checked with the office yet. <a href="disclaimer.html">Read the disclaimer</a>.</div>
+
+<main class="page report">
+  <h1 data-i18n="report.page_title">Report a pollution spot</h1>
+  <p data-i18n="report.intro">Seen sewage, foam, dumped waste or a blocked drain on the river? Send a photo. A team member checks every report before it appears on the map.</p>
+
+  <p class="card" id="closed" hidden></p>
+
+  <form id="report-form" novalidate hidden>
+    <section class="card step-card">
+      <h2 data-i18n="report.step_photo">1. Your photo</h2>
+      <p class="meta" data-i18n-html="report.tip.html"><strong>Tip:</strong> take the photo with the free <strong>GPS Map Camera</strong> app (search for it in your app store). It prints the exact location and time on the photo, which this page reads for you.</p>
+      <label class="btn file-btn">
+        <span data-i18n="report.choose">Take or choose a photo</span>
+        <input type="file" id="photo-input" accept="image/*">
+      </label>
+      <ul class="status-list" id="photo-status" aria-live="polite"></ul>
+      <p class="actions" id="stamp-action" hidden>
+        <button type="button" class="btn btn-quiet btn-small" id="read-stamp" data-i18n="report.read_stamp">Read the location printed on my photo</button>
+        <span class="meta" data-i18n="report.read_stamp_size">Downloads about 3 MB the first time.</span>
+      </p>
+    </section>
+
+    <section class="card step-card" id="faces-step" hidden>
+      <h2 data-i18n="report.step_faces">2. Hide faces and private details</h2>
+      <p class="meta" data-i18n="report.faces_help">Faces are blurred before the photo is sent. Drag on the photo to cover anything else private (a face we missed, a number plate, a house number). Tap a box to switch it off if it covers something that is not private.</p>
+      <div class="preview-wrap"><canvas id="preview" aria-label="Your photo, with blurred areas"></canvas></div>
+      <p class="actions">
+        <span class="meta" id="box-count"></span>
+        <button type="button" class="btn btn-quiet btn-small" id="undo-box" data-i18n="report.undo" disabled>Remove last box</button>
+      </p>
+      <ul class="status-list" id="faces-status" aria-live="polite"></ul>
+    </section>
+
+    <section class="card step-card">
+      <h2 data-i18n="report.step_place">3. Where is it?</h2>
+      <p class="meta" data-i18n="report.place_help">Tap the map or drag the pin to the exact spot. Reports are accepted inside the outlined areas.</p>
+      <p class="actions"><button type="button" class="btn btn-quiet btn-small" id="use-location" data-i18n="report.use_location">Use my location</button></p>
+      <div id="pin-map" role="region" aria-label="Map: set the pin at the spot"></div>
+      <ul class="status-list" id="place-status" aria-live="polite"></ul>
+    </section>
+
+    <section class="card step-card">
+      <h2 data-i18n="report.step_details">4. What is the problem?</h2>
+      <label class="field"><span data-i18n="report.problem">Problem</span>
+        <select id="problem" required><option value="" data-i18n="report.problem_pick">Choose one</option></select>
+      </label>
+      <p class="meta" id="problem-hint"></p>
+      <label class="field"><span data-i18n="report.note">Anything else the team should know (optional)</span>
+        <textarea id="note" rows="3" maxlength="500"></textarea>
+      </label>
+      <p class="meta field-foot"><span data-i18n="report.note_help">Please don't write names, phone numbers or emails.</span> <span id="note-count"></span></p>
+      <label class="check-row"><input type="checkbox" id="consent"> <span data-i18n="report.consent">I took this photo or may share it. I agree it can be published on this site after the team checks it.</span></label>
+    </section>
+
+    <section class="card step-card">
+      <h2 data-i18n="report.step_send">5. Send</h2>
+      <altcha-widget id="altcha" auto="onfocus" name="altcha"></altcha-widget>
+      <p class="actions"><button type="submit" class="btn" id="send" data-i18n="report.send">Send report</button></p>
+      <ul class="status-list" id="send-status" aria-live="polite"></ul>
+    </section>
+  </form>
+
+  <section class="card done" id="done" hidden>
+    <h2 data-i18n="report.done_title">Thank you. Your report is in.</h2>
+    <p class="ref" id="done-ref"></p>
+    <p data-i18n="report.done_next">A team member will check it. If it is approved, it appears on the map as a resident report (not yet verified by the team). Keep the reference if you want to ask about it.</p>
+    <p class="actions"><a class="btn" href="report.html" id="another" data-i18n="report.another">Report another spot</a></p>
+  </section>
+
+  <section class="card keep">
+    <h2 data-i18n="report.keep_title">What we keep</h2>
+    <p data-i18n-html="report.keep.html">Your photo (after blurring, resized, without hidden phone data), the place you confirm, when the photo was taken, the problem and your note. <strong>Never</strong> your name, phone number or email. Your internet address is used only in scrambled form to limit spam, and is deleted after 2 days. Photos stay private until a team member approves them. <a href="privacy.html">Privacy page</a>.</p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <span data-i18n="footer.project">Water Pollution: A Silent Crisis · student project 2026–27</span>
+  <a href="privacy.html" data-i18n="nav.privacy">Privacy</a>
+  <a href="disclaimer.html" data-i18n="nav.disclaimer">Disclaimer</a>
+  <a href="https://github.com/Pranav2188/water-pollution-silent-crisis" target="_blank" rel="noopener noreferrer" data-i18n="footer.code">Code and data</a>
+  <span data-i18n-html="footer.osm.html">Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</span>
+</footer>
+<script src="assets/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script type="module" src="js/pages/report.js"></script>
+</body>
+</html>

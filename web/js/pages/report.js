@@ -1,0 +1,398 @@
+// Entry point for report.html: a resident sends a photo report (Phase 4, docs/phase-4.md).
+//
+// 1 photo: decoded on the phone; hidden GPS read (exifr); printed stamp read when it looks stamped
+// 2 faces: found and blurred on the phone; the resident adds or switches off boxes
+// 3 place: pin from the stamp / photo / phone, confirmed on the map, inside a report zone
+// 4 details: problem type, note, agreement
+// 5 send: spam puzzle (ALTCHA), then the blurred, re-drawn photo + thumbnail to submit-report
+//
+// Open when config.features.photoReports is true, or with ?pilot in the address for team testing.
+
+import { config } from "../core/config.js";
+import { loadData } from "../core/data.js";
+import { esc } from "../core/format.js";
+import { initI18n, t } from "../core/i18n.js";
+import { boxFromDrag, errorKeys, exifPoint, firstPin, locationSource, looksStamped, padBox, reportFields } from "../features/report-form.js";
+import { createPinMap } from "../features/report-map.js";
+import { blurredCopy, loadPhoto, stampLikelihood, uploadFiles, workingCopy } from "../features/report-photo.js";
+import { cleanNote, LIMITS, zoneFor } from "../features/report-rules.js";
+
+const $ = (id) => document.getElementById(id);
+const FUNCTION_URL = config.supabase.url ? `${config.supabase.url.replace(/\/$/, "")}/functions/v1/submit-report` : "";
+const VENDOR = new URL("../../assets/vendor/", import.meta.url).href;
+
+const state = {
+  photoId: 0,          // changes with every new photo, so late results for an old photo are ignored
+  img: null,
+  work: null,          // working canvas (at most 1600 px)
+  boxes: [],           // {x, y, w, h, on, auto}
+  facesBusy: false,
+  evidence: {},        // stamp / photo / device: {lat, lng[, accuracy]}
+  takenAt: { stamp: null, photo: null },
+  pinByHand: false,    // once the resident moves the pin, new evidence does not move it (until a new photo)
+  lines: {},           // status lines for the photo step
+  sending: false,
+};
+let data, zones, pinMap;
+
+// ------------------------------------------------------------------ small helpers
+
+function say(listId, items) {
+  $(listId).innerHTML = items.filter(Boolean).map(([text, kind = ""]) => `<li class="${kind}">${esc(text)}</li>`).join("");
+}
+const fixed = (n) => Number(n).toFixed(6).replace(/0+$/, "").replace(/\.$/, "");
+const when = (iso) => new Date(iso).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Kolkata" });
+
+// ------------------------------------------------------------------ 1. photo
+
+async function onPhoto(file) {
+  const id = ++state.photoId;
+  Object.assign(state, { img: null, work: null, boxes: [], facesBusy: false, takenAt: { stamp: null, photo: null }, lines: {}, pinByHand: false });
+  delete state.evidence.stamp;
+  delete state.evidence.photo;
+  $("stamp-action").hidden = true;
+  say("photo-status", []);
+  say("faces-status", []);
+  say("send-status", []);
+
+  let img;
+  try {
+    img = await loadPhoto(file);
+  } catch {
+    if (id === state.photoId) say("photo-status", [[t("report.photo_error"), "bad"]]);
+    $("faces-step").hidden = true;
+    return;
+  }
+  if (id !== state.photoId) return;
+  state.img = img;
+  state.work = workingCopy(img);
+  $("faces-step").hidden = false;
+  drawPreview();
+  const lines = state.lines;
+  lines.ready = [t("report.photo_ready", { w: state.work.width, h: state.work.height }), "ok"];
+  showLines();
+
+  // Hidden GPS and date (often removed by the phone or WhatsApp; free to check).
+  const exif = (async () => {
+    try {
+      const { default: exifr } = await import(`${VENDOR}exifr-7.1.3/exifr-lite.esm.mjs`);
+      // Only the camera blocks; exifr's "lite" build has no tag-name lists, so "pick" cannot be used.
+      const ex = await exifr.parse(file, { tiff: true, exif: true, gps: true, ifd1: false, interop: false, xmp: false, icc: false, iptc: false, jfif: false, ihdr: false }).catch(() => null);
+      if (id !== state.photoId) return;
+      const p = exifPoint(ex);
+      if (p) { state.evidence.photo = p; state.lines.exif = [t("report.exif_found"), "ok"]; }
+      const d = ex && ex.DateTimeOriginal instanceof Date && !Number.isNaN(+ex.DateTimeOriginal) ? ex.DateTimeOriginal : null;
+      if (d) state.takenAt.photo = d.toISOString();
+    } catch { /* no hidden data: fine */ }
+  })();
+
+  // The printed stamp, read automatically only when the photo looks stamped.
+  const stamp = looksStamped(stampLikelihood(img)) ? readStampNow(id) : Promise.resolve(false);
+
+  findFacesNow(id);
+  const [, stampRead] = await Promise.all([exif, stamp]);
+  if (id !== state.photoId) return;
+  if (!stampRead) $("stamp-action").hidden = false;
+  if (!lines.stamp && !stampRead) lines.stamp = [t("report.stamp_none")];
+  showLines();
+  pinFromEvidence();
+}
+
+function showLines() {
+  const l = state.lines;
+  say("photo-status", [l.ready, l.exif, l.stamp, l.time]);
+}
+
+async function readStampNow(id) {
+  const lines = state.lines;
+  lines.stamp = [t("report.stamp_reading"), "busy"];
+  showLines();
+  try {
+    const { readStamp } = await import("../features/report-stamp.js");
+    const s = await readStamp(state.img);
+    if (id !== state.photoId) return false;
+    if (s.takenAt) {
+      state.takenAt.stamp = s.takenAt;
+      lines.time = [t("report.stamp_time", { when: when(s.takenAt) })];
+    }
+    if (Number.isFinite(s.lat)) {
+      state.evidence.stamp = { lat: s.lat, lng: s.lng };
+      lines.stamp = [t("report.stamp_found", { lat: fixed(s.lat), lng: fixed(s.lng) }), "ok"];
+      showLines();
+      return true;
+    }
+    lines.stamp = [t("report.stamp_none")];
+  } catch {
+    if (id !== state.photoId) return false;
+    lines.stamp = [t("report.stamp_failed"), "bad"];
+  }
+  showLines();
+  return false;
+}
+
+// ------------------------------------------------------------------ 2. faces
+
+async function findFacesNow(id) {
+  state.facesBusy = true;
+  say("faces-status", [[t("report.faces_finding"), "busy"]]);
+  try {
+    const { findFaces } = await import("../features/report-faces.js");
+    const found = await findFaces(state.work);
+    if (id !== state.photoId) return;
+    const auto = found.map((b) => ({ ...padBox(b, state.work.width, state.work.height), on: true, auto: true }));
+    state.boxes = [...auto, ...state.boxes];
+    say("faces-status", [[auto.length ? t("report.faces_found", { n: auto.length }) : t("report.faces_none"), auto.length ? "ok" : ""]]);
+  } catch {
+    if (id === state.photoId) say("faces-status", [[t("report.faces_unavailable"), "bad"]]);
+  } finally {
+    if (id === state.photoId) { state.facesBusy = false; drawPreview(); }
+  }
+}
+
+let drag = null;
+function drawPreview() {
+  const c = $("preview");
+  if (!state.work) return;
+  if (c.width !== state.work.width || c.height !== state.work.height) Object.assign(c, { width: state.work.width, height: state.work.height });
+  const ctx = c.getContext("2d");
+  ctx.drawImage(blurredCopy(state.work, state.boxes), 0, 0);
+  const line = Math.max(2, Math.round(c.width / 300));
+  const outline = (b, on) => {
+    ctx.setLineDash(on ? [] : [line * 3, line * 2]);
+    ctx.lineWidth = line + 2; ctx.strokeStyle = "rgba(0,0,0,.6)"; ctx.strokeRect(b.x, b.y, b.w, b.h);
+    ctx.lineWidth = line; ctx.strokeStyle = on ? "#ffd400" : "#ffffff"; ctx.strokeRect(b.x, b.y, b.w, b.h);
+  };
+  for (const b of state.boxes) outline(b, b.on);
+  if (drag && drag.now) outline(boxFromDrag(drag.start, drag.now, c.width, c.height), true);
+  ctx.setLineDash([]);
+  const on = state.boxes.filter((b) => b.on).length;
+  $("box-count").textContent = t("report.boxes", { on, all: state.boxes.length });
+  $("undo-box").disabled = !state.boxes.some((b) => !b.auto);
+}
+
+function canvasPoint(e) {
+  const c = $("preview"), r = c.getBoundingClientRect();
+  return { x: ((e.clientX - r.left) * c.width) / r.width, y: ((e.clientY - r.top) * c.height) / r.height, scale: r.width / c.width };
+}
+
+function wirePreview() {
+  const c = $("preview");
+  c.addEventListener("pointerdown", (e) => {
+    if (!state.work) return;
+    c.setPointerCapture(e.pointerId);
+    drag = { start: canvasPoint(e), now: null };
+  });
+  c.addEventListener("pointermove", (e) => {
+    if (!drag) return;
+    drag.now = canvasPoint(e);
+    drawPreview();
+  });
+  const finish = (e) => {
+    if (!drag) return;
+    const end = canvasPoint(e);
+    const moved = Math.hypot(end.x - drag.start.x, end.y - drag.start.y) * end.scale;
+    if (moved < 10) {
+      // a tap: switch the top box under the finger on or off
+      const hit = [...state.boxes].reverse().find((b) => end.x >= b.x && end.x <= b.x + b.w && end.y >= b.y && end.y <= b.y + b.h);
+      if (hit) hit.on = !hit.on;
+    } else {
+      const b = boxFromDrag(drag.start, end, c.width, c.height);
+      if (b.w * end.scale >= 8 && b.h * end.scale >= 8) state.boxes.push({ ...b, on: true, auto: false });
+    }
+    drag = null;
+    drawPreview();
+  };
+  c.addEventListener("pointerup", finish);
+  c.addEventListener("pointercancel", () => { drag = null; drawPreview(); });
+  $("undo-box").addEventListener("click", () => {
+    const i = state.boxes.map((b) => b.auto).lastIndexOf(false);
+    if (i >= 0) state.boxes.splice(i, 1);
+    drawPreview();
+  });
+}
+
+// ------------------------------------------------------------------ 3. place
+
+let movingPin = false;
+function pinFromEvidence() {
+  if (state.pinByHand) return;
+  const p = firstPin(state.evidence);
+  if (!p) return;
+  movingPin = true;
+  pinMap.setPin(p.lat, p.lng);
+  movingPin = false;
+}
+
+function onPinMove(latlng) {
+  if (!movingPin) state.pinByHand = true;
+  showPlace();
+}
+
+function showPlace() {
+  const p = pinMap.getPin();
+  if (!p) return say("place-status", [[t("report.pin_none")]]);
+  const pin = { lat: p.lat, lng: p.lng };
+  const area = zoneFor(pin.lat, pin.lng, zones);
+  const from = t(`report.from.${locationSource(pin, state.evidence)}`);
+  say("place-status", [
+    [`${t("report.pin_at", { lat: fixed(pin.lat.toFixed(6)), lng: fixed(pin.lng.toFixed(6)) })} (${from})`],
+    area ? [t("report.in_zone", { area: data.areaById[area]?.name || area }), "ok"] : [t("report.out_of_zone"), "bad"],
+  ]);
+}
+
+function useLocation() {
+  if (!navigator.geolocation) return say("place-status", [[t("report.location_denied"), "bad"]]);
+  say("place-status", [[t("report.location_asking"), "busy"]]);
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const { latitude: lat, longitude: lng, accuracy } = pos.coords;
+      state.evidence.device = { lat, lng, accuracy };
+      state.pinByHand = false;           // the resident asked for it: move the pin there
+      movingPin = true;
+      pinMap.setPin(lat, lng);
+      movingPin = false;
+      $("place-status").insertAdjacentHTML("beforeend", `<li>${esc(t("report.location_got", { m: Math.round(accuracy) }))}</li>`);
+    },
+    () => { say("place-status", [[t("report.location_denied"), "bad"]]); showPlace(); },
+    { enableHighAccuracy: true, timeout: 20000, maximumAge: 60000 },
+  );
+}
+
+// ------------------------------------------------------------------ 4 + 5. details and send
+
+function missing() {
+  const p = pinMap.getPin();
+  const list = [];
+  if (!state.work) list.push("photo");
+  else if (state.facesBusy) list.push("faces");
+  if (!p) list.push("pin");
+  else if (!zoneFor(p.lat, p.lng, zones)) list.push("zone");
+  if (!$("problem").value) list.push("problem");
+  if (!$("consent").checked) list.push("consent");
+  return list;
+}
+
+async function spamPayload() {
+  const widget = $("altcha");
+  const field = $("report-form").querySelector('input[name="altcha"]');
+  if (field && field.value && widget.getState && widget.getState() === "verified") return field.value;
+  say("send-status", [[t("report.spam_wait"), "busy"]]);
+  if (widget.getState && widget.getState() === "expired") widget.reset();
+  const result = widget.verify ? await widget.verify() : null;
+  return (result && result.payload) || (field && field.value) || "";
+}
+
+function showErrors(error, details) {
+  say("send-status", errorKeys(error, details).map((k) => [t(k), "bad"]));
+  if (/^spam_check_(expired|failed|missing)$/.test(error)) try { $("altcha").reset(); } catch { /* widget not ready */ }
+}
+
+async function send(e) {
+  e.preventDefault();
+  if (state.sending) return;
+  const gaps = missing();
+  if (gaps.length) return say("send-status", [[t("report.missing", { list: gaps.map((g) => t(`report.missing.${g}`)).join(", ") }), "bad"]]);
+  const note = cleanNote($("note").value);
+  if (note.tooLong) return showErrors("note_too_long");
+
+  state.sending = true;
+  $("send").disabled = true;
+  try {
+    const payload = await spamPayload();
+    if (!payload) return showErrors("spam_check_missing");
+    say("send-status", [[t("report.sending"), "busy"]]);
+    let files;
+    try {
+      files = await uploadFiles(blurredCopy(state.work, state.boxes));
+    } catch (err) {
+      return showErrors(err.message === "too_large" ? "too_large" : "invalid", err.details || []);
+    }
+    const p = pinMap.getPin();
+    const fields = reportFields({
+      pin: { lat: p.lat, lng: p.lng }, evidence: state.evidence, problemType: $("problem").value,
+      note: note.note, takenAt: state.takenAt.stamp || state.takenAt.photo, consent: $("consent").checked,
+    });
+    const ext = (b) => (b.type === "image/webp" ? "webp" : "jpg");
+    const form = new FormData();
+    form.append("altcha", payload);
+    form.append("report", JSON.stringify(fields));
+    form.append("photo", files.photo, `photo.${ext(files.photo)}`);
+    form.append("thumb", files.thumb, `thumb.${ext(files.thumb)}`);
+
+    let res;
+    try {
+      res = await fetch(FUNCTION_URL, { method: "POST", body: form });
+    } catch {
+      return showErrors("network");
+    }
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok || !body.ref) return showErrors(body.error || "server_error", body.details || []);
+
+    $("report-form").hidden = true;
+    $("done").hidden = false;
+    $("done-ref").textContent = t("report.done_ref", { ref: body.ref });
+    $("another").href = location.pathname + location.search;   // keeps ?pilot during the pilot
+    $("done").scrollIntoView({ behavior: "smooth", block: "start" });
+  } finally {
+    state.sending = false;
+    $("send").disabled = false;
+  }
+}
+
+// ------------------------------------------------------------------ start
+
+async function start() {
+  await initI18n();
+  document.title = t("report.page_title");
+  const open = config.features.photoReports || new URLSearchParams(location.search).has("pilot");
+  if (!open || !FUNCTION_URL) {
+    $("closed").textContent = t(open ? "report.not_ready" : "report.closed");
+    $("closed").hidden = false;
+    return;
+  }
+
+  try {
+    data = await loadData();
+    const res = await fetch(`${config.dataPath}report-zones.geojson`, { cache: "no-cache" });
+    if (!res.ok) throw new Error(`report-zones.geojson (${res.status})`);
+    zones = await res.json();
+  } catch (err) {
+    $("closed").textContent = t("common.load_error", { message: err.message });
+    $("closed").hidden = false;
+    return;
+  }
+
+  // Spam puzzle widget: fetches its puzzle from the function, solves it in the background.
+  const widget = $("altcha");
+  widget.setAttribute("challenge", FUNCTION_URL);
+  widget.setAttribute("configuration", JSON.stringify({ humanInteractionSignature: false }));
+  import(`${VENDOR}altcha-3.2.4/altcha.min.js`).catch(() => { /* the send step reports a missing spam check */ });
+
+  const select = $("problem");
+  for (const r of data.routing) select.add(new Option(r.problem_type, r.problem_type));
+  select.addEventListener("change", () => {
+    $("problem-hint").textContent = data.routingByType[select.value]?.what_you_see || "";
+  });
+  const count = () => { $("note-count").textContent = t("report.note_count", { n: $("note").value.length, max: LIMITS.noteChars }); };
+  $("note").addEventListener("input", count);
+  count();
+
+  $("report-form").hidden = false;
+  pinMap = createPinMap("pin-map", zones, onPinMove);
+  showPlace();
+  wirePreview();
+  $("photo-input").addEventListener("change", (e) => { const f = e.target.files && e.target.files[0]; if (f) onPhoto(f); });
+  $("read-stamp").addEventListener("click", async () => {
+    if (!state.img) return;
+    $("stamp-action").hidden = true;
+    const id = state.photoId;
+    const ok = await readStampNow(id);
+    if (id !== state.photoId) return;
+    if (!ok) $("stamp-action").hidden = false;
+    pinFromEvidence();
+  });
+  $("use-location").addEventListener("click", useLocation);
+  $("report-form").addEventListener("submit", send);
+}
+
+start();

@@ -1,0 +1,44 @@
+/* Report page (report.html): step cards, photo preview with blur boxes, pin map, form fields. */
+
+.report .step-card h2 { margin: 0 0 6px; font-size: 1.1rem; }
+.report .step-card { margin: 16px 0; }
+
+/* photo input: the whole button is the label; the real input is hidden but still focusable */
+.file-btn { position: relative; cursor: pointer; margin: 6px 0; }
+.file-btn input { position: absolute; inset: 0; opacity: 0; width: 100%; cursor: pointer; }
+.file-btn:focus-within { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* status lines under each step */
+.status-list { list-style: none; padding: 0; margin: 8px 0 0; font-size: .9rem; }
+.status-list li { padding: 3px 0 3px 22px; position: relative; color: var(--muted); }
+.status-list li::before { content: "•"; position: absolute; left: 6px; }
+.status-list li.ok { color: var(--ok-text); }
+.status-list li.ok::before { content: "✓"; left: 4px; }
+.status-list li.bad { color: var(--warn-text); background: var(--warn-bg); border-radius: 6px; }
+.status-list li.bad::before { content: "!"; left: 8px; font-weight: 700; }
+.status-list li.busy::before { content: "…"; left: 4px; }
+
+/* photo preview: dragging on it draws a blur box, so it must not scroll the page */
+.preview-wrap { margin: 10px 0 4px; text-align: center; }
+#preview { max-width: 100%; max-height: 70vh; touch-action: none; cursor: crosshair; border-radius: 8px; background: var(--soft-bg); }
+
+/* pin map */
+#pin-map { height: 50vh; min-height: 280px; border-radius: 8px; border: 1px solid var(--line); margin-top: 8px; }
+
+/* fields */
+.field { display: block; margin: 10px 0 4px; font-weight: 600; font-size: .92rem; }
+.field select, .field textarea {
+  display: block; width: 100%; margin-top: 4px; font: inherit; font-weight: 400; padding: 8px;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text);
+}
+.field-foot { display: flex; justify-content: space-between; gap: 8px; margin-top: 2px; }
+.check-row { display: flex; gap: 10px; align-items: flex-start; margin: 14px 0 4px; font-size: .92rem; }
+.check-row input { width: 20px; height: 20px; margin-top: 2px; flex: none; }
+
+button.btn { font: inherit; font-weight: 600; cursor: pointer; }
+button.btn:disabled { opacity: .5; cursor: default; }
+altcha-widget { display: block; margin: 6px 0; max-width: 100%; }
+
+.done .ref { font-size: 1.15rem; font-weight: 700; }
+.keep { font-size: .9rem; }
+.keep h2 { font-size: 1rem; margin: 0 0 4px; }
