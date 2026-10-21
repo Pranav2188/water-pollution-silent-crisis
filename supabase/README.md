@@ -19,6 +19,7 @@ The sheet always wins for the registers. Those tables are overwritten from the s
 | `migrations/002_resident_reports.sql` | Phase 4: `reports`, `reviewers`, `report_attempts`, `used_challenges`, the `claim_report_slot` rate-limit function, the `report-photos` and `report-public` folders and their rules |
 | `migrations/003_private_reviewer_check.sql` | Moves the "is this person a reviewer?" check into a schema the public API cannot reach |
 | `migrations/004_delete_original_at_review.sql` | Lets the review page delete the resident's original when a report is approved or rejected: the photo paths may then be empty, and reviewers may only empty them |
+| `migrations/005_reviewers_read_published.sql` | Lets reviewers read the published-photos folder, which Supabase Storage needs for replacing ("upsert") and removing files there; without it the first live approval failed |
 | `functions/submit-report/` | The only way a report gets in: checks the spam puzzle, the place, the photo and the limits, then stores it as `waiting`. `report-rules.js` and `report-zones.json` are **copies** made from the website's files (see below) |
 
 ## Status
@@ -29,7 +30,7 @@ The sheet always wins for the registers. Those tables are overwritten from the s
 | Project | `water-pollution-silent-crisis` |
 | Region | South Asia (Mumbai), `ap-south-1` |
 | Project URL | `https://enungxucvdqqeyzpyyxl.supabase.co` (not a secret; also stored as the `SUPABASE_URL` GitHub secret) |
-| Migrations run | 001 on 16 Oct 2026 (plus the Alandi columns the same day); 002 and 003 on 21 Oct 2026; 004 not yet (Milestone 3) |
+| Migrations run | 001 on 16 Oct 2026 (plus the Alandi columns the same day); 002 and 003 on 21 Oct 2026; 004 on 22 Oct 2026; 005 not yet |
 | GitHub secrets | `SUPABASE_URL`, `SUPABASE_SERVICE_KEY` (added 16 Oct 2026) |
 | Registers | 50 sources, 3 areas, 43 authorities (31 `AU` + 12 `CA`), 9 problem types, 6 projects, 15 project dates, 18 spots (14 `HS` + 4 `CS`) |
 | `submit-report` | Version 2 deployed 21 Oct 2026, 11 report zones. Function secrets: see "The submit-report function" |
