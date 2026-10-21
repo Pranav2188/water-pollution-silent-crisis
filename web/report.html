@@ -44,13 +44,9 @@
     </section>
 
     <section class="card step-card" id="faces-step" hidden>
-      <h2 data-i18n="report.step_faces">2. Hide faces and private details</h2>
-      <p class="meta" data-i18n="report.faces_help">Faces are blurred before the photo is sent. Drag on the photo to cover anything else private (a face we missed, a number plate, a house number). Tap a box to switch it off if it covers something that is not private.</p>
-      <div class="preview-wrap"><canvas id="preview" aria-label="Your photo, with blurred areas"></canvas></div>
-      <p class="actions">
-        <span class="meta" id="box-count"></span>
-        <button type="button" class="btn btn-quiet btn-small" id="undo-box" data-i18n="report.undo" disabled>Remove last box</button>
-      </p>
+      <h2 data-i18n="report.step_faces">2. Faces are blurred</h2>
+      <p class="meta" data-i18n="report.faces_help">Faces are blurred on your phone before the photo is sent. A team member checks every photo and blurs anything else private (a face we missed, a number plate) before it is published.</p>
+      <div class="preview-wrap"><canvas id="preview" aria-label="Your photo as it will be sent, with faces blurred"></canvas></div>
       <ul class="status-list" id="faces-status" aria-live="polite"></ul>
     </section>
 
@@ -92,7 +88,7 @@
 
   <section class="card keep">
     <h2 data-i18n="report.keep_title">What we keep</h2>
-    <p data-i18n-html="report.keep.html">Your photo (after blurring, resized, without hidden phone data), the place you confirm, when the photo was taken, the problem and your note. <strong>Never</strong> your name, phone number or email. Your internet address is used only in scrambled form to limit spam, and is deleted after 2 days. Photos stay private until a team member approves them. <a href="privacy.html">Privacy page</a>.</p>
+    <p data-i18n-html="report.keep.html">Your photo (after blurring, resized, without hidden phone data), the place you confirm, when the photo was taken, the problem and your note. <strong>Never</strong> your name, phone number or email. Your internet address is used only in scrambled form to limit spam, and is deleted after 2 days. Photos stay private until a team member checks them; the team blurs anything else private, publishes only that cleaned copy, and deletes the photo you sent. <a href="privacy.html">Privacy page</a>.</p>
   </section>
 </main>
 

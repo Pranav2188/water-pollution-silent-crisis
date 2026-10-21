@@ -12,7 +12,7 @@ import { config } from "../core/config.js";
 import { loadData } from "../core/data.js";
 import { esc } from "../core/format.js";
 import { initI18n, t } from "../core/i18n.js";
-import { boxFromDrag, errorKeys, exifPoint, firstPin, locationSource, looksStamped, padBox, reportFields } from "../features/report-form.js";
+import { errorKeys, exifPoint, firstPin, locationSource, looksStamped, padBox, reportFields } from "../features/report-form.js";
 import { createPinMap } from "../features/report-map.js";
 import { blurredCopy, loadPhoto, stampLikelihood, uploadFiles, workingCopy } from "../features/report-photo.js";
 import { cleanNote, LIMITS, zoneFor } from "../features/report-rules.js";
@@ -20,6 +20,9 @@ import { cleanNote, LIMITS, zoneFor } from "../features/report-rules.js";
 const $ = (id) => document.getElementById(id);
 const FUNCTION_URL = config.supabase.url ? `${config.supabase.url.replace(/\/$/, "")}/functions/v1/submit-report` : "";
 const VENDOR = new URL("../../assets/vendor/", import.meta.url).href;
+// During the pilot (?pilot in the address) each step also shows how long it took.
+const PILOT = new URLSearchParams(location.search).has("pilot");
+const took = (t0) => (PILOT ? ` (${((performance.now() - t0) / 1000).toFixed(1)} s)` : "");
 
 const state = {
   photoId: 0,          // changes with every new photo, so late results for an old photo are ignored
@@ -105,6 +108,7 @@ function showLines() {
 
 async function readStampNow(id) {
   const lines = state.lines;
+  const t0 = performance.now();
   lines.stamp = [t("report.stamp_reading"), "busy"];
   showLines();
   try {
@@ -117,11 +121,11 @@ async function readStampNow(id) {
     }
     if (Number.isFinite(s.lat)) {
       state.evidence.stamp = { lat: s.lat, lng: s.lng };
-      lines.stamp = [t("report.stamp_found", { lat: fixed(s.lat), lng: fixed(s.lng) }), "ok"];
+      lines.stamp = [t("report.stamp_found", { lat: fixed(s.lat), lng: fixed(s.lng) }) + took(t0), "ok"];
       showLines();
       return true;
     }
-    lines.stamp = [t("report.stamp_none")];
+    lines.stamp = [t("report.stamp_none") + took(t0)];
   } catch {
     if (id !== state.photoId) return false;
     lines.stamp = [t("report.stamp_failed"), "bad"];
@@ -133,15 +137,16 @@ async function readStampNow(id) {
 // ------------------------------------------------------------------ 2. faces
 
 async function findFacesNow(id) {
+  const t0 = performance.now();
   state.facesBusy = true;
   say("faces-status", [[t("report.faces_finding"), "busy"]]);
   try {
     const { findFaces } = await import("../features/report-faces.js");
     const found = await findFaces(state.work);
     if (id !== state.photoId) return;
-    const auto = found.map((b) => ({ ...padBox(b, state.work.width, state.work.height), on: true, auto: true }));
-    state.boxes = [...auto, ...state.boxes];
-    say("faces-status", [[auto.length ? t("report.faces_found", { n: auto.length }) : t("report.faces_none"), auto.length ? "ok" : ""]]);
+    state.boxes = found.map((b) => ({ ...padBox(b, state.work.width, state.work.height), on: true }));
+    const n = state.boxes.length;
+    say("faces-status", [[(n ? t("report.faces_found", { n }) : t("report.faces_none")) + took(t0), n ? "ok" : ""]]);
   } catch {
     if (id === state.photoId) say("faces-status", [[t("report.faces_unavailable"), "bad"]]);
   } finally {
@@ -149,66 +154,13 @@ async function findFacesNow(id) {
   }
 }
 
-let drag = null;
+// The photo as it will be sent (faces blurred). Residents do not edit the blur: anything the
+// face finder missed is blurred by the reviewer before publishing (decided 22 Oct 2026).
 function drawPreview() {
   const c = $("preview");
   if (!state.work) return;
   if (c.width !== state.work.width || c.height !== state.work.height) Object.assign(c, { width: state.work.width, height: state.work.height });
-  const ctx = c.getContext("2d");
-  ctx.drawImage(blurredCopy(state.work, state.boxes), 0, 0);
-  const line = Math.max(2, Math.round(c.width / 300));
-  const outline = (b, on) => {
-    ctx.setLineDash(on ? [] : [line * 3, line * 2]);
-    ctx.lineWidth = line + 2; ctx.strokeStyle = "rgba(0,0,0,.6)"; ctx.strokeRect(b.x, b.y, b.w, b.h);
-    ctx.lineWidth = line; ctx.strokeStyle = on ? "#ffd400" : "#ffffff"; ctx.strokeRect(b.x, b.y, b.w, b.h);
-  };
-  for (const b of state.boxes) outline(b, b.on);
-  if (drag && drag.now) outline(boxFromDrag(drag.start, drag.now, c.width, c.height), true);
-  ctx.setLineDash([]);
-  const on = state.boxes.filter((b) => b.on).length;
-  $("box-count").textContent = t("report.boxes", { on, all: state.boxes.length });
-  $("undo-box").disabled = !state.boxes.some((b) => !b.auto);
-}
-
-function canvasPoint(e) {
-  const c = $("preview"), r = c.getBoundingClientRect();
-  return { x: ((e.clientX - r.left) * c.width) / r.width, y: ((e.clientY - r.top) * c.height) / r.height, scale: r.width / c.width };
-}
-
-function wirePreview() {
-  const c = $("preview");
-  c.addEventListener("pointerdown", (e) => {
-    if (!state.work) return;
-    c.setPointerCapture(e.pointerId);
-    drag = { start: canvasPoint(e), now: null };
-  });
-  c.addEventListener("pointermove", (e) => {
-    if (!drag) return;
-    drag.now = canvasPoint(e);
-    drawPreview();
-  });
-  const finish = (e) => {
-    if (!drag) return;
-    const end = canvasPoint(e);
-    const moved = Math.hypot(end.x - drag.start.x, end.y - drag.start.y) * end.scale;
-    if (moved < 10) {
-      // a tap: switch the top box under the finger on or off
-      const hit = [...state.boxes].reverse().find((b) => end.x >= b.x && end.x <= b.x + b.w && end.y >= b.y && end.y <= b.y + b.h);
-      if (hit) hit.on = !hit.on;
-    } else {
-      const b = boxFromDrag(drag.start, end, c.width, c.height);
-      if (b.w * end.scale >= 8 && b.h * end.scale >= 8) state.boxes.push({ ...b, on: true, auto: false });
-    }
-    drag = null;
-    drawPreview();
-  };
-  c.addEventListener("pointerup", finish);
-  c.addEventListener("pointercancel", () => { drag = null; drawPreview(); });
-  $("undo-box").addEventListener("click", () => {
-    const i = state.boxes.map((b) => b.auto).lastIndexOf(false);
-    if (i >= 0) state.boxes.splice(i, 1);
-    drawPreview();
-  });
+  c.getContext("2d").drawImage(blurredCopy(state.work, state.boxes), 0, 0);
 }
 
 // ------------------------------------------------------------------ 3. place
@@ -380,7 +332,8 @@ async function start() {
   $("report-form").hidden = false;
   pinMap = createPinMap("pin-map", zones, onPinMove);
   showPlace();
-  wirePreview();
+  // Start fetching the face finder now, while the resident chooses a photo (about 2.5 MB once).
+  import("../features/report-faces.js").then((m) => m.preloadFaces()).catch(() => {});
   $("photo-input").addEventListener("change", (e) => { const f = e.target.files && e.target.files[0]; if (f) onPhoto(f); });
   $("read-stamp").addEventListener("click", async () => {
     if (!state.img) return;

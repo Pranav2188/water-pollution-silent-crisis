@@ -21,5 +21,6 @@ export const config = {
   // Phase 4 only. The PUBLIC publishable key (sb_publishable_…, or the legacy anon key) may go here.
   // The secret key (sb_secret_… / service_role) never goes in website code: see supabase/README.md.
   // url: the project address (not a secret); the report page sends to <url>/functions/v1/submit-report.
-  supabase: { url: "https://enungxucvdqqeyzpyyxl.supabase.co", anonKey: "" },
+  // anonKey: the publishable key (sb_publishable_…, safe in website code); the review page signs in with it.
+  supabase: { url: "https://enungxucvdqqeyzpyyxl.supabase.co", anonKey: "sb_publishable_iq6rKO8yDsjq6rtDi-Xs9w_CRLaTMsc" },
 };

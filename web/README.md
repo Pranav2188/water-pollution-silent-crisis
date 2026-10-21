@@ -36,12 +36,14 @@ How the parts fit together, and where the planned features plug in: [docs/archit
 | `js/features/report-form.js` | Report page logic with no page or network: stamp check, 2-of-3 stamp agreement, face tiles and boxes, where the location came from, fields sent, error messages (tested) | done (Milestone 2) |
 | `js/features/report-photo.js` | Decodes the photo, redraws it without hidden data, blurs boxes, makes the photo and thumbnail | done (Milestone 2) |
 | `js/features/report-stamp.js`, `report-faces.js`, `report-map.js` | Stamp reading (Tesseract), face finding (MediaPipe), the pin map; the first two load their libraries only when needed | done (Milestone 2) |
+| `review.html`, `js/pages/review.js` | Phase 4 review page (team only, not linked): sign in, queue, faces blurred and plates suggested automatically, blur / clear blur, approve / reject / needs a visit; deletes the original at the decision | done (Milestone 3) |
+| `js/features/review-logic.js`, `review-plates.js` | Review logic with no page or network (box states, plate-model output, what may be approved; tested) and the plate finder (ONNX Runtime Web) | done (Milestone 3) |
 | `js/features/report-rules.js` | Phase 4 rules for photo reports: which area a point is in, reading a GPS-camera stamp, location warnings, date and note checks, "is this really a clean JPEG/WebP". Runs in the browser and, as an identical copy, in the `submit-report` function (tested) | done (Milestone 1) |
 | `js/features/project-list.js` | Project cards with dated promises | Sanskar, Week 7 |
 | `i18n/en.json`, `i18n/mr.json` | All website text. `mr.json` is empty until translated; empty values show in English | Vaishnavi translates |
 | `assets/css/` | `tokens.css` (all colours, light and dark) · `base.css` · `components.css` · `map.css`; pages load `main.css` | shared |
 | `assets/vendor/leaflet-1.9.4/` | Leaflet, copied from the npm package (BSD 2-Clause, licence included) so the site loads no outside scripts | – |
-| `assets/vendor/` (others) | Tesseract, MediaPipe Face Detection, exifr, ALTCHA for the report page; versions, sources and licences in `assets/vendor/README.md` | – |
+| `assets/vendor/` (others) | Tesseract, MediaPipe Face Detection, exifr, ALTCHA for the report page; supabase-js, ONNX Runtime Web and the plate model for the review page; versions, sources and licences in `assets/vendor/README.md` | – |
 | `data/` | **Generated.** Never edit by hand; see `docs/data-model.md` | `tools/export_data.py` |
 | `photos/` | Field photos, no faces (see `photos/README.md`) | Siddhesh, Vaishnavi |
 
