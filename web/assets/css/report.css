@@ -42,3 +42,10 @@ altcha-widget { display: block; margin: 6px 0; max-width: 100%; }
 .done .ref { font-size: 1.15rem; font-weight: 700; }
 .keep { font-size: .9rem; }
 .keep h2 { font-size: 1rem; margin: 0 0 4px; }
+
+/* recent approved reports */
+.recent h2 { font-size: 1.05rem; margin: 0 0 4px; }
+.recent-list { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.recent-item { display: flex; gap: 10px; align-items: flex-start; padding: 8px; border: 1px solid var(--line); border-radius: var(--radius); color: var(--text); text-decoration: none; background: var(--surface); }
+.recent-item:hover, .recent-item:focus-visible { border-color: var(--resident); }
+.recent-item img { width: 84px; height: 63px; object-fit: cover; border-radius: 6px; flex: none; background: var(--soft-bg); }

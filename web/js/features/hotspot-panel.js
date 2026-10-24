@@ -22,7 +22,7 @@ export function googleMapsUrl(h, kind) {
 const tag = (key) => `<span class="tag">${esc(t(key))}</span>`;
 
 // The hotspot's photo, shown larger over the page (same tab). One viewer for the whole page.
-function openPhotoViewer(src, alt) {
+export function openPhotoViewer(src, alt) {
   let dlg = document.getElementById("photo-viewer");
   if (!dlg) {
     dlg = document.createElement("dialog");
@@ -39,7 +39,7 @@ function openPhotoViewer(src, alt) {
 }
 
 // Show the photo in the panel; hide it quietly if the file cannot be loaded.
-function wirePhoto(panel) {
+export function wirePhoto(panel) {
   const fig = panel.querySelector(".panel-photo");
   if (!fig) return;
   const img = fig.querySelector("img");

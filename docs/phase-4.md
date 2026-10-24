@@ -6,6 +6,8 @@ Status (21 Oct 2026): **Milestone 1 (foundation) built.** Migrations 002 and 003
 
 Status (22 Oct 2026): **Milestone 2 (upload page) built.** `report.html` works end to end against a local copy of `submit-report` (results under "Tests" below). It is not linked from the menu and opens only with `?pilot` in the address (`report.html?pilot`), so the team can test it on their phones before the pilot.
 
+Status (24 Oct 2026): **Milestone 4 (map and privacy) built.** Approved reports show on the map as orange rings labelled "not verified by the team" and under "Recent reports" on `report.html`; every published photo has **Report this photo** (`flag-report` function, migration 006), which takes it off the site at once and puts it back in the review queue; the review page lists those first and asks for an "I checked the whole photo" tick before Approve; the privacy and disclaimer pages describe photo reports. The form itself still opens only with `?pilot`: switching `photoReports` on (after the phone tests, P4-12) opens it and adds "Report a spot" to every menu.
+
 Status (22 Oct 2026): **Milestone 3 (review page) built.** `review.html` works end to end against a stand-in for Supabase (results under "Tests"). Before it works live: migration 004 is run, sign-ups are switched off and reviewer accounts are made ([supabase/README.md](../supabase/README.md#reviewers-phase-4-reviewhtml)).
 
 ## Decisions
@@ -94,6 +96,11 @@ Library versions are pinned to releases at least two weeks old, and kept in `web
 - 39 river photos without plates: 5 got a box. One was a real catch (the registration painted on the dumper in the 10 Oct cleanup photo, missed without tiles); the others were the "Google" logo in the stamp's mini-map and "HYUNDAI" on an excavator arm.
 - In Chromium with ONNX Runtime Web: the same boxes and scores as the Python test (within 1 px); about 0.5 to 1 s per photo, 5 to 9 s with tiles.
 
+### Tests of Milestone 4 (24 Oct 2026, Chromium, against a stand-in for Supabase and the real `flag-report` code running in Deno)
+
+- `flag-report` directly, 16 of 16: our site allowed and other sites refused; bad JSON, unknown reasons, bad references and oversized bodies refused; a flag copies the photo and thumbnail to `report-photos/flagged/`, sets the report to waiting with reason and time, clears the public links and deletes the public files; flagging the same photo again, a photo already hidden, a waiting report or a missing reference all get the same reply and change nothing; the 6th flag from one connection in a day is refused.
+- In the browser, 24 of 24: the map shows the approved reports as rings with a legend entry and counts them; `index.html#RPT-00006` opens the report's panel (photo, "not verified" label, note, whom to contact first); Report this photo asks for a reason, then hides the photo and removes the ring, and it stays gone after a reload; `report.html` (form closed) lists the recent reports with links to the map and dates in IST; the review page lists the flagged report first with its reason, keeps Approve disabled until the whole-photo tick, and re-approving publishes the photo again and deletes the private copy; the map then shows it again. No page errors. The "Report a spot" menu link stays hidden while `photoReports` is off.
+
 ### Tests of the review page (22 Oct 2026, Chromium, against a stand-in for Supabase that applies the rules of migrations 002 to 004)
 
 - Wrong password refused; a signed-in account that is not a reviewer sees nothing; the reviewer sees 2 waiting and 1 "needs a visit".
@@ -116,10 +123,11 @@ Migration `supabase/migrations/002_resident_reports.sql`:
 | `reviewers` | Which logged-in accounts may review | The reviewer themself | Added by Pranav in the Supabase dashboard |
 | `report_attempts` | Scrambled connection fingerprint + time, for rate limits; deleted after 2 days | Nobody | The function only |
 | `used_challenges` | Spent ALTCHA puzzles, to stop replays; deleted after they expire | Nobody | The function only |
+| `report_flags` (migration 006) | "Report this photo": scrambled connection fingerprint, reference and time, for limits; deleted after 2 days | Nobody | The `flag-report` function only |
 | `report-photos` folder | Waiting photos and thumbnails | Reviewers | The function adds; reviewers delete |
 | `report-public` folder | Approved, cleaned photos | Everyone | Reviewers |
 
-Statuses: `waiting` → `approved` / `rejected` / `needs_visit` → (`promoted` once a team visit adds an `HS-xx` hotspot to the sheet).
+Statuses: `waiting` → `approved` / `rejected` / `needs_visit` → (`promoted` once a team visit adds an `HS-xx` hotspot to the sheet). A flagged photo goes from `approved` back to `waiting`, with `flag_reason` (face, plate, personal, not_pollution, other) and `flagged_at` set (migration 006); the public never sees those two columns.
 
 Flags the function adds for the reviewer: `pin_far_from_stamp`, `pin_far_from_photo_gps`, `pin_far_from_device` (more than 200 m apart), `pin_only` (no location evidence), `old_photo` (taken more than 90 days ago), `note_has_contact` (the note seems to contain a phone number or email).
 
@@ -139,8 +147,9 @@ Flags the function adds for the reviewer: `pin_far_from_stamp`, `pin_far_from_ph
 - Until review, that photo can still show faces the phone missed or number plates; it is private (reviewers only) and is **deleted when the report is approved or rejected**. Only the reviewer's cleaned copy is ever public.
 - The connection address is only used scrambled (keyed hash, changes daily) for rate limits and deleted after 2 days.
 - Retention: decided reports keep no original (above). Still to agree: what happens to reports nobody reviews (60 days proposed) and to "needs a team visit" reports after the visit.
-- Every published photo gets a "report this photo" link that sends it back to the review queue.
-- Before launch, the privacy page and `web/README.md` change: the report page asks for location when the resident taps "Use my location".
+- Every published photo has **Report this photo** (built 24 Oct): the visitor picks a reason (no free text), the `flag-report` function moves the photo back to the private folder and the report back to the queue, and the photo disappears from the map at once. Limits: the same photo once per connection a day, 5 photos per connection a day, 50 a day for the site.
+- Before Approve works, the reviewer ticks "I checked the whole photo, including the background" (added 24 Oct after the first live test published a photo with recognisable people in the background).
+- The privacy page (updated 24 Oct) describes what a report stores, the location request on the report page, Supabase as a service, and Report this photo; the disclaimer explains that resident reports are not verified by the team.
 
 ## Milestones
 
@@ -149,7 +158,7 @@ Flags the function adds for the reviewer: `pin_far_from_stamp`, `pin_far_from_ph
 | 1 | Foundation | This plan; migrations folder; reports database, folders and rules; interim report zones; shared report rules with tests; `submit-report` function deployed and tested | Pranav |
 | 2 | Upload page (**built 22 Oct**, opens with `?pilot`) | `report.html`: photo, stamp reading, location, pin, area check, blur, redraw, spam puzzle, send; Marathi strings (keys added; translation by Vaishnavi) | Sanskar (+ Pranav) |
 | 3 | Review page (**built 22 Oct**) | `review.html`: email + password sign-in, queue, faces and plates found automatically, blur / clear blur, approve / reject / needs a visit, original deleted at decision; migration 004; reviewer guidelines | Sanskar + Pranav; guidelines Shweta |
-| 4 | Map and privacy | Resident reports layer; privacy and disclaimer updates; "report this photo"; promote-to-hotspot routine; retention clean-up | Sanskar, Vaishnavi, Shweta |
+| 4 | Map and privacy (**built 24 Oct**, except the last two) | Resident reports layer and "Recent reports"; privacy and disclaimer updates; "report this photo" (migration 006, `flag-report`); whole-photo tick on the review page; still to do: promote-to-hotspot routine, retention clean-up | Sanskar, Vaishnavi, Shweta |
 | 5 | Test and pilot | Team photos through the whole chain; blur test on riverbank photos (P4-06); pilot with Jeevitnadi / Keshav Nagar association; then switch on | Siddhesh, Vaishnavi |
 
 Later: river corridors (needs the river lines exported once from OpenStreetMap, see below), expansion to all of Pune's rivers, daily email to reviewers when reports are waiting.

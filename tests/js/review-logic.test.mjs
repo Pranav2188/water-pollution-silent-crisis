@@ -4,7 +4,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import {
-  boxAt, decisionRow, FLAG_KEYS, letterbox, needsTidyUp, newBox, nextState, PLATE_CONFIDENCE, plateBoxes, publicPaths, readyToApprove,
+  approveState, boxAt, decisionRow, FLAG_KEYS, isFlagged, letterbox, needsTidyUp, newBox, nextState, PLATE_CONFIDENCE, plateBoxes,
+  publicPaths, queueOrder, readyToApprove,
 } from "../../web/js/features/review-logic.js";
 
 const en = JSON.parse(readFileSync(new URL("../../web/i18n/en.json", import.meta.url)));
@@ -68,4 +69,28 @@ test("every warning the server can add has a reviewer text", () => {
   for (const key of Object.values(FLAG_KEYS)) assert.ok(en[key], key);
   for (const s of ["waiting", "needs_visit", "approved", "rejected", "promoted"]) assert.ok(en[`review.tab.${s}`], s);
   for (const d of ["approved", "rejected", "needs_visit"]) assert.ok(en[`review.done.${d}`], d);
+});
+
+// ------------------------------------------------------------------ Milestone 4 (24 Oct)
+
+test("photos reported by visitors come first in the queue", () => {
+  const rows = [
+    { id: 1, status: "waiting", created_at: "2026-10-20T00:00:00Z", flagged_at: null },
+    { id: 2, status: "waiting", created_at: "2026-10-22T00:00:00Z", flagged_at: "2026-10-24T01:00:00Z" },
+    { id: 3, status: "needs_visit", created_at: "2026-10-19T00:00:00Z", flagged_at: "2026-10-23T00:00:00Z" },
+    { id: 4, status: "waiting", created_at: "2026-10-21T00:00:00Z" },
+  ];
+  assert.deepEqual(queueOrder(rows).map((r) => r.id), [2, 3, 1, 4]);
+  assert.equal(isFlagged(rows[1]), true);
+  assert.equal(isFlagged(rows[2]), false, "only a waiting report counts as flagged");
+});
+
+test("approve needs the whole-photo tick as well as decided suggestions", () => {
+  const boxes = [newBox({ x: 0, y: 0, w: 10, h: 10 }, "face"), newBox({ x: 20, y: 0, w: 10, h: 5 }, "plate")];
+  assert.deepEqual(approveState(boxes, { busy: true, hasPhoto: true, checked: true }), { enabled: false, help: "review.wait_finding" });
+  assert.deepEqual(approveState(boxes, { busy: false, hasPhoto: true, checked: true }), { enabled: false, help: "review.undecided", n: 1 });
+  boxes[1].state = "on";
+  assert.deepEqual(approveState(boxes, { busy: false, hasPhoto: true, checked: false }), { enabled: false, help: "review.tick_needed", n: 2 });
+  assert.deepEqual(approveState(boxes, { busy: false, hasPhoto: true, checked: true }), { enabled: true, help: "review.ready", n: 2 });
+  for (const k of ["review.wait_finding", "review.undecided", "review.tick_needed", "review.ready", "review.tick"]) assert.ok(en[k], k);
 });

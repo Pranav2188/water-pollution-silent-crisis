@@ -20,7 +20,9 @@ The sheet always wins for the registers. Those tables are overwritten from the s
 | `migrations/003_private_reviewer_check.sql` | Moves the "is this person a reviewer?" check into a schema the public API cannot reach |
 | `migrations/004_delete_original_at_review.sql` | Lets the review page delete the resident's original when a report is approved or rejected: the photo paths may then be empty, and reviewers may only empty them |
 | `migrations/005_reviewers_read_published.sql` | Lets reviewers read the published-photos folder, which Supabase Storage needs for replacing ("upsert") and removing files there; without it the first live approval failed |
+| `migrations/006_report_this_photo.sql` | "Report this photo": `flag_reason` and `flagged_at` on reports, the `report_flags` table and the `claim_flag_slot` limits (5 photos per connection a day, 50 a day for the site) |
 | `functions/submit-report/` | The only way a report gets in: checks the spam puzzle, the place, the photo and the limits, then stores it as `waiting`. `report-rules.js` and `report-zones.json` are **copies** made from the website's files (see below) |
+| `functions/flag-report/` | "Report this photo": takes a published resident photo off the site at once and puts the report back in the review queue. `flag-rules.js` is a **copy** of `web/js/features/flag-rules.js` |
 
 ## Status
 
@@ -30,10 +32,11 @@ The sheet always wins for the registers. Those tables are overwritten from the s
 | Project | `water-pollution-silent-crisis` |
 | Region | South Asia (Mumbai), `ap-south-1` |
 | Project URL | `https://enungxucvdqqeyzpyyxl.supabase.co` (not a secret; also stored as the `SUPABASE_URL` GitHub secret) |
-| Migrations run | 001 on 16 Oct 2026 (plus the Alandi columns the same day); 002 and 003 on 21 Oct 2026; 004 on 22 Oct 2026; 005 not yet |
+| Migrations run | 001 on 16 Oct 2026 (plus the Alandi columns the same day); 002 and 003 on 21 Oct 2026; 004 and 005 on 22 Oct 2026; 006 not yet |
 | GitHub secrets | `SUPABASE_URL`, `SUPABASE_SERVICE_KEY` (added 16 Oct 2026) |
 | Registers | 50 sources, 3 areas, 43 authorities (31 `AU` + 12 `CA`), 9 problem types, 6 projects, 15 project dates, 18 spots (14 `HS` + 4 `CS`) |
 | `submit-report` | Version 2 deployed 21 Oct 2026, 11 report zones. Function secrets: see "The submit-report function" |
+| `flag-report` | Not deployed yet (needs migration 006 first). See "The flag-report function" |
 | Checked | Registers matched `web/data/*.json`; public key cannot write; 002 dress rehearsal 19/19; after 003: the public sees no waiting reports, a reviewer sees and updates them, a non-reviewer sees none; security advisor: only a note that `report_attempts` and `used_challenges` have no rules (on purpose: nobody but the function may touch them) |
 
 ## Keys
@@ -89,6 +92,16 @@ node --test tests/js/*.test.mjs                                        # fails i
 ```
 
 Then redeploy all three files (`index.ts`, `report-rules.js`, `report-zones.json`) in the dashboard (Edge Functions → submit-report → Code) or with `supabase functions deploy submit-report --no-verify-jwt`, and check that `?about` shows the new fingerprint. The checks on GitHub stop a merge, and the website deploy, if the zones in the repo are out of date, but they cannot see what is deployed: that is what `?about` is for.
+
+## The flag-report function
+
+"Report this photo" on the map (Phase 4, Milestone 4). Deployed with "Verify JWT" **off**, like submit-report. It uses the `ALTCHA_HMAC_SECRET` secret that is already set (only to scramble connection addresses for its limits); nothing new to add.
+
+What it does for `POST { ref, reason }`: copies the published photo and thumbnail from `report-public` to `report-photos/flagged/`, sets the report back to `waiting` with `flag_reason` and `flagged_at`, clears the public links, and deletes the public copies. The review page lists flagged reports first; approving one publishes a cleaned copy again and deletes the private copy.
+
+**Order:** run migration 006 first, then deploy (`supabase functions deploy flag-report --no-verify-jwt`, or dashboard → Edge Functions → Deploy a new function, name `flag-report`, files `index.ts` and `flag-rules.js`, Verify JWT off). Check: `https://enungxucvdqqeyzpyyxl.supabase.co/functions/v1/flag-report?about` shows `{"function":"flag-report"}`.
+
+After changing `web/js/features/flag-rules.js`: `cp web/js/features/flag-rules.js supabase/functions/flag-report/` and redeploy (the tests fail while the copy differs).
 
 ## Reviewers (Phase 4, `review.html`)
 

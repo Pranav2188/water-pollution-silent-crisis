@@ -1,4 +1,5 @@
-// Leaflet map: tiles, prabhag outlines, hotspot markers, legend, and showing one area at a time.
+// Leaflet map: tiles, prabhag outlines, hotspot markers, resident report rings, legend, and
+// showing one area at a time.
 
 import { esc } from "../core/format.js";
 import { t } from "../core/i18n.js";
@@ -44,24 +45,43 @@ export function addHotspots(map, hotspots, onSelect) {
   });
 }
 
-export function addLegend(map) {
+// Resident reports (Phase 4): hollow rings, so they read as "not verified by the team".
+// onSelect(report) runs when one is tapped. Returns entries shaped like addHotspots' ones.
+export function addResidentReports(map, reports, onSelect) {
+  return reports.map((r) => {
+    const marker = L.circleMarker([r.lat, r.lng], {
+      radius: 8, weight: 3, color: css("--resident") || "#c2410c", fillColor: "#ffffff", fillOpacity: 0.9,
+    })
+      .addTo(map)
+      .bindTooltip(`${esc(r.ref)}: ${esc(r.problem_type)} (${esc(t("rr.label"))})`)
+      .on("click", () => onSelect(r));
+    return { hotspot: r, marker, resident: true };
+  });
+}
+
+// withResidents: also explain the resident report rings.
+export function addLegend(map, { withResidents = false } = {}) {
   const legend = L.control({ position: "bottomleft" });
   legend.onAdd = () => {
     const div = L.DomUtil.create("div", "legend");
-    div.innerHTML = TYPES.map((k) => `<div><i style="background:${css(`--${k}`)}"></i>${esc(t(`type.${k}`))}</div>`).join("");
+    div.innerHTML = TYPES.map((k) => `<div><i style="background:${css(`--${k}`)}"></i>${esc(t(`type.${k}`))}</div>`).join("") +
+      (withResidents ? `<div><i class="ring"></i>${esc(t("rr.legend"))}</div>` : "");
     return div;
   };
   legend.addTo(map);
 }
 
 // Show only one area (or all when areaId is null) and zoom to what is shown.
+// markers: entries from addHotspots and addResidentReports. Returns how many of each are shown.
 export function showArea(map, markers, wardsByArea, areaId) {
   const visible = [];
-  for (const { hotspot, marker } of markers) {
+  let spots = 0, reports = 0;
+  for (const { hotspot, marker, resident } of markers) {
     const show = !areaId || hotspot.area_id === areaId;
     if (show) {
       marker.addTo(map);
       visible.push([hotspot.lat, hotspot.lng]);
+      if (resident) reports++; else spots++;
     } else {
       marker.remove();
     }
@@ -72,5 +92,5 @@ export function showArea(map, markers, wardsByArea, areaId) {
   }
   if (visible.length > 1) map.fitBounds(visible, { padding: [30, 30], maxZoom: 16 });
   else if (visible.length === 1) map.setView(visible[0], 16);
-  return visible.length;
+  return { spots, reports };
 }

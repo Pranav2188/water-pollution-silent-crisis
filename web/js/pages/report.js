@@ -10,12 +10,14 @@
 
 import { config } from "../core/config.js";
 import { loadData } from "../core/data.js";
-import { esc } from "../core/format.js";
-import { initI18n, t } from "../core/i18n.js";
+import { esc, niceDate } from "../core/format.js";
+import { initI18n, lang, t } from "../core/i18n.js";
+import { areaName } from "../features/areas.js";
 import { errorKeys, exifPoint, firstPin, locationSource, looksStamped, padBox, reportFields } from "../features/report-form.js";
 import { createPinMap } from "../features/report-map.js";
 import { blurredCopy, loadPhoto, stampLikelihood, uploadFiles, workingCopy } from "../features/report-photo.js";
 import { cleanNote, LIMITS, zoneFor } from "../features/report-rules.js";
+import { fetchApprovedReports, istDay } from "../features/resident-reports.js";
 
 const $ = (id) => document.getElementById(id);
 const FUNCTION_URL = config.supabase.url ? `${config.supabase.url.replace(/\/$/, "")}/functions/v1/submit-report` : "";
@@ -291,11 +293,29 @@ async function send(e) {
   }
 }
 
+// ------------------------------------------------------------------ recent reports
+
+// The latest approved reports, each linking to its place on the map (index.html#RPT-00005).
+// Shown whether or not the form is open.
+async function showRecent() {
+  const [reports, d] = await Promise.all([fetchApprovedReports(12), loadData().catch(() => null)]);
+  if (!reports.length) return;
+  const area = (id) => (d && d.areaById[id] ? areaName(d.areaById[id]) : id);
+  $("recent-list").innerHTML = reports.map((r) => `
+    <li><a class="recent-item" href="index.html#${esc(r.ref)}">
+      <img src="${esc(r.public_thumb_url)}" alt="${esc(t("rr.photo_alt", { ref: r.ref, problem: r.problem_type }))}" loading="lazy" decoding="async">
+      <span><strong>${esc(r.problem_type)}</strong><br>${esc(area(r.area_id))}<br>
+      <span class="meta">${esc(r.ref)} · ${esc(niceDate(istDay(r.taken_at || r.created_at), lang))}</span></span>
+    </a></li>`).join("");
+  $("recent").hidden = false;
+}
+
 // ------------------------------------------------------------------ start
 
 async function start() {
   await initI18n();
   document.title = t("report.page_title");
+  showRecent();
   const open = config.features.photoReports || new URLSearchParams(location.search).has("pilot");
   if (!open || !FUNCTION_URL) {
     $("closed").textContent = t(open ? "report.not_ready" : "report.closed");

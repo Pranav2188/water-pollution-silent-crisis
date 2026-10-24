@@ -68,8 +68,14 @@ function addSwitch() {
   header.append(select);
 }
 
+// Menu links for features that are switched off stay hidden (data-feature="photoReports").
+function showFeatureLinks() {
+  document.querySelectorAll("[data-feature]").forEach((el) => { if (config.features[el.dataset.feature]) el.hidden = false; });
+}
+
 // Call once at the start of every page script.
 export async function initI18n() {
+  showFeatureLinks();
   lang = pickLanguage();
   english = await load("en");
   strings = lang === "en" ? english : await load(lang);

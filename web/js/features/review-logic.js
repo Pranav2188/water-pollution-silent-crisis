@@ -4,7 +4,26 @@
 export const PLATE_SIDE = 640;          // the plate model's input size
 export const PLATE_CONFIDENCE = 0.35;   // tested 22 Oct: catches every plate 34 px or wider in a 1600 px photo
 export const DECIDABLE = ["waiting", "needs_visit"];   // statuses a reviewer can still decide
+// A published photo that a visitor reported ("Report this photo", migration 006) comes back as a
+// waiting report with flagged_at set. Those go to the top of the queue.
 export const QUEUE = ["waiting", "needs_visit"];
+
+export const isFlagged = (r) => Boolean(r && r.status === "waiting" && r.flagged_at);
+
+// Queue order: flagged photos first (they were public), then oldest first.
+export function queueOrder(rows) {
+  return [...rows].sort((a, b) => (isFlagged(b) - isFlagged(a)) || String(a.created_at).localeCompare(String(b.created_at)));
+}
+
+// The approve button also needs the reviewer's "I checked the whole photo" tick (added 24 Oct
+// after the first live test published a photo with recognisable people in the background).
+export function approveState(boxes, { busy, hasPhoto, checked }) {
+  const r = readyToApprove(boxes);
+  if (busy || !hasPhoto) return { enabled: false, help: "review.wait_finding" };
+  if (!r.ok) return { enabled: false, help: "review.undecided", n: r.undecided };
+  if (!checked) return { enabled: false, help: "review.tick_needed", n: r.blurred };
+  return { enabled: true, help: "review.ready", n: r.blurred };
+}
 
 // ------------------------------------------------------------------ boxes
 //

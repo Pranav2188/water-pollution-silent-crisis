@@ -18,7 +18,7 @@ How the parts fit together, and where the planned features plug in: [docs/archit
 
 | File | What it is | Who / when |
 |---|---|---|
-| `index.html`, `js/pages/map.js` | Hotspot map page: area buttons, map, side panel | Week 4 skeleton (done) |
+| `index.html`, `js/pages/map.js` | Hotspot map page: area buttons, map, side panel; approved resident reports as rings; `index.html#RPT-00005` opens one | Week 4 skeleton (done); resident reports Milestone 4 |
 | `projects.html`, `js/pages/projects.js` | Project list with every dated promise; becomes the Mundhwa/Kharadi tracker | Sanskar, Week 7 |
 | `privacy.html`, `disclaimer.html` | Live from day one; drafts for Prof. Thombare to review | Vaishnavi reviews |
 | `js/core/config.js` | Feature switches, languages, Supabase public key. **Turn features on here.** | shared |
@@ -32,12 +32,14 @@ How the parts fit together, and where the planned features plug in: [docs/archit
 | `js/features/contacts.js` | Reads phone numbers, WhatsApp, emails, websites and X handles out of the sheet's contact text; skips anything marked "to verify" or "not a complaint line" (tested) | done |
 | `js/features/responsibility.js` | `responsibleFor(hotspot, data, problemType)`: first contact, channels, escalation, sources, local and general offices; `checkStatus(authority)` (tested) | done (Week 6) |
 | `js/features/complaint.js` | Fills the Routing Rules template; WhatsApp and X links (tested) | ready for Week 7 (PMC CARE number checked against sources; a test message is still to send) |
-| `report.html`, `js/pages/report.js` | Phase 4 upload page: photo, stamp, faces, pin, problem, spam puzzle, send. Opens only with `?pilot` until `photoReports` is switched on | done (Milestone 2) |
+| `report.html`, `js/pages/report.js` | Phase 4 upload page: photo, stamp, faces, pin, problem, spam puzzle, send; "Recent reports" (always shown). The form opens only with `?pilot` until `photoReports` is switched on, which also shows "Report a spot" in every menu | done (Milestones 2 and 4) |
 | `js/features/report-form.js` | Report page logic with no page or network: stamp check, 2-of-3 stamp agreement, face tiles and boxes, where the location came from, fields sent, error messages (tested) | done (Milestone 2) |
 | `js/features/report-photo.js` | Decodes the photo, redraws it without hidden data, blurs boxes, makes the photo and thumbnail | done (Milestone 2) |
 | `js/features/report-stamp.js`, `report-faces.js`, `report-map.js` | Stamp reading (Tesseract), face finding (MediaPipe), the pin map; the first two load their libraries only when needed | done (Milestone 2) |
-| `review.html`, `js/pages/review.js` | Phase 4 review page (team only, not linked): sign in, queue, faces blurred and plates suggested automatically, blur / clear blur, approve / reject / needs a visit; deletes the original at the decision | done (Milestone 3) |
+| `review.html`, `js/pages/review.js` | Phase 4 review page (team only, not linked): sign in, queue (photos reported by visitors first), faces blurred and plates suggested automatically, blur / clear blur, "I checked the whole photo" tick, approve / reject / needs a visit; deletes the original at the decision | done (Milestones 3 and 4) |
 | `js/features/review-logic.js`, `review-plates.js` | Review logic with no page or network (box states, plate-model output, what may be approved; tested) and the plate finder (ONNX Runtime Web) | done (Milestone 3) |
+| `js/features/resident-reports.js`, `report-panel.js` | Phase 4: reads approved reports from Supabase with the public key (public columns only), their side panel, and "Report this photo" | done (Milestone 4) |
+| `js/features/flag-rules.js` | "Report this photo" rules (reasons, reference, which public files belong to a report). Runs in the browser and, as an identical copy, in the `flag-report` function (tested) | done (Milestone 4) |
 | `js/features/report-rules.js` | Phase 4 rules for photo reports: which area a point is in, reading a GPS-camera stamp, location warnings, date and note checks, "is this really a clean JPEG/WebP". Runs in the browser and, as an identical copy, in the `submit-report` function (tested) | done (Milestone 1) |
 | `js/features/project-list.js` | Project cards with dated promises | Sanskar, Week 7 |
 | `i18n/en.json`, `i18n/mr.json` | All website text. `mr.json` is empty until translated; empty values show in English | Vaishnavi translates |

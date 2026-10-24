@@ -32,3 +32,4 @@
 .review-decide { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--line); }
 .review-decide .actions { margin: 6px 0; }
 .btn-danger { color: #b3261e; border-color: #b3261e; }
+.tag-flagged { background: var(--resident); color: #fff; }

@@ -15,7 +15,8 @@ export const config = {
     areaFilter: true,           // area buttons above the map (data/areas.csv)
     responsibilityPanel: true,  // "What to do about it": first contact, channels, escalation (features/respond-panel.js)
     complaintHelper: false,     // Week 7: WhatsApp / X message; needs the PMC CARE number verified (Progress P3-01)
-    photoReports: false,        // Phase 4: report.html (resident photo reports). Until switched on, it opens only with ?pilot in the address
+    photoReports: false,        // Phase 4: report.html (resident photo reports) and its "Report a spot" menu link. Until switched on, the page opens only with ?pilot in the address
+    residentReports: true,      // Phase 4: approved resident reports on the map and under "Recent reports" on report.html (read from Supabase with the public key)
   },
 
   // Phase 4 only. The PUBLIC publishable key (sb_publishable_…, or the legacy anon key) may go here.

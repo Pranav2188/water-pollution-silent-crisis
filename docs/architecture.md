@@ -51,7 +51,7 @@ data/boundaries/*.kml ── tools/kml_to_geojson.py ──► web/data/wards.ge
      js/core/data.js loadData() ──► js/pages/*.js ──► js/features/*.js ──► the page
 ```
 
-The website never talks to the sheet or (until Phase 4) to Supabase. It only reads the JSON files next to it, so it works on GitHub Pages with no server.
+The website never talks to the sheet. Until Phase 4 it did not talk to Supabase either; now the map and report pages read approved resident reports from it with the public key, and work without them if Supabase is down. It only reads the JSON files next to it, so it works on GitHub Pages with no server.
 
 ## The website in layers
 
@@ -72,7 +72,8 @@ The website never talks to the sheet or (until Phase 4) to Supabase. It only rea
 | Responsibility panel (Week 6) | `responsibilityPanel: true` (on) | `features/responsibility.js` (`responsibleFor`, `checkStatus`), `features/contacts.js` (`channelsIn`, `routeChannels`) | "What to do about it" box in the side panel (`features/respond-panel.js`) | done 16 Oct 2026; the routing rules are still drafts until the team agrees them (Progress P2-05), and contacts move from "checked against sources" to "confirmed" as the team calls them |
 | Complaint helper (Week 7) | `complaintHelper` | `features/complaint.js` → `fillTemplate`, `openPlaceholders`, `whatsappLink`, `xLink` | marked spot in `features/hotspot-panel.js` | PMC CARE number confirmed by a test message (Progress P3-01; desk check done 16 Oct 2026); the form |
 | Marathi | add `"mr"` to `languages` | `core/i18n.js`, `i18n/mr.json` | header language switch; `?lang=mr` to test early | the translations; `name_mr` in `areas.csv` |
-| Photo reports (Phase 4, [plan](phase-4.md)) | `photoReports`, `supabase.url`/`anonKey` | `features/report-rules.js` (place, stamp, photo and note checks, shared with the server), `features/report-form.js` and `report-photo/stamp/faces/map.js` (the upload page); `features/review-logic.js` and `review-plates.js` (the review page); `supabase/migrations/004`; `supabase/migrations/002`–`003` (reports table, review rules, photo folders, rate limits); `supabase/functions/submit-report` (deployed 21 Oct 2026) | `report.html` (built; opens with `?pilot` until switched on), `review.html` (built; team sign-in) | Milestones 4–5: map layer, privacy updates, pilot |
+| Photo reports (Phase 4, [plan](phase-4.md)) | `photoReports`, `supabase.url`/`anonKey` | `features/report-rules.js` (place, stamp, photo and note checks, shared with the server), `features/report-form.js` and `report-photo/stamp/faces/map.js` (the upload page); `features/review-logic.js` and `review-plates.js` (the review page); `supabase/migrations/004`; `supabase/migrations/002`–`003` (reports table, review rules, photo folders, rate limits); `supabase/functions/submit-report` (deployed 21 Oct 2026) | `report.html` (built; opens with `?pilot` until switched on), `review.html` (built; team sign-in) | Milestone 5: pilot, then switch `photoReports` on |
+| Resident reports on the map, Report this photo (Phase 4, Milestone 4) | `residentReports` (on) | `features/resident-reports.js` (reads approved reports with the public key), `features/report-panel.js`, `features/flag-rules.js` (shared with the server); `supabase/migrations/006`; `supabase/functions/flag-report` | Rings on the map (`index.html#RPT-00005` opens one), "Recent reports" on `report.html`, Report this photo in the panel | built 24 Oct 2026; needs migration 006 and the `flag-report` deployment |
 
 ## Checks that protect the live site
 

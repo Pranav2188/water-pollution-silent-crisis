@@ -1,10 +1,10 @@
 // Entry point for review.html: team reviewers check resident reports (Phase 4, Milestone 3).
 //
-// Sign in (email + password, accounts made in the Supabase dashboard) -> the queue (waiting and
-// "needs a visit") -> one report: faces found and blurred, number plates found as suggestions,
+// Sign in (email + password, accounts made in the Supabase dashboard) -> the queue (waiting, with
+// photos reported by visitors first, and "needs a visit") -> one report: faces found and blurred, number plates found as suggestions,
 // blur / clear blur by hand -> Approve (publishes a cleaned copy, deletes the original),
 // Needs a visit (keeps it private), or Reject (deletes the original).
-// Everything is protected by the database rules (migrations 002-004): this page only works for
+// Everything is protected by the database rules (migrations 002-006): this page only works for
 // accounts listed in public.reviewers.
 
 import { config } from "../core/config.js";
@@ -13,11 +13,11 @@ import { esc } from "../core/format.js";
 import { initI18n, t } from "../core/i18n.js";
 import { boxFromDrag, padBox } from "../features/report-form.js";
 import { blurredCopy, loadPhoto, uploadFiles } from "../features/report-photo.js";
-import { boxAt, decisionRow, DECIDABLE, FLAG_KEYS, needsTidyUp, newBox, nextState, publicPaths, QUEUE, readyToApprove } from "../features/review-logic.js";
+import { approveState, boxAt, decisionRow, DECIDABLE, FLAG_KEYS, isFlagged, needsTidyUp, newBox, nextState, publicPaths, QUEUE, queueOrder } from "../features/review-logic.js";
 
 const $ = (id) => document.getElementById(id);
 const PRIVATE = "report-photos", PUBLIC = "report-public";
-const COLUMNS = "id, ref, created_at, status, area_id, problem_type, lat, lng, location_source, location_flags, taken_at, note, photo_path, thumb_path";
+const COLUMNS = "id, ref, created_at, status, area_id, problem_type, lat, lng, location_source, location_flags, taken_at, note, photo_path, thumb_path, flag_reason, flagged_at";
 
 let sb, data, zones, me;
 let rows = [], tab = "waiting";
@@ -70,7 +70,7 @@ async function loadQueue() {
   say("queue-status", [[t("review.loading"), "busy"]]);
   const { data: got, error } = await sb.from("reports").select(COLUMNS).in("status", QUEUE).order("created_at", { ascending: true });
   if (error) return say("queue-status", [[t("review.load_failed", { message: error.message }), "bad"]]);
-  rows = got || [];
+  rows = queueOrder(got || []);
   renderTabs();
   await renderList();
   tidyUp();   // in the background: originals left behind by an interrupted decision
@@ -93,6 +93,7 @@ async function renderList() {
       ${url[r.thumb_path] ? `<img src="${esc(url[r.thumb_path])}" alt="" loading="lazy">` : `<span class="review-noimg"></span>`}
       <span><strong>${esc(r.ref)}</strong> · ${esc(data.areaById[r.area_id]?.name || r.area_id)}<br>
       ${esc(r.problem_type)}<br><span class="meta">${esc(t("review.received", { when: when(r.created_at) }))}</span>
+      ${isFlagged(r) ? `<span class="tag tag-flagged">${esc(t("review.flagged_tag", { reason: t(`flag.reason.${r.flag_reason}`) }))}</span>` : ""}
       ${(r.location_flags || []).map((f) => `<span class="tag">${esc(t(FLAG_KEYS[f] || f))}</span>`).join(" ")}</span>
     </button></li>`).join("");
   $("list").querySelectorAll(".review-item").forEach((b) => b.addEventListener("click", () => openReport(rows.find((r) => String(r.id) === b.dataset.id))));
@@ -116,6 +117,7 @@ async function openReport(row) {
   say("suggestions", []);
   $("reason").value = "";
   $("d-note").value = row.note || "";
+  $("checked").checked = false;
   const sel = $("d-problem");
   sel.innerHTML = data.routing.map((r) => `<option${r.problem_type === row.problem_type ? " selected" : ""}>${esc(r.problem_type)}</option>`).join("");
   const flags = (row.location_flags || []).map((f) => t(FLAG_KEYS[f] || f));
@@ -126,6 +128,7 @@ async function openReport(row) {
     [t("review.f.place"), `${row.lat}, ${row.lng} (${t(`report.from.${row.location_source}`)})`],
     [t("review.f.flags"), flags.length ? flags.join("; ") : t("review.f.no_flags")],
   ];
+  if (isFlagged(row)) facts.unshift([t("review.f.flagged"), t("review.flagged_fact", { reason: t(`flag.reason.${row.flag_reason}`), when: when(row.flagged_at) })]);
   $("facts").innerHTML = facts.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("") +
     `<dt></dt><dd><a href="https://www.google.com/maps/search/?api=1&query=${row.lat},${row.lng}" target="_blank" rel="noopener noreferrer">${esc(t("panel.open_maps"))}</a></dd>`;
   showMap(row);
@@ -235,10 +238,9 @@ function renderSuggestions() {
 }
 
 function updateApprove() {
-  const r = readyToApprove(view.boxes);
-  const waiting = view.busy > 0 || !view.work;
-  $("approve").disabled = waiting || !r.ok;
-  $("approve-help").textContent = waiting ? t("review.wait_finding") : r.ok ? t("review.ready", { n: r.blurred }) : t("review.undecided", { n: r.undecided });
+  const a = approveState(view.boxes, { busy: view.busy > 0, hasPhoto: Boolean(view.work), checked: $("checked").checked });
+  $("approve").disabled = !a.enabled;
+  $("approve-help").textContent = t(a.help, { n: a.n });
 }
 
 function point(e) {
@@ -349,6 +351,7 @@ async function start() {
   $("sign-out").addEventListener("click", async () => { await sb.auth.signOut(); location.reload(); });
   $("back").addEventListener("click", () => { view.openId++; loadQueue(); });
   $("approve").addEventListener("click", () => decide("approved"));
+  $("checked").addEventListener("change", updateApprove);
   $("visit").addEventListener("click", () => decide("needs_visit"));
   $("reject").addEventListener("click", () => decide("rejected"));
   wireCanvas();
